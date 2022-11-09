@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import "../css/Footer-Dark-icons.css";
 
 class Footer extends Component{
     constructor(){

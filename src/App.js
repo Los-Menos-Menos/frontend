@@ -3,8 +3,8 @@ import React, {Component} from 'react';
 import Residente from "./Componentes/residente";
 import Navbar from "./Componentes/navbar";
 import Footer from './Componentes/footer';
-import Admin from './Componentes/admin';
-import Admin_usuarios from './Componentes/admin_usuarios';
+import Admin from './Componentes/admin/admin';
+import Admin_usuarios from './Componentes/admin/admin_usuarios';
 
 class App extends Component {
     constructor(){

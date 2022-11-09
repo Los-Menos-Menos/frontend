@@ -13,9 +13,9 @@ class Admin_usuarios extends Component{
                     <div className="card-header py-3">
                         <div className="row table-topper align-items-center">
                             <div className="col-12 col-sm-5 col-md-6 text-start a_u1">
-                                <p className="text-primary m-0 fw-bold">Usuarios</p>
+                                <p className="text-primary m-0 fw-bold a_u2">Usuarios</p>
                             </div> 
-                            <div className="col-12 col-sm-7 col-md-6 text-end"><button className="btn btn-primary btn-sm reset" type="button">Borrar Filtros</button><button className="btn btn-warning btn-sm" id="zoom_in" type="button" zoomclick="ChangeZoomLevel(-10);"><i className="fa fa-search-plus"></i></button><button className="btn btn-warning btn-sm" id="zoom_out" type="button" zoomclick="ChangeZoomLevel(-10);"><i className="fa fa-search-minus"></i></button></div>
+                            <div className="col-12 col-sm-7 col-md-6 text-end a_u1"><button className="btn btn-primary btn-sm reset a_u3" type="button">Borrar Filtros</button><button className="btn btn-warning btn-sm a_u3" id="zoom_in" type="button" zoomclick="ChangeZoomLevel(-10);"><i className="fa fa-search-plus"></i></button><button className="btn btn-warning btn-sm a_u3" id="zoom_out" type="button" zoomclick="ChangeZoomLevel(-10);"><i className="fa fa-search-minus"></i></button></div>
                         </div>
                     </div>
                     <div className="row">

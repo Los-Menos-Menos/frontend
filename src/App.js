@@ -5,6 +5,7 @@ import Navbar from "./Componentes/navbar";
 import Footer from './Componentes/footer';
 import Admin from './Componentes/admin';
 import Admin_usuarios from './Componentes/admin_usuarios';
+import Login from './Componentes/login';
 
 class App extends Component {
     constructor(){
@@ -12,7 +13,7 @@ class App extends Component {
 		this.state = {
 		residentes: [
 			{
-				nombre: "Sebastian",
+				nombre: "Sofia",
 				edad: 110,
 			},
 			{
@@ -32,7 +33,7 @@ class App extends Component {
             <div className="App">
                 <Navbar/>
                 <main>
-                    <Admin_usuarios></Admin_usuarios>
+                    <Login></Login>
                 </main>
                 <Footer/>
             </div>

@@ -28,32 +28,70 @@ class App extends Component {
 			page: "login",
 		};
 		this.renderPage = this.renderPage.bind(this);
+		this.cambiarPagina = this.cambiarPagina.bind(this);
 
     }
+
+	cambiarPagina(pagina, opciones){
+		this.setState({
+			page: pagina,
+		});
+		console.log(pagina,opciones);
+	}
 	
 	renderPage(){
 		switch(this.state.page){
 			case "residentes":
-				return <Residente residentes={this.state.residentes}/>
+				return <Residente residentes={this.state.residentes} cambiarPagina={this.cambiarPagina}/>
 			case "admin":
 				return <Admin/>
 			case "admin_usuarios":
 				return <Admin_usuarios/>
 			case "login":
-				return <Login/>
+				return <Login cambiarPagina={this.cambiarPagina}/>
 			default:
-				return <Login/>
+				return <Admin/>
 		}
 	}
 
     render() {
+		let opciones = null;
+		if (this.state.page === "login"){
+			opciones = {
+				nombre: "AdminCondom",
+				paginas: [
+					"residentes",
+					"admin",
+					"admin_usuarios",
+
+					
+				],
+				botonLogin: {
+					texto: "Iniciar Sesion",
+				},
+			};
+		}
+		if (this.state.page === "residentes"){
+			opciones = {
+				nombre: "Camilo",
+				paginas: [
+					"Gastos comunes",
+					"Reservas",
+					"Reclamos",
+					"Anuncios",
+				],
+				botonLogin: {
+					texto: "Cerrar Sesion",
+				},
+			};
+		}
         return (
             <div className="App">
-                <Navbar/>
+                <Navbar opciones={opciones} cambiarPagina={this.cambiarPagina}/>
                 <main>
                     {this.renderPage()}
                 </main>
-                <Footer/>
+                <Footer cambiarPagina={this.cambiarPagina}/>
             </div>
     );}
 }

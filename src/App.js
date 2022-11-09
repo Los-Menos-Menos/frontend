@@ -11,29 +11,44 @@ class App extends Component {
     constructor(){
         super();
 		this.state = {
-		residentes: [
-			{
-				nombre: "Sofia",
-				edad: 110,
-			},
-			{
-				nombre: "Juan",
-				edad: 20,
-			},
-			{
-				nombre: "Pedro",
-				edad: 30,
-			},
-		],
-	};
+			residentes: [
+				{
+					nombre: "Sofia",
+					edad: 110,
+				},
+				{
+					nombre: "Juan",
+					edad: 20,
+				},
+				{
+					nombre: "Pedro",
+					edad: 30,
+				},
+			],
+		};
+		this.renderPage = this.renderPage.bind(this);
+
     }
+	
+	renderPage(){
+		switch(this.state.page){
+			case "residentes":
+				return <Residente residentes={this.state.residentes}/>
+			case "admin":
+				return <Admin/>
+			case "admin_usuarios":
+				return <Admin_usuarios/>
+			default:
+				return <Login/>
+		}
+	}
 
     render() {
         return (
             <div className="App">
                 <Navbar/>
                 <main>
-                    <Login></Login>
+                    {this.renderPage()}
                 </main>
                 <Footer/>
             </div>

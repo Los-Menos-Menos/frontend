@@ -1,6 +1,6 @@
 import './App.css';
 import React, {Component} from 'react';
-import Residente from "./Componentes/residente";
+import Residente from "./Componentes/residente/residente";
 import Navbar from "./Componentes/navbar";
 import Footer from './Componentes/footer';
 import Admin from './Componentes/admin/admin';

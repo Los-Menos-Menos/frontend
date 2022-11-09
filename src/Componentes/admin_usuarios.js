@@ -39,7 +39,7 @@ class Admin_usuarios extends Component{
                                             <td>sebastianrex@gmail.cl<br></br>+56912345678</td>
                                             <td>Administrador</td>
                                             <td>11</td>
-                                            <td className="text-center align-middle"><a className="btn btnMaterial btn-flat primary semicircle" role="button" href="#"><i className="fas fa-money-check-alt"></i></a><a className="btn btnMaterial btn-flat success semicircle" role="button" href="#"><i className="fas fa-pen"></i></a><a className="btn btnMaterial btn-flat accent btnNoBorders checkboxHover" role="button" data-bs-toggle="modal" data-bs-target="#delete-modal" href="#"><i className="fas fa-trash btnNoBorders" ></i></a></td>
+                                            <td className="text-center align-middle a_u4"><a className="btn btnMaterial btn-flat primary semicircle" role="button" href="#"><i className="fas fa-money-check-alt"></i></a><a className="btn btnMaterial btn-flat success semicircle" role="button" href="#"><i className="fas fa-pen"></i></a><a className="btn btnMaterial btn-flat accent btnNoBorders checkboxHover a_u5" role="button" data-bs-toggle="modal" data-bs-target="#delete-modal" href="#"><i className="fas fa-trash btnNoBorders a_u6" ></i></a></td>
                                         </tr>
                                         <tr>
                                             <td>Sofia Llanos</td>
@@ -47,7 +47,7 @@ class Admin_usuarios extends Component{
                                             <td>sofia.gamer777@gmail.com<br></br>+56977779999</td>
                                             <td>Conserje</td>
                                             <td>13</td>
-                                            <td className="text-center align-middle"><a className="btn btnMaterial btn-flat primary semicircle" role="button" href="#"><i className="fas fa-money-check-alt"></i></a><a className="btn btnMaterial btn-flat success semicircle" role="button" href="#"><i className="fas fa-pen"></i></a><a className="btn btnMaterial btn-flat accent btnNoBorders checkboxHover" role="button" data-bs-toggle="modal" data-bs-target="#delete-modal" href="#"><i className="fas fa-trash btnNoBorders"></i></a></td>
+                                            <td className="text-center align-middle a_u4"><a className="btn btnMaterial btn-flat primary semicircle" role="button" href="#"><i className="fas fa-money-check-alt"></i></a><a className="btn btnMaterial btn-flat success semicircle" role="button" href="#"><i className="fas fa-pen"></i></a><a className="btn btnMaterial btn-flat accent btnNoBorders checkboxHover a_u5" role="button" data-bs-toggle="modal" data-bs-target="#delete-modal" href="#"><i className="fas fa-trash btnNoBorders"></i></a></td>
                                         </tr>
                                         <tr>
                                             <td>Alfredo Aceituno</td>
@@ -55,7 +55,7 @@ class Admin_usuarios extends Component{
                                             <td>alfreditoxbnalgarete@gamil.com<br></br>+56900000001</td>
                                             <td>Residente</td>
                                             <td>69</td>
-                                            <td className="text-center align-middle"><a className="btn btnMaterial btn-flat primary semicircle" role="button" href="#"><i className="fas fa-money-check-alt"></i></a><a className="btn btnMaterial btn-flat success semicircle" role="button" href="#"><i className="fas fa-pen"></i></a><a className="btn btnMaterial btn-flat accent btnNoBorders checkboxHover" role="button" data-bs-toggle="modal" data-bs-target="#delete-modal" href="#"><i className="fas fa-trash btnNoBorders" ></i></a></td>
+                                            <td className="text-center align-middle a_u4"><a className="btn btnMaterial btn-flat primary semicircle" role="button" href="#"><i className="fas fa-money-check-alt"></i></a><a className="btn btnMaterial btn-flat success semicircle" role="button" href="#"><i className="fas fa-pen"></i></a><a className="btn btnMaterial btn-flat accent btnNoBorders checkboxHover a_u5" role="button" data-bs-toggle="modal" data-bs-target="#delete-modal" href="#"><i className="fas fa-trash btnNoBorders" ></i></a></td>
                                         </tr>
                                     </tbody>
                                 </table>

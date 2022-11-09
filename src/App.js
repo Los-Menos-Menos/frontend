@@ -1,25 +1,42 @@
-import logo from './logo.svg';
 import './App.css';
+import React, {Component} from 'react';
+import Residente from "./Componentes/residente";
+import Navbar from "./Componentes/navbar";
+import Footer from './Componentes/footer';
+import Admin from './Componentes/admin';
+import Admin_usuarios from './Componentes/admin_usuarios';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+class App extends Component {
+    constructor(){
+        super();
+		this.state = {
+		residentes: [
+			{
+				nombre: "Sebastian",
+				edad: 110,
+			},
+			{
+				nombre: "Juan",
+				edad: 20,
+			},
+			{
+				nombre: "Pedro",
+				edad: 30,
+			},
+		],
+	};
+    }
+
+    render() {
+        return (
+            <div className="App">
+                <Navbar/>
+                <main>
+                    <Admin_usuarios></Admin_usuarios>
+                </main>
+                <Footer/>
+            </div>
+    );}
 }
 
 export default App;

@@ -1,0 +1,22 @@
+.a_u1{
+    margin: 0px;
+    padding: 5px 15px;
+}
+.a_u2{
+    color: rgb(0,0,0);
+    --bs-primary: #000000;
+    --bs-primary-rgb: 0,0,0;
+}
+.a_u3{
+    margin: 2px;
+}
+.a_u4{
+    max-height: 60px;
+    height: 60px;
+}
+.a_u5{
+    margin-left: 5px;
+}
+.a_u6{
+    color: #DC3545;
+}

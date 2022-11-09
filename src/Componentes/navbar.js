@@ -1,6 +1,5 @@
 import React, { Component } from "react";
-import "../styles.css";
-import "../css/Black-Navbar.css";
+import "../assets/css/navbar.css";
 
 class Navbar extends Component{
     constructor(){

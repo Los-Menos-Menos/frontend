@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import EntradaTablasUsuario from "./entrada_tablas_usuario";
-import "../../styles.css";
+
 
 class Admin_usuarios extends Component{
     constructor(){

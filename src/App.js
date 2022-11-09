@@ -25,6 +25,7 @@ class App extends Component {
 					edad: 30,
 				},
 			],
+			page: "login",
 		};
 		this.renderPage = this.renderPage.bind(this);
 
@@ -38,6 +39,8 @@ class App extends Component {
 				return <Admin/>
 			case "admin_usuarios":
 				return <Admin_usuarios/>
+			case "login":
+				return <Login/>
 			default:
 				return <Login/>
 		}

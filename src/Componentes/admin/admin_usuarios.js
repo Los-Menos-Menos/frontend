@@ -1,5 +1,6 @@
 import React, { Component } from "react";
-import "../styles.css";
+import EntradaTablasUsuario from "./entrada_tablas_usuario";
+import "../../styles.css";
 
 class Admin_usuarios extends Component{
     constructor(){
@@ -33,6 +34,7 @@ class Admin_usuarios extends Component{
                                         </tr>
                                     </thead>
                                     <tbody className="text-center">
+                                        <EntradaTablasUsuario usuario={{usuario:{nombre:"Juan Perez",ultimoPago:"Enero",morosidad:"$1000",email:"",numero:"123456789",tipoUsuario:"Administrador",idUsuario:"1"}}}/>
                                         <tr>
                                             <td>Sebastian Cerda</td>
                                             <td>Ultimo mes pagado: Septiembre, 2022<br></br>Morosidad: Sí</td>

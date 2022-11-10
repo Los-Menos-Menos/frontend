@@ -9,6 +9,10 @@ import Admin_usuarios from './Componentes/admin/admin_usuarios';
 import Login from './Componentes/login';
 import Conserje from './Componentes/conserje/conserje';
 import Reservas_Residente from './Componentes/residente/reservas_residente';
+import Reservas_Quincho from './Componentes/residente/reserva_quincho';
+import Reservas_Estacionamiento from './Componentes/residente/reserva_estacionamiento';
+import Reservas_SalaEventos from './Componentes/residente/reserva_salaeventos';
+import Reservas_Multicancha from './Componentes/residente/reserva_multicancha';
 
 class App extends Component {
     constructor(){
@@ -36,7 +40,7 @@ class App extends Component {
             <div className="App">
                 <Navbar/>
                 <main>
-                    <Reservas_Residente></Reservas_Residente>
+                    <Reservas_Multicancha></Reservas_Multicancha>
                 </main>
                 <Footer/>
             </div>

@@ -1,13 +1,18 @@
 import './App.css';
 import React, {Component} from 'react';
+
+import opciones from './opciones.js';
+
 import Residente from "./Componentes/residente/residente";
 import Navbar from "./Componentes/navbar";
 import Footer from './Componentes/footer';
-import Admin from './Componentes/admin/admin';
-import Admin_usuarios from './Componentes/admin/admin_usuarios';
+import AdminInicio from './Componentes/admin/admin_inicio';
+import AdminUsuarios from './Componentes/admin/admin_usuarios';
+import AdminReservas from './Componentes/admin/admin_reservas';
 import Login from './Componentes/login';
 
 class App extends Component {
+	tipoUsuario = "Administrador";
     constructor(){
         super();
 		this.state = {
@@ -25,7 +30,7 @@ class App extends Component {
 					edad: 30,
 				},
 			],
-			page: "login",
+			page: "Administrador",
 		};
 		this.renderPage = this.renderPage.bind(this);
 		this.cambiarPagina = this.cambiarPagina.bind(this);
@@ -41,53 +46,33 @@ class App extends Component {
 	
 	renderPage(){
 		switch(this.state.page){
-			case "residentes":
+			case "Residente":
 				return <Residente residentes={this.state.residentes} cambiarPagina={this.cambiarPagina}/>
-			case "admin":
-				return <Admin/>
-			case "admin_usuarios":
-				return <Admin_usuarios/>
-			case "login":
+			case "Administrador":
+				return <AdminInicio/>
+			case "Directiva":
+				return <div>Directiva</div>
+			case "Conserje":
+				return <div>Conserje</div>
+			case "Super Administrador":
+				return <div>Super Administrador</div>
+			case "Login":
 				return <Login cambiarPagina={this.cambiarPagina}/>
+			case "Inicio":
+				return <AdminInicio cambiarPagina={this.cambiarPagina}/>
+			case "Gestionar usuarios":
+				return <AdminUsuarios cambiarPagina={this.cambiarPagina}/>;
+			case "Gestionar espacios":
+				return <AdminReservas cambiarPagina={this.cambiarPagina}/>;
 			default:
-				return <Admin/>
+				return <AdminInicio/>
 		}
 	}
 
     render() {
-		let opciones = null;
-		if (this.state.page === "login"){
-			opciones = {
-				nombre: "AdminCondom",
-				paginas: [
-					"residentes",
-					"admin",
-					"admin_usuarios",
-
-					
-				],
-				botonLogin: {
-					texto: "Iniciar Sesion",
-				},
-			};
-		}
-		if (this.state.page === "residentes"){
-			opciones = {
-				nombre: "Camilo",
-				paginas: [
-					"Gastos comunes",
-					"Reservas",
-					"Reclamos",
-					"Anuncios",
-				],
-				botonLogin: {
-					texto: "Cerrar Sesion",
-				},
-			};
-		}
         return (
             <div className="App">
-                <Navbar opciones={opciones} cambiarPagina={this.cambiarPagina}/>
+                <Navbar opciones={opciones[this.tipoUsuario]} cambiarPagina={this.cambiarPagina}/>
                 <main>
                     {this.renderPage()}
                 </main>

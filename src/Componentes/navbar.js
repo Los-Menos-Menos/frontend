@@ -8,6 +8,7 @@ class Navbar extends Component{
 
     
     render(){
+        console.log(this.props)
         let opciones = this.props.opciones;
         return(
             <nav className="navbar navbar-light navbar-expand-md navbar-fixed-top navigation-clean-button Nabvar">
@@ -22,7 +23,7 @@ class Navbar extends Component{
                             {opciones.paginas.map((pagina, index) => {
                                 return(
                                     <li className="nav-item" key={index}>
-                                        <a className="nav-link text-light" href="#" onClick={() => this.props.cambiarPagina(pagina)}>{pagina}</a>
+                                        <a className="nav-link text-light" href="#" onClick={() => this.props.cambiarPagina(pagina[0])}>{pagina[1]}</a>
                                     </li>
                                 )
                             })}

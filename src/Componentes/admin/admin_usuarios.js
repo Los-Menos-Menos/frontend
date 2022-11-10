@@ -1,8 +1,16 @@
 import React, { Component } from "react";
 import EntradaTablasUsuario from "./entrada_tablas_usuario";
-
+import "../../assets/css/luis.css"
 
 class Admin_usuarios extends Component{
+    usuarios=[
+        {nombre:"Juan Perez",ultimoPago:"Enero",morosidad:"$1000",email:"juanitojuanjarry@runin.cl",numero:"123456789",tipoUsuario:"Administrador",idUsuario:"1"},
+        {nombre:"Fernanda Cerda",ultimoPago:"Febrero",morosidad:"$2000",email:"fernandacerda@hermosisima.cl",numero:"987654321",tipoUsuario:"Administrador",idUsuario:"2"},
+        {nombre:"Luis Corrales",ultimoPago:"Marzo",morosidad:"$3000",email:"colocolinodecorazon@colocolo.cl",numero:"123456789",tipoUsuario:"Administrador",idUsuario:"3"},
+        {nombre:"Sofia Mañana",ultimoPago:"Abril",morosidad:"$4000",email:"luchitoesmuymaloelcolocolo@jajajaj.cl",numero:"987654321",tipoUsuario:"Residente",idUsuario:"4"},
+        {nombre:"Sebastián Sepúlveda",ultimoPago:"Mayo",morosidad:"$5000",email:"feñitateamo@amor.cl",numero:"123456789",tipoUsuario:"Residente",idUsuario:"5"},
+    ]
+
     constructor(){
         super();
     }
@@ -16,7 +24,6 @@ class Admin_usuarios extends Component{
                             <div className="col-12 col-sm-5 col-md-6 text-start a_u1">
                                 <p className="text-primary m-0 fw-bold a_u2">Usuarios</p>
                             </div> 
-                            <div className="col-12 col-sm-7 col-md-6 text-end a_u1"><button className="btn btn-primary btn-sm reset a_u3" type="button">Borrar Filtros</button><button className="btn btn-warning btn-sm a_u3" id="zoom_in" type="button" zoomclick="ChangeZoomLevel(-10);"><i className="fa fa-search-plus"></i></button><button className="btn btn-warning btn-sm a_u3" id="zoom_out" type="button" zoomclick="ChangeZoomLevel(-10);"><i className="fa fa-search-minus"></i></button></div>
                         </div>
                     </div>
                     <div className="row">
@@ -34,31 +41,9 @@ class Admin_usuarios extends Component{
                                         </tr>
                                     </thead>
                                     <tbody className="text-center">
-                                        <EntradaTablasUsuario usuario={{usuario:{nombre:"Juan Perez",ultimoPago:"Enero",morosidad:"$1000",email:"",numero:"123456789",tipoUsuario:"Administrador",idUsuario:"1"}}}/>
-                                        <tr>
-                                            <td>Sebastian Cerda</td>
-                                            <td>Ultimo mes pagado: Septiembre, 2022<br></br>Morosidad: Sí</td>
-                                            <td>sebastianrex@gmail.cl<br></br>+56912345678</td>
-                                            <td>Administrador</td>
-                                            <td>11</td>
-                                            <td className="text-center align-middle a_u4"><a className="btn btnMaterial btn-flat primary semicircle" role="button" href="#"><i className="fas fa-money-check-alt"></i></a><a className="btn btnMaterial btn-flat success semicircle" role="button" href="#"><i className="fas fa-pen"></i></a><a className="btn btnMaterial btn-flat accent btnNoBorders checkboxHover a_u5" role="button" data-bs-toggle="modal" data-bs-target="#delete-modal" href="#"><i className="fas fa-trash btnNoBorders a_u6" ></i></a></td>
-                                        </tr>
-                                        <tr>
-                                            <td>Sofia Llanos</td>
-                                            <td><br></br>Ultimo mes pagado: Noviembre, 2022<br></br>Morosidad: No<br></br></td>
-                                            <td>sofia.gamer777@gmail.com<br></br>+56977779999</td>
-                                            <td>Conserje</td>
-                                            <td>13</td>
-                                            <td className="text-center align-middle a_u4"><a className="btn btnMaterial btn-flat primary semicircle" role="button" href="#"><i className="fas fa-money-check-alt"></i></a><a className="btn btnMaterial btn-flat success semicircle" role="button" href="#"><i className="fas fa-pen"></i></a><a className="btn btnMaterial btn-flat accent btnNoBorders checkboxHover a_u5" role="button" data-bs-toggle="modal" data-bs-target="#delete-modal" href="#"><i className="fas fa-trash btnNoBorders"></i></a></td>
-                                        </tr>
-                                        <tr>
-                                            <td>Alfredo Aceituno</td>
-                                            <td><br></br>Ultimo mes pagado: Noviembre, 2022<br></br>Morosidad: No<br></br></td>
-                                            <td>alfreditoxbnalgarete@gamil.com<br></br>+56900000001</td>
-                                            <td>Residente</td>
-                                            <td>69</td>
-                                            <td className="text-center align-middle a_u4"><a className="btn btnMaterial btn-flat primary semicircle" role="button" href="#"><i className="fas fa-money-check-alt"></i></a><a className="btn btnMaterial btn-flat success semicircle" role="button" href="#"><i className="fas fa-pen"></i></a><a className="btn btnMaterial btn-flat accent btnNoBorders checkboxHover a_u5" role="button" data-bs-toggle="modal" data-bs-target="#delete-modal" href="#"><i className="fas fa-trash btnNoBorders" ></i></a></td>
-                                        </tr>
+                                        {this.usuarios.map((usuario) => (
+                                            <EntradaTablasUsuario usuario={usuario}/>
+                                        ))}
                                     </tbody>
                                 </table>
                             </div>

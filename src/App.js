@@ -1,12 +1,14 @@
 import './App.css';
 import React, {Component} from 'react';
 import Residente from "./Componentes/residente/residente";
+import Gastoscomunes_residente from "./Componentes/residente/gastoscomunes_residente";
 import Navbar from "./Componentes/navbar";
 import Footer from './Componentes/footer';
 import Admin from './Componentes/admin/admin';
 import Admin_usuarios from './Componentes/admin/admin_usuarios';
 import Login from './Componentes/login';
 import Conserje from './Componentes/conserje/conserje';
+import Reservas_Residente from './Componentes/residente/reservas_residente';
 
 class App extends Component {
     constructor(){
@@ -34,7 +36,7 @@ class App extends Component {
             <div className="App">
                 <Navbar/>
                 <main>
-                    <Conserje></Conserje>
+                    <Reservas_Residente></Reservas_Residente>
                 </main>
                 <Footer/>
             </div>

@@ -7,27 +7,22 @@ import Libro from "../../assets/img/libro.jpg";
 import SalaEventos from "../../assets/img/salaeventos.png";
 import MultiCancha from "../../assets/img/multicancha.png";
 
-class EspaciosComunes_Directiva extends Component {
+class EspaciosComunes_Directiva extends Component { 
     constructor(){
         super();
     }
     render(){
         return(
             <>
-    <div class="col">
-            <div class="card">
-                <div className="text-center">
-                    <h2 class="text-center card-title">Espacios Comunes</h2>
-                    <p class="card-text">Aquí podrás ver las reservas de los espacios comunes del condominio</p>
-                    
-                    </div>
-                        
-                    <div class="d-flex">
-                        <div></div>
+            <div class="mx-auto" style={{paddingTop: '50px'}}>
+                <div class="row mb-5">
+                    <div class="col-md-8 col-xl-6 text-center mx-auto">
+                        <h2>Espacios Comunes</h2>
+                        <h5>Aquí podrás ver las reservas de los espacios comunes del condominio</h5>
                     </div>
                 </div>
             </div>
-            <div class="row gy-4 row-cols-1 row-cols-md-2 row-cols-xl-4">
+            <div class="row gy-4 row-cols-1 row-cols-md-2 row-cols-xl-4 mx-auto"  style={{paddingBottom: '60px', paddingRight: '40px', paddingLeft: '40px'}}>
                         <div class="col">
                             <div class="card" style={{ margin: 10}}>
                                 <div class= "card-title mx-auto"> <b> Quincho </b> </div>

@@ -139,7 +139,7 @@ class App extends Component {
             <div className="App">
                 <Navbar opciones={opcionesNavbar} cambiarPagina={this.cambiarPagina} botonLogin={this.botonLogin}/>
                 <main>
-					<Anuncios></Anuncios>
+					<Login></Login>
                 </main>
                 <Footer cambiarPagina={this.cambiarPagina}/>
             </div>

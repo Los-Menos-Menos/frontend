@@ -7,7 +7,7 @@ export default [
       valor: "$ 100.000",
       pagado: "Si",
       morosidad: "No",
-      boton:  <div class="col d-flex justify-content-center"><button class="btn btn-primary" type="button" style={{margin: 10}} onClick={() => {alert('¡Has pagado la totalidad de tus deudas!')}}>Agregar</button></div>
+      boton:  <div class="col d-flex justify-content-center"><button class="btn btn-primary" type="button" style={{margin: 10}} >Agregar</button></div>
     },
     {
       title: "Luis Corrales",
@@ -16,6 +16,6 @@ export default [
       valor: "$ 2.000",
       pagado: "No",
       morosidad: "Si",
-      boton: <div class="col d-flex justify-content-center"><button class="btn btn-primary" type="button" style={{margin: 10}} onClick={() => {alert('¡Has pagado la totalidad de tus deudas!')}}>Agregar</button></div>
+      boton: <div class="col d-flex justify-content-center"><button class="btn btn-primary" type="button" style={{margin: 10}} >Agregar</button></div>
     },
 ];

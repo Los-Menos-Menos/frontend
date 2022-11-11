@@ -26,23 +26,20 @@ const columns = [
   {
     name: "Fecha",
     selector: "year",
-    sortable: true
-  },
-  {
-    name: "Mensaje",
-    selector: "runtime",
     sortable: true,
     right: true
   }
 ];
 
 const ExpandedComponent = ({ data }) => (
-  <p className="mx-auto">
-    <strong>Fecha:</strong> {data.year}
-    <br />
-    <strong>Mensaje:</strong> {data.runtime}
-    <br />
-  </p>
+  <div className="card" style={{width: '100%'}} >
+    <p> 
+      <strong>Fecha:</strong> {data.year}
+      <br />
+      <strong>Mensaje:</strong> {data.runtime}
+      <br />
+    </p>
+  </div>
 );
 
 

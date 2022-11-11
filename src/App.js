@@ -8,6 +8,9 @@ import Admin_usuarios from './Componentes/admin/admin_usuarios';
 import Login from './Componentes/login';
 import Conserje from './Componentes/conserje/conserje';
 import Libro from './Componentes/conserje/libro';
+import Anuncios from './Componentes/residente/anuncios';
+import Anuncios_Directiva from './Componentes/directiva/anuncios_directiva';
+import Nuevo_Anuncio from './Componentes/directiva/nuevo_anuncio';
 
 class App extends Component {
     constructor(){
@@ -35,7 +38,7 @@ class App extends Component {
             <div className="App">
                 <Navbar/>
                 <main>
-                    <Libro></Libro>
+                    <Nuevo_Anuncio></Nuevo_Anuncio>
                 </main>
                 <Footer/>
             </div>

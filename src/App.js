@@ -19,7 +19,7 @@ import Reservas_SalaEventos from './Componentes/residente/reserva_salaeventos';
 import Reservas_Multicancha from './Componentes/residente/reserva_multicancha';
 
 class App extends Component {
-	tipoUsuario = "Administrador";
+	tipoUsuario = "Login";
     constructor(){
         super();
 		this.state = {
@@ -37,7 +37,7 @@ class App extends Component {
 					edad: 30,
 				},
 			],
-			page: "Administrador",
+			page: "Login",
 		};
 		this.renderPage = this.renderPage.bind(this);
 		this.cambiarPagina = this.cambiarPagina.bind(this);
@@ -81,7 +81,6 @@ class App extends Component {
             <div className="App">
                 <Navbar opciones={opciones[this.tipoUsuario]} cambiarPagina={this.cambiarPagina}/>
                 <main>
-                    <Reservas_Multicancha></Reservas_Multicancha>
 					{this.renderPage()}
                 </main>
                 <Footer cambiarPagina={this.cambiarPagina}/>

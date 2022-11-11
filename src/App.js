@@ -8,6 +8,10 @@ import Admin from './Componentes/admin/admin';
 import Admin_usuarios from './Componentes/admin/admin_usuarios';
 import Login from './Componentes/login';
 import Conserje from './Componentes/conserje/conserje';
+import Libro from './Componentes/conserje/libro';
+import Anuncios from './Componentes/residente/anuncios';
+import Anuncios_Directiva from './Componentes/directiva/anuncios_directiva';
+import Nuevo_Anuncio from './Componentes/directiva/nuevo_anuncio';
 import Reservas_Residente from './Componentes/residente/reservas_residente';
 import Reservas_Quincho from './Componentes/residente/reserva_quincho';
 import Reservas_Estacionamiento from './Componentes/residente/reserva_estacionamiento';
@@ -40,7 +44,7 @@ class App extends Component {
             <div className="App">
                 <Navbar/>
                 <main>
-                    <Reservas_Multicancha></Reservas_Multicancha>
+                    <Conserje></Conserje>
                 </main>
                 <Footer/>
             </div>

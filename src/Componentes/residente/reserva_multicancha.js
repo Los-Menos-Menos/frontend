@@ -13,7 +13,7 @@ class Reservas_Multicancha extends Component {
         return(
             <div style={{margin: '50px'}}>
             <div class="container mx-auto">
-                <h4>Reserva de Sala de Eventos:</h4>
+                <h4>Reserva de MultiCancha:</h4>
             </div>
             <div class="row gy-4 row-cols-1 row-cols-md-2 row-cols-xl-3 d-flex justify-content-center">
                 <div class="col">

@@ -24,18 +24,40 @@ const columns = [
     right: true
   },
   {
-    name: "Gastos Comunes",
-    selector: "gastos",
-    sortable: true,
-    right: true
-  },
-  {
     name: "Morosidad",
     selector: "morosidad",
     sortable: true,
     right: true
   }
 ];
+
+const ExpandedComponent = ({ data }) => (
+  <div className="card" style={{width: '100%'}} >
+    <strong>Gastos Comunes:</strong> 
+    <ul>{
+    data.gastos.map((gasto, index) => (
+      <li key={index}>{gasto}</li>
+    ))
+    }
+    </ul>
+    <strong>Multas:</strong> {data.multas.length > 0 ? 
+      <ul>{
+        data.multas.map((multa, index) => (
+          <li key={index}>{multa}</li>
+        ))
+        }
+        </ul>
+    : "No hay multas"}
+    <br></br>
+    <strong>Reservas:</strong> 
+    <ul>{
+    data.reservas.map((reserva, index) => (
+      <li key={index}>{reserva}</li>
+    ))
+    }
+    </ul>
+  </div>
+);
 
 function InfoResidentes_Conserje() {
   const [filter, setFilter] = React.useState("");
@@ -51,6 +73,8 @@ function InfoResidentes_Conserje() {
           title="Información Residentes"
           columns={columns}
           data={filteredData}
+          expandableRows
+          expandableRowsComponent={ExpandedComponent}
           pagination
           subHeader
           subHeaderComponent={

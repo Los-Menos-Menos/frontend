@@ -6,8 +6,7 @@ export default [
       tipo: "Gasto Comun",
       valor: "$ 100.000",
       pagado: "Si",
-      morosidad: "No",
-      boton:  <div class="col d-flex justify-content-center"><button class="btn btn-primary" type="button" style={{margin: 10}} >Agregar</button></div>
+      morosidad: "No"
     },
     {
       title: "Luis Corrales",
@@ -15,7 +14,6 @@ export default [
       tipo: "Multa",
       valor: "$ 2.000",
       pagado: "No",
-      morosidad: "Si",
-      boton: <div class="col d-flex justify-content-center"><button class="btn btn-primary" type="button" style={{margin: 10}} >Agregar</button></div>
-    },
+      morosidad: "Si"
+    }
 ];

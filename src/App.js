@@ -9,14 +9,22 @@ import Footer from './Componentes/footer';
 
 import Login from './Componentes/login';
 
+//ADMIN IMPORTS
 import AdminInicio from './Componentes/admin/admin_inicio';
 import AdminUsuarios from './Componentes/admin/admin_usuarios';
 import AdminReservas from './Componentes/admin/admin_reservas';
 
+// CONSERJE IMPORTS
 import Conserje from './Componentes/conserje/conserje';
 import Libro from './Componentes/conserje/libro';
 import InfoResidentes_Conserje from './Componentes/conserje/infoc_residentes';
+import Reservas_Conserje from './Componentes/conserje/reservas_conserje';
+import Conserje_Quincho from './Componentes/conserje/conserje_quincho';
+import Conserje_Cancha from './Componentes/conserje/conserje_cancha';
+import Conserje_SalaEventos from './Componentes/conserje/conserje_salaeventos';
+import Conserje_Estacionamiento from './Componentes/conserje/conserje_estacionamiento';
 
+//DIRECTIVA IMPORTS
 import Directiva from './Componentes/directiva/directiva';
 import Anuncios_Directiva from './Componentes/directiva/anuncios_directiva';
 import Nuevo_Anuncio from './Componentes/directiva/nuevo_anuncio';
@@ -28,6 +36,7 @@ import ReservasSalaEventos_Directiva from './Componentes/directiva/reservas_sala
 import ReservasMultiCancha_Directiva from './Componentes/directiva/reservas_multicancha';
 
 
+//RESIDENTE IMPORTS
 import Residente from "./Componentes/residente/residente";
 import Gastoscomunes_residente from "./Componentes/residente/gastoscomunes_residente";
 import Anuncios from './Componentes/residente/anuncios';

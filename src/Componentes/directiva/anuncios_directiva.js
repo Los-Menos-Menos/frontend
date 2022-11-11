@@ -4,7 +4,13 @@ import Card from '@mui/material/Card';
 import Button from "@mui/material/Button";
 import data from "./data_anuncios";
 
-
+const SearchIt = ({ onChange, value }) => (
+  <input
+    placeholder="Search"
+    onChange={e => onChange(e)}
+    value={value.toLowerCase()}
+  />
+);
 const columns = [
     {
         name: "Nombre",

@@ -2,7 +2,7 @@ import React from "react";
 import DataTable from "react-data-table-component";
 import Card from '@mui/material/Card';
 import Button from "@mui/material/Button";
-import data from "./data_anuncios";
+import data from "./data_residentes";
 
 const SearchIt = ({ onChange, value }) => (
   <input
@@ -18,50 +18,46 @@ const columns = [
     sortable: true
   },
   {
-    name: "Rol",
-    selector: "rol",
+    name: "Depto",
+    selector: "depto",
     sortable: true,
     right: true
   },
   {
-    name: "Fecha",
-    selector: "year",
-    sortable: true
+    name: "Gastos Comunes",
+    selector: "gastos",
+    sortable: true,
+    right: true
   },
   {
-    name: "Mensaje",
-    selector: "runtime",
+    name: "Morosidad",
+    selector: "morosidad",
     sortable: true,
     right: true
   }
+  ,
+  {
+    name: "Multa",
+    selector: "boton",
+    sortable: false,
+    center: true
+  }
 ];
 
-const ExpandedComponent = ({ data }) => (
-  <p className="mx-auto">
-    <strong>Fecha:</strong> {data.year}
-    <br />
-    <strong>Mensaje:</strong> {data.runtime}
-    <br />
-  </p>
-);
-
-
-function Anuncios() {
+function InfoResidentes_Directiva() {
   const [filter, setFilter] = React.useState("");
   const filteredData = data.filter(item =>
     item.title.toLowerCase().includes(filter)
   );
 
   return (
-    <div className="container mx-auto" style={{margin: '40px'}}>
+    <div className="container">
 
       <Card>
         <DataTable
-          title="Anuncios"
+          title="Información Residentes"
           columns={columns}
           data={filteredData}
-          expandableRows
-          expandableRowsComponent={ExpandedComponent}
           pagination
           subHeader
           subHeaderComponent={
@@ -75,9 +71,9 @@ function Anuncios() {
           
         />
       </Card>
-      
+      <div class="col d-flex justify-content-center"><button class="btn btn-primary" type="button" style={{margin: 10}} onClick={() => {alert('¡Has pagado la totalidad de tus deudas!')}}>Ir a Pagar</button></div>
     </div>
   );
 }
-export default Anuncios;
+export default InfoResidentes_Directiva;
 

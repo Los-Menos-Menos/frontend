@@ -45,7 +45,7 @@ function Libro() {
   );
 
   return (
-    <div className="container">
+    <div className="container mx-auto" style={{margin: '40px'}}>
 
       <Card>
         <DataTable
@@ -60,7 +60,7 @@ function Libro() {
                 onChange={e => setFilter(e.target.value)}
                 value={filter}
                 />
-                <Button variant="contained">Nuevo Evento</Button>
+                <Button variant="contained" style={{margin: 10}} >Nuevo Evento</Button>
             </div>
           }
           

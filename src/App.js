@@ -21,6 +21,7 @@ import Reservas_Quincho from './Componentes/residente/reserva_quincho';
 import Reservas_Estacionamiento from './Componentes/residente/reserva_estacionamiento';
 import Reservas_SalaEventos from './Componentes/residente/reserva_salaeventos';
 import Reservas_Multicancha from './Componentes/residente/reserva_multicancha';
+import InfoResidentes_Directiva from './Componentes/directiva/info_residentes';
 
 class App extends Component {
     constructor(){

@@ -15,6 +15,7 @@ import AdminReservas from './Componentes/admin/admin_reservas';
 
 import Conserje from './Componentes/conserje/conserje';
 import Libro from './Componentes/conserje/libro';
+import InfoResidentes_Conserje from './Componentes/conserje/infoc_residentes';
 
 import Directiva from './Componentes/directiva/directiva';
 import Anuncios_Directiva from './Componentes/directiva/anuncios_directiva';
@@ -160,7 +161,7 @@ class App extends Component {
             <div className="App">
                 <Navbar opciones={opcionesNavbar} cambiarPagina={this.cambiarPagina} botonLogin={this.botonLogin}/>
                 <main>
-					{this.renderPage()}
+					<InfoResidentes_Conserje></InfoResidentes_Conserje>
                 </main>
                 <Footer cambiarPagina={this.cambiarPagina}/>
             </div>

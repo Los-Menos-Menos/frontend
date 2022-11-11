@@ -7,8 +7,14 @@ import React, { useState } from 'react';
 class Reservas_Estacionamiento extends Component {
     constructor(){
         super();
-        
     }
+
+    mark = [
+        '16-11-2022',
+        '19-11-2022',
+        '22-11-2022'
+    ]
+
     render(){
         return(
             <div style={{margin: '50px'}}>
@@ -32,7 +38,11 @@ class Reservas_Estacionamiento extends Component {
                 <div class="container" style={{margin: 30}}>
                     <div class="card" style={{ margin: 10}}>
                             <h5>Selecciona una fecha en la que quieras reservar:</h5>
-                            <Calendar />
+                            <Calendar 
+                            tileDisable={
+                                ({date, view}) => 
+                                view === 'month' && date.getDay() === 0
+                                } />
                             <div class="card-body p-4">
                                     <div class="col d-flex justify-content-center"><button class="btn btn-primary" type="button" onClick={() => {alert('¡Tu reserva ha sido realizada!')}}>Reservar</button></div>
                                 </div>

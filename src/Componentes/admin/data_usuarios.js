@@ -2,46 +2,41 @@ export default [
     {
       title: "Alfredo Llanos",
       year: "2022/01/15",
-      morosidad: "$1000",
+      morosidad: "Sí",
       email: "alfreditoxgamermaestro@runin.cl",
       numero: "123456789",
-      tipoUsuario:"Administrador",
-      //idUsuario: "1"
+      tipoUsuario:"Administrador"
     },
     {
       title: "Fernanda Cerda",
       year: "2022/02/15",
-      morosidad: "$2000",
+      morosidad: "Sí",
       email: "nandito@nonogram.cl",
       numero: "234567891",
-      tipoUsuario:"Directiva",
-      //idUsuario: "2"
+      tipoUsuario:"Directiva"
     },
     {
         title: "Luis Corrales",
         year: "2022/03/15",
-        morosidad: "$1500",
+        morosidad: "Sí",
         email: "lxchodelagb@colocolo.cl",
         numero: "345678912",
-        tipoUsuario:"Residente",
-        //idUsuario: "3"
+        tipoUsuario:"Residente"
     },
     {
         title: "Sofia Mañana",
         year: "2022/04/15",
-        morosidad: "$4000",
+        morosidad: "Sí",
         email: "luchitoesmuymaloelcolocolo@jajajaj.cl",
         numero: "456789123",
-        tipoUsuario:"Conserje",
-        //idUsuario: "4"
+        tipoUsuario:"Conserje"
     },
     {
         title: "Sebastián Sepulveda",
-        year: "2022/05/15",
-        morosidad: "$5000",
+        year: "2022/10/15",
+        morosidad: "No",
         email: "feñitateamo@amor.cl",
         numero: "123456789",
-        tipoUsuario:"Residente",
-        //idUsuario: "5"
+        tipoUsuario:"Residente"
     }
 ];

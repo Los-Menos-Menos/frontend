@@ -33,14 +33,29 @@ const columns = [
 
 const ExpandedComponent = ({ data }) => (
   <div className="card" style={{width: '100%'}} >
-    <p> 
-      <strong>Gastos Comunes:</strong> {data.gastos}
-      <br />
-      <strong>Multas:</strong> {data.multas}
-      <br />
-      <strong>Reservas:</strong> {data.reservas}
-      <br />
-    </p>
+    <strong>Gastos Comunes:</strong> 
+    <ul>{
+    data.gastos.map((gasto, index) => (
+      <li key={index}>{gasto}</li>
+    ))
+    }
+    </ul>
+    <strong>Multas:</strong> {data.multas.length > 0 ? 
+      <ul>{
+        data.multas.map((multa, index) => (
+          <li key={index}>{multa}</li>
+        ))
+        }
+        </ul>
+    : "No hay multas"}
+    <br></br>
+    <strong>Reservas:</strong> 
+    <ul>{
+    data.reservas.map((reserva, index) => (
+      <li key={index}>{reserva}</li>
+    ))
+    }
+    </ul>
   </div>
 );
 

@@ -40,6 +40,13 @@ const columns = [
     sortable: true,
     right: true
   }
+  ,
+  {
+    name: "Observacion",
+    selector: "boton",
+    sortable: false,
+    right: true
+  }
 ];
 
 function Gastoscomunes_residente() {

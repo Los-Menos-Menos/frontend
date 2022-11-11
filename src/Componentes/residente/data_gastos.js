@@ -6,7 +6,8 @@ export default [
       tipo: "Gasto Comun",
       valor: "$ 100.000",
       pagado: "Si",
-      morosidad: "No"
+      morosidad: "No",
+      boton:  <div class="col d-flex justify-content-center"><button class="btn btn-primary" type="button" style={{margin: 10}} onClick={() => {alert('¡Has pagado la totalidad de tus deudas!')}}>Agregar</button></div>
     },
     {
       title: "Luis Corrales",
@@ -14,6 +15,7 @@ export default [
       tipo: "Multa",
       valor: "$ 2.000",
       pagado: "No",
-      morosidad: "Si"
+      morosidad: "Si",
+      boton: <div class="col d-flex justify-content-center"><button class="btn btn-primary" type="button" style={{margin: 10}} onClick={() => {alert('¡Has pagado la totalidad de tus deudas!')}}>Agregar</button></div>
     },
 ];

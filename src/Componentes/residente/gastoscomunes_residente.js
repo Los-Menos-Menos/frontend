@@ -1,8 +1,10 @@
-import React from "react";
+import React, { useState } from "react";
 import DataTable from "react-data-table-component";
 import Card from '@mui/material/Card';
 import Button from "@mui/material/Button";
 import data from "./data_gastos";
+
+import Modal from 'react-bootstrap/Modal';
 
 const SearchIt = ({ onChange, value }) => (
   <input
@@ -49,6 +51,35 @@ const columns = [
   }
 ];
 
+
+function Modalito(){
+  const [show, setShow] = useState(false);
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
+  return(
+    <div>
+      <Button variant="primary" onClick={handleShow}>
+        Launch demo modal
+      </Button>
+
+      <Modal show={show} onHide={handleClose}>
+        <Modal.Header closeButton>
+          <Modal.Title>Modal heading</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>Woohoo, you're reading this text in a modal!</Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={handleClose}>
+            Close
+          </Button>
+          <Button variant="primary" onClick={handleClose}>
+            Save Changes
+          </Button>
+        </Modal.Footer>
+      </Modal>
+    </div>
+  );
+}
+
 function Gastoscomunes_residente() {
   const [filter, setFilter] = React.useState("");
   const filteredData = data.filter(item =>
@@ -80,5 +111,5 @@ function Gastoscomunes_residente() {
     </div>
   );
 }
-export default Gastoscomunes_residente;
+export default {Gastoscomunes_residente, Modalito};
 

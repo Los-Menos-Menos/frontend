@@ -9,19 +9,28 @@ import Footer from './Componentes/footer';
 
 import Login from './Componentes/login';
 
+//ADMIN IMPORTS
 import AdminInicio from './Componentes/admin/admin_inicio';
 import AdminUsuarios from './Componentes/admin/admin_usuarios';
 import AdminReservas from './Componentes/admin/admin_reservas';
 
+// CONSERJE IMPORTS
 import Conserje from './Componentes/conserje/conserje';
 import Libro from './Componentes/conserje/libro';
 import InfoResidentes_Conserje from './Componentes/conserje/infoc_residentes';
+import Reservas_Conserje from './Componentes/conserje/reservas_conserje';
+import Conserje_Quincho from './Componentes/conserje/conserje_quincho';
+import Conserje_Cancha from './Componentes/conserje/conserje_cancha';
+import Conserje_SalaEventos from './Componentes/conserje/conserje_salaeventos';
+import Conserje_Estacionamiento from './Componentes/conserje/conserje_estacionamiento';
 
+//DIRECTIVA IMPORTS
 import Directiva from './Componentes/directiva/directiva';
 import Anuncios_Directiva from './Componentes/directiva/anuncios_directiva';
 import Nuevo_Anuncio from './Componentes/directiva/nuevo_anuncio';
 import InfoResidentes_Directiva from './Componentes/directiva/info_residentes';
 
+//RESIDENTE IMPORTS
 import Residente from "./Componentes/residente/residente";
 import Gastoscomunes_residente from "./Componentes/residente/gastoscomunes_residente";
 import Anuncios from './Componentes/residente/anuncios';
@@ -161,7 +170,7 @@ class App extends Component {
             <div className="App">
                 <Navbar opciones={opcionesNavbar} cambiarPagina={this.cambiarPagina} botonLogin={this.botonLogin}/>
                 <main>
-					<InfoResidentes_Conserje></InfoResidentes_Conserje>
+					<Gastoscomunes_residente></Gastoscomunes_residente>
                 </main>
                 <Footer cambiarPagina={this.cambiarPagina}/>
             </div>

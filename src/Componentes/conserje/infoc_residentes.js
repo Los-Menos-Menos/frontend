@@ -24,18 +24,25 @@ const columns = [
     right: true
   },
   {
-    name: "Gastos Comunes",
-    selector: "gastos",
-    sortable: true,
-    right: true
-  },
-  {
     name: "Morosidad",
     selector: "morosidad",
     sortable: true,
     right: true
   }
 ];
+
+const ExpandedComponent = ({ data }) => (
+  <div className="card" style={{width: '100%'}} >
+    <p> 
+      <strong>Gastos Comunes:</strong> {data.gastos}
+      <br />
+      <strong>Multas:</strong> {data.multas}
+      <br />
+      <strong>Reservas:</strong> {data.reservas}
+      <br />
+    </p>
+  </div>
+);
 
 function InfoResidentes_Conserje() {
   const [filter, setFilter] = React.useState("");
@@ -51,6 +58,8 @@ function InfoResidentes_Conserje() {
           title="Información Residentes"
           columns={columns}
           data={filteredData}
+          expandableRows
+          expandableRowsComponent={ExpandedComponent}
           pagination
           subHeader
           subHeaderComponent={

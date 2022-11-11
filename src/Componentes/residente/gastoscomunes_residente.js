@@ -1,37 +1,77 @@
-import { Component } from "react";
-import GastosComunes from"../../assets/img/gastos2.png";
-import { MDBBtn } from 'mdb-react-ui-kit';
+import React from "react";
+import DataTable from "react-data-table-component";
+import Card from '@mui/material/Card';
+import Button from "@mui/material/Button";
+import data from "./data_gastos";
 
-class Gastoscomunes_residente extends Component {
-    constructor(){
-        super();
-    }
-    render(){
-        return(
-            <>
-    <div class="col">
-            <div class="card"><img src={GastosComunes} class="card-img-top w-100 d-block" alt="" style={{ height: '350px', objectFit: "contain" }} />
-                <div className="text-center">
-                    <h4 class="text-center card-title">Gastos Comunes</h4>
-                    <p class="card-text">Aquí se encuentran tu deudas</p>
-                    <div>
-                        <div class="col"><strong  style={{ float: "left", paddingLeft: 550}}>Gastos Comunes</strong><small >$120.000</small></div>
-                        <div class="col"><strong  style={{ float: "left", paddingLeft: 550}}>Reserva de Piscina</strong><small >$5.000</small></div>
-                        <div class="col"><strong  style={{ float: "left", paddingLeft: 550}}>Multa</strong><small style={{ marginLeft: 100}}>$5.000</small></div>
-                        <div class="col"><small ></small></div>
-                    </div><strong>Total</strong><small >$130.000</small>
-                    </div>
-                        <div className="text-center">
-                        <MDBBtn style={{ width: "30%"}}>Ir a Pagar</MDBBtn>
-                        </div>
-                    <div class="d-flex">
-                        <div></div>
-                    </div>
-                </div>
+const SearchIt = ({ onChange, value }) => (
+  <input
+    placeholder="Search"
+    onChange={e => onChange(e)}
+    value={value.toLowerCase()}
+  />
+);
+const columns = [
+  {
+    name: "Tipo",
+    selector: "tipo",
+    sortable: true
+  },
+  {
+    name: "Valor",
+    selector: "valor",
+    sortable: true,
+    right: true
+  },
+  {
+    name: "Fecha",
+    selector: "year",
+    sortable: true
+  },
+  {
+    name: "Pagado",
+    selector: "pagado",
+    sortable: true,
+    right: true
+  },
+  {
+    name: "Morosidad",
+    selector: "morosidad",
+    sortable: true,
+    right: true
+  }
+];
+
+function Gastoscomunes_residente() {
+  const [filter, setFilter] = React.useState("");
+  const filteredData = data.filter(item =>
+    item.title.toLowerCase().includes(filter)
+  );
+
+  return (
+    <div className="container">
+
+      <Card>
+        <DataTable
+          title="Gastos Comunes"
+          columns={columns}
+          data={filteredData}
+          pagination
+          subHeader
+          subHeaderComponent={
+            <div>
+                <SearchIt 
+                onChange={e => setFilter(e.target.value)}
+                value={filter}
+                />
             </div>
-            </>
-        );
-    }
+          }
+          
+        />
+      </Card>
+      <div class="col d-flex justify-content-center"><button class="btn btn-primary" type="button" style={{margin: 10}} onClick={() => {alert('¡Has pagado la totalidad de tus deudas!')}}>Ir a Pagar</button></div>
+    </div>
+  );
 }
-
 export default Gastoscomunes_residente;
+

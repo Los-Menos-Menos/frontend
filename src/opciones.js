@@ -7,7 +7,7 @@ let opciones={
         },
     },
     "Residente":{
-        nombre: "Resident",
+        nombre: "Residente",
         paginas: [
             ["Gastos comunes","Gastos comunes"],
             ["Reservas","Reservas"],

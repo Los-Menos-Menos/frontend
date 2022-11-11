@@ -53,43 +53,62 @@ class App extends Component {
 	}
 	
 	renderPage(){
-		switch(this.state.page){
+
+		switch(this.state.tipoUsuario){
 			case "Residente":
-				return <Residente residentes={this.state.residentes} cambiarPagina={this.cambiarPagina}/>
-			case "Administrador":
-				return <AdminInicio/>
-			case "Directiva":
-				return <div>Directiva</div>
-			case "Conserje":
-				return <div>Conserje</div>
-			case "Super Administrador":
-				return <div>Super Administrador</div>
-			case "Login":
-				return <Login cambiarPagina={this.cambiarPagina} logear={this.logear}/>
-			case "Inicio":
-				return <AdminInicio cambiarPagina={this.cambiarPagina}/>
-			case "Gestionar usuarios":
-				return <AdminUsuarios cambiarPagina={this.cambiarPagina}/>;
-			case "Gestionar espacios":
-				return <AdminReservas cambiarPagina={this.cambiarPagina}/>;
-			default:
-				switch(this.state.tipoUsuario){
+				switch(this.state.page){
 					case "Residente":
 						return <Residente residentes={this.state.residentes} cambiarPagina={this.cambiarPagina}/>
+					case "Gastoscomunes_residente":
+						return <Gastoscomunes_residente cambiarPagina={this.cambiarPagina}/>
+					case "Reservas_Residente":
+						return <Reservas_Residente cambiarPagina={this.cambiarPagina}/>
+					case "Reservas_Quincho":
+						return <Reservas_Quincho cambiarPagina={this.cambiarPagina}/>
+					case "Reservas_Estacionamiento":
+						return <Reservas_Estacionamiento cambiarPagina={this.cambiarPagina}/>
+					case "Reservas_SalaEventos":
+						return <Reservas_SalaEventos cambiarPagina={this.cambiarPagina}/>
+					case "Reservas_Multicancha":
+						return <Reservas_Multicancha cambiarPagina={this.cambiarPagina}/>
+					default:
+						return <Residente residentes={this.state.residentes} cambiarPagina={this.cambiarPagina}/>
+				};
+			case "Administrador":
+				switch(this.state.page){
 					case "Administrador":
-						return <AdminInicio/>
-					case "Directiva":
-						return <div>Directiva</div>
+						return <AdminInicio cambiarPagina={this.cambiarPagina}/>
+					case "AdminUsuarios":
+						return <AdminUsuarios cambiarPagina={this.cambiarPagina}/>
+					case "AdminReservas":
+						return <AdminReservas cambiarPagina={this.cambiarPagina}/>
+					default:
+						return <AdminInicio cambiarPagina={this.cambiarPagina}/>
+				};
+			case "Conserje":
+				switch(this.state.page){
 					case "Conserje":
 						return <div>Conserje</div>
-					case "Super Administrador":
-						return <div>Super Administrador</div>
+					default:
+						return <div>Conserje</div>
+				}
+			case "Login":
+				switch(this.state.page){
 					case "Login":
 						return <Login cambiarPagina={this.cambiarPagina} logear={this.logear}/>
 					default:
 						return <Login cambiarPagina={this.cambiarPagina} logear={this.logear}/>
 				}
-		}
+			case "SuperUsuario":
+				switch(this.state.page){
+					case "SuperUsuario":
+						return <div>SuperUsuario</div>
+					default:
+						return <div>SuperUsuario</div>
+				};
+			default:
+				return <Login cambiarPagina={this.cambiarPagina} logear={this.logear}/>
+			}
 	}
 
 	botonLogin(){

@@ -9,8 +9,8 @@ let opciones={
     "Residente":{
         nombre: "Residente",
         paginas: [
-            ["Gastos comunes","Gastos comunes"],
-            ["Reservas","Reservas"],
+            ["Gastoscomunes_residente","Gastos comunes"],
+            ["Reservas_Residente","Reservas"],
             ["Anuncios","Anuncios"],
             ["Multas","Multas"],
 
@@ -23,8 +23,8 @@ let opciones={
         nombre: "Administrador",
         paginas: [
             ["Gestionar gastos comunes","Gestionar gastos comunes"],
-            ["Gestionar usuarios", "Gestionar usuarios"],
-            ["Gestionar reservas", "Gestionar reservas"],
+            ["AdminUsuarios", "Gestionar usuarios"],
+            ["AdminReservas", "Gestionar reservas"],
             ["Gestionar reclamos", "Gestionar reclamos"],
         ],
         botonLogin: {

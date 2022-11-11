@@ -41,8 +41,8 @@ class App extends Component {
 					edad: 30,
 				},
 			],
-			page: "Directiva",
-			tipoUsuario: "Directiva",
+			page: "Login",
+			tipoUsuario: "Login",
 		};
 		this.renderPage = this.renderPage.bind(this);
 		this.cambiarPagina = this.cambiarPagina.bind(this);
@@ -152,7 +152,7 @@ class App extends Component {
             <div className="App">
                 <Navbar opciones={opcionesNavbar} cambiarPagina={this.cambiarPagina} botonLogin={this.botonLogin}/>
                 <main>
-					<Anuncios_Directiva cambiarPagina={this.cambiarPagina}/>
+					{this.renderPage()}
                 </main>
                 <Footer cambiarPagina={this.cambiarPagina}/>
             </div>

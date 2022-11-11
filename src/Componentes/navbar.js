@@ -4,6 +4,7 @@ import "../assets/css/navbar.css";
 class Navbar extends Component{
     constructor(){
         super();
+        this.triggerBotonLogin = this.triggerBotonLogin.bind(this);
     }
 
     triggerBotonLogin(){

@@ -12,8 +12,6 @@ let opciones={
             ["Gastoscomunes_residente","Gastos comunes"],
             ["Reservas_Residente","Reservas"],
             ["Anuncios","Anuncios"],
-            ["Multas","Multas"],
-
         ],
         botonLogin: {
             texto: "Cerrar Sesion",

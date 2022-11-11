@@ -19,7 +19,6 @@ import Reservas_SalaEventos from './Componentes/residente/reserva_salaeventos';
 import Reservas_Multicancha from './Componentes/residente/reserva_multicancha';
 
 class App extends Component {
-	tipoUsuario = "Login";
     constructor(){
         super();
 		this.state = {
@@ -38,10 +37,12 @@ class App extends Component {
 				},
 			],
 			page: "Login",
+			tipoUsuario: "Login",
 		};
 		this.renderPage = this.renderPage.bind(this);
 		this.cambiarPagina = this.cambiarPagina.bind(this);
-
+		this.botonLogin = this.botonLogin.bind(this);
+		this.logear = this.logear.bind(this);
     }
 
 	cambiarPagina(pagina, opciones){
@@ -64,7 +65,7 @@ class App extends Component {
 			case "Super Administrador":
 				return <div>Super Administrador</div>
 			case "Login":
-				return <Login cambiarPagina={this.cambiarPagina}/>
+				return <Login cambiarPagina={this.cambiarPagina} logear={this.logear}/>
 			case "Inicio":
 				return <AdminInicio cambiarPagina={this.cambiarPagina}/>
 			case "Gestionar usuarios":
@@ -72,14 +73,47 @@ class App extends Component {
 			case "Gestionar espacios":
 				return <AdminReservas cambiarPagina={this.cambiarPagina}/>;
 			default:
-				return <AdminInicio/>
+				switch(this.state.tipoUsuario){
+					case "Residente":
+						return <Residente residentes={this.state.residentes} cambiarPagina={this.cambiarPagina}/>
+					case "Administrador":
+						return <AdminInicio/>
+					case "Directiva":
+						return <div>Directiva</div>
+					case "Conserje":
+						return <div>Conserje</div>
+					case "Super Administrador":
+						return <div>Super Administrador</div>
+					case "Login":
+						return <Login cambiarPagina={this.cambiarPagina} logear={this.logear}/>
+					default:
+						return <Login cambiarPagina={this.cambiarPagina} logear={this.logear}/>
+				}
 		}
 	}
 
+	botonLogin(){
+		console.log("Boton login presionado");
+		console.log("El usuario es " + this.state.tipoUsuario);
+		this.state.tipoUsuario = "Login";
+		this.setState({
+			page: "Login",
+		});
+	}
+
+	logear(tipoUsuario){
+		this.setState({
+			tipoUsuario: tipoUsuario,
+			page: tipoUsuario,
+		});
+		console.log("El usuario es " + this.state.tipoUsuario);
+	}
+
     render() {
+		let opcionesNavbar = opciones[this.state.tipoUsuario];
         return (
             <div className="App">
-                <Navbar opciones={opciones[this.tipoUsuario]} cambiarPagina={this.cambiarPagina}/>
+                <Navbar opciones={opcionesNavbar} cambiarPagina={this.cambiarPagina} botonLogin={this.botonLogin}/>
                 <main>
 					{this.renderPage()}
                 </main>

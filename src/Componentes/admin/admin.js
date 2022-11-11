@@ -18,15 +18,20 @@ class Admin extends Component {
         var toRender = <AdminInicio />
         switch(this.state.page){
             case "Inicio":
-                toRender = <AdminInicio cambiarPagina={this.cambiarPaginaAdmin}/>
+                toRender = <AdminInicio cambiarPagina={this.cambiarPaginaAdmin}/>;
+                break;
             case "Gestionar gastos comunes":
                 toRender = "Gestionar gastos comunes";
+                break;
             case "Gestionar usuarios":
                 toRender = <AdminUsuarios cambiarPagina={this.cambiarPaginaAdmin}/>;
+                break;
             case "Gestionar espacios":
                 toRender = <AdminReservas cambiarPagina={this.cambiarPaginaAdmin}/>;
+                break;
             default:
-                toRender = <AdminInicio cambiarPagina={this.cambiarPaginaAdmin}/>
+                toRender = <AdminInicio cambiarPagina={this.cambiarPaginaAdmin}/>;
+                break;
         }
         return toRender;
     }

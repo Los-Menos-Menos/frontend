@@ -6,6 +6,12 @@ class Navbar extends Component{
         super();
     }
 
+    triggerBotonLogin(){
+        this.props.botonLogin();
+        //make component update
+        this.forceUpdate();
+    }
+
     
     render(){
         console.log(this.props)
@@ -17,7 +23,7 @@ class Navbar extends Component{
                         <span className="visually-hidden">Toggle navigation</span>
                         <span className="navbar-toggler-icon"></span>
                     </button>
-                    <div><a className="navbar-brand text-light" href="#"><span>{opciones.nombre}</span></a></div>
+                    <div><a className="navbar-brand text-light" href="#" onClick={() => this.props.cambiarPagina(opciones.nombre)}><span>{opciones.nombre}</span></a></div>
                     <div id="navcol-1" className="collapse navbar-collapse">
                         <ul className="navbar-nav nav-right">
                             {opciones.paginas.map((pagina, index) => {
@@ -28,7 +34,7 @@ class Navbar extends Component{
                                 )
                             })}
                         </ul>
-                        <p className="ms-auto navbar-text actions"><a className="btn btn-light action-button" role="button"  >{opciones.botonLogin.texto}</a></p>
+                        <p className="ms-auto navbar-text actions"><a className="btn btn-light action-button" role="button" onClick={()=>this.triggerBotonLogin()}>{opciones.botonLogin.texto}</a></p>
                     </div>
                 </div>
             </nav>

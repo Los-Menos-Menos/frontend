@@ -10,19 +10,20 @@ class Login extends Component{
 
     usuarios = {
         "admin":{
-            "nombre": "admin",
+            "nombre": "Administrador",
             "contraseña": "admin",
-            "tipo": "admin",
+            "tipo": "Administrador",
         },
-        "residentes":{
-            "nombre": "residentes",
-            "contraseña": "residentes",
-            "tipo": "residentes",
+        "residente":{
+            "nombre": "Residente",
+            "contraseña": "residente",
+            "tipo": "Residente",
         }, 
     }
 
     login = (usuario, contraseña) => {
         if (this.usuarios[usuario] && this.usuarios[usuario].contraseña === contraseña){
+            this.props.logear(this.usuarios[usuario].tipo);
             this.props.cambiarPagina(this.usuarios[usuario].tipo);
         }else{
             alert("Usuario o contraseña incorrectos");
@@ -83,16 +84,9 @@ class Login extends Component{
                         </div>
                         
                     </div>
-                    
-
                     <p class="text-muted text-center mt-3 mb-0">Don't have an account? <a href="register.html" class="text-primary ml-1">register</a></p>
-
-                
-
                 </div>
-                
             </div>
-            
         </div>
         );
         }

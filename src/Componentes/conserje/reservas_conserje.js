@@ -28,7 +28,7 @@ class Reservas_Conserje extends Component {
                                 <img src={EspaciosComunes} class="card-img-top w-100 d-block fit-cover" alt="" style={{ height: '300px' }} />
                                 <div class="card-body p-4">
                                     <div class="row">
-                                        <div class="col d-flex justify-content-center"><button class="btn btn-primary" type="button" onClick={() => this.props.cambiarPagina("Reservas_Quincho")}>Reservar</button></div>
+                                        <div class="col d-flex justify-content-center"><button class="btn btn-primary" type="button" onClick={() => this.props.cambiarPagina("Conserje_Quincho")}>Reservar</button></div>
                                     </div>
                                     <div class="d-flex">
                                         <div></div>
@@ -44,7 +44,7 @@ class Reservas_Conserje extends Component {
                                     <div class="d-flex">
                                         <div></div>
                                     </div>
-                                    <div class="col d-flex justify-content-center"><button class="btn btn-primary" type="button" onClick={() => this.props.cambiarPagina("Reservas_Estacionamiento")}>Reservar</button></div>
+                                    <div class="col d-flex justify-content-center"><button class="btn btn-primary" type="button" onClick={() => this.props.cambiarPagina("Conserje_Estacionamiento")}>Reservar</button></div>
                                 </div>
                             </div>
                         </div>
@@ -53,7 +53,7 @@ class Reservas_Conserje extends Component {
                             <div class= "card-title mx-auto"> <b> Sala de Eventos </b> </div>
                                 <img src={SalaEventos} class="card-img-top w-100 d-block fit-cover" alt="" style={{ height: '300px' }} />
                                 <div class="card-body p-4">
-                                    <div class="col d-flex justify-content-center"><button class="btn btn-primary" type="button" onClick={() => this.props.cambiarPagina("Reservas_SalaEventos")}>Reservar</button></div>
+                                    <div class="col d-flex justify-content-center"><button class="btn btn-primary" type="button" onClick={() => this.props.cambiarPagina("Conserje_SalaEventos")}>Reservar</button></div>
                                 </div>
                             </div>
                         </div>
@@ -62,7 +62,7 @@ class Reservas_Conserje extends Component {
                                 <div class= "card-title mx-auto"> <b> Multicancha </b> </div>
                                 <img src={MultiCancha} class="card-img-top w-100 d-block fit-cover" alt="" style={{ height: '300px' }} />
                                 <div class="card-body p-4">
-                                    <div class="col d-flex justify-content-center"><button class="btn btn-primary" type="button" onClick={() => this.props.cambiarPagina("Reservas_Multicancha")}>Reservar</button></div>
+                                    <div class="col d-flex justify-content-center"><button class="btn btn-primary" type="button" onClick={() => this.props.cambiarPagina("Conserje_Multicancha")}>Reservar</button></div>
                                 </div>
                             </div>
                         </div>

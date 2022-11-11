@@ -122,6 +122,16 @@ class App extends Component {
 						return <Conserje cambiarPagina={this.cambiarPagina}/>
 					case "InfoResidentes_Conserje":
 						return <InfoResidentes_Conserje cambiarPagina={this.cambiarPagina}/>
+					case "Reservas_Conserje":
+						return <Reservas_Conserje cambiarPagina={this.cambiarPagina}/>
+					case "Conserje_Quincho":
+						return <Conserje_Quincho cambiarPagina={this.cambiarPagina}/>
+					case "Conserje_Estacionamiento":
+						return <Conserje_Estacionamiento cambiarPagina={this.cambiarPagina}/>
+					case "Conserje_SalaEventos":
+						return <Conserje_SalaEventos cambiarPagina={this.cambiarPagina}/>
+					case "Conserje_Multicancha":
+						return <Conserje_Cancha cambiarPagina={this.cambiarPagina}/>
 					case "Libro":
 						return <Libro cambiarPagina={this.cambiarPagina}/>
 					default:

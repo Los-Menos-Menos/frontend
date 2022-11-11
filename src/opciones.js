@@ -33,7 +33,7 @@ let opciones={
         nombre: "Conserje",
         paginas: [
             ["InfoResidentes_Conserje","Residentes"],
-            ["Espacios comunes","Espacios comunes"],
+            ["Reservas_Conserje","Espacios comunes"],
             ["Libro","Libro"],
         ],
         botonLogin: {

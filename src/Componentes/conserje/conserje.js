@@ -49,7 +49,7 @@ class Conserje extends Component {
                                     <div class="d-flex">
                                         <div></div>
                                     </div>
-                                    <div class="col d-flex justify-content-end"><button class="btn btn-primary" type="button" onClick={() => this.props.cambiarPagina("InfoReservas_Conserje")}>Ver Espacios</button></div>
+                                    <div class="col d-flex justify-content-end"><button class="btn btn-primary" type="button" onClick={() => this.props.cambiarPagina("Reservas_Conserje")}>Ver Espacios</button></div>
                                 </div>
                             </div>
                         </div>

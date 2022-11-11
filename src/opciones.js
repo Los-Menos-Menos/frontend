@@ -32,7 +32,7 @@ let opciones={
     "Conserje":{
         nombre: "Conserje",
         paginas: [
-            ["Residentes","Residentes"],
+            ["InfoResidentes_Conserje","Residentes"],
             ["Espacios comunes","Espacios comunes"],
             ["Libro","Libro"],
         ],

@@ -111,6 +111,8 @@ class App extends Component {
 				switch(this.state.page){
 					case "Conserje":
 						return <Conserje cambiarPagina={this.cambiarPagina}/>
+					case "InfoResidentes_Conserje":
+						return <InfoResidentes_Conserje cambiarPagina={this.cambiarPagina}/>
 					case "Libro":
 						return <Libro cambiarPagina={this.cambiarPagina}/>
 					default:
@@ -181,7 +183,7 @@ class App extends Component {
             <div className="App">
                 <Navbar opciones={opcionesNavbar} cambiarPagina={this.cambiarPagina} botonLogin={this.botonLogin}/>
                 <main>
-					<InfoResidentes_Conserje></InfoResidentes_Conserje>
+					{this.renderPage()}
                 </main>
                 <Footer cambiarPagina={this.cambiarPagina}/>
             </div>

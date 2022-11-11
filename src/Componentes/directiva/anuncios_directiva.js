@@ -71,7 +71,7 @@ class Anuncios_Directiva extends Component {
 								onChange={e => this.filter = e.target.value}
 								value={this.filter}
 								/>
-								<Button variant="contained" onClick={this.props.cambiarPagina("Nuevo_Anuncio")} style={{margin: 10}}>Nuevo Anuncio</Button>
+								<Button variant="contained" onClick={() => this.props.cambiarPagina("Nuevo_Anuncio")} style={{margin: 10}}>Nuevo Anuncio</Button>
 							</div>
 						}
 					/>

@@ -57,11 +57,10 @@ let opciones={
     "Directiva" : {
         nombre: "Directiva",
         paginas: [
-            ["Gestionar gastos comunes","Gestionar gastos comunes"],
-            ["Gestionar usuarios", "Gestionar usuarios"],
-            ["Gestionar reservas", "Gestionar reservas"],
-            ["Gestionar reclamos", "Gestionar reclamos"],
-            ["Gestionar anuncios", "Gestionar anuncios"],
+            ["info_residentes","Información Residentes"],
+            ["EspaciosComunes_Directiva","Reservas"],
+            ["Nuevo_Anuncio","Nuevo Anuncio"],
+            ["Anuncios_Directiva","Anuncios"],
         ],
         botonLogin: {
             texto: "Cerrar Sesion",

@@ -20,6 +20,12 @@ import Directiva from './Componentes/directiva/directiva';
 import Anuncios_Directiva from './Componentes/directiva/anuncios_directiva';
 import Nuevo_Anuncio from './Componentes/directiva/nuevo_anuncio';
 import InfoResidentes_Directiva from './Componentes/directiva/info_residentes';
+import ReservasEstacionamiento_Directiva from './Componentes/directiva/reservas_estacionamiento';
+import ReservasQuincho_Directiva from './Componentes/directiva/reservas_quinchos';
+import EspaciosComunes_Directiva from './Componentes/directiva/espacios_comunes';
+import ReservasSalaEventos_Directiva from './Componentes/directiva/reservas_salaeventos';
+import ReservasMultiCancha_Directiva from './Componentes/directiva/reservas_multicancha';
+
 
 import Residente from "./Componentes/residente/residente";
 import Gastoscomunes_residente from "./Componentes/residente/gastoscomunes_residente";
@@ -113,10 +119,24 @@ class App extends Component {
 				switch(this.state.page){
 					case "Directiva":
 						return <Directiva cambiarPagina={this.cambiarPagina}/>
+					case "info_residentes":
+						return <InfoResidentes_Directiva cambiarPagina={this.cambiarPagina}/>
+					case "EspaciosComunes_Directiva":
+						return <EspaciosComunes_Directiva cambiarPagina={this.cambiarPagina}/>
+					case "ReservasEstacionamiento_Directiva":
+						return <ReservasEstacionamiento_Directiva cambiarPagina={this.cambiarPagina}/>
+					case "ReservasQuincho_Directiva":
+						return <ReservasQuincho_Directiva cambiarPagina={this.cambiarPagina}/>
+					case "ReservasSalaEventos_Directiva":
+						return <ReservasSalaEventos_Directiva cambiarPagina={this.cambiarPagina}/>
+					case "ReservasMulticancha_Directiva":
+						return <ReservasMultiCancha_Directiva cambiarPagina={this.cambiarPagina}/>
+					case "Anuncios_Directiva":
+						return <Anuncios_Directiva cambiarPagina={this.cambiarPagina}/>
 					case "Nuevo_Anuncio":
 						return <Nuevo_Anuncio cambiarPagina={this.cambiarPagina}/>
 					default:
-						return <Anuncios_Directiva cambiarPagina={this.cambiarPagina}/>
+						return <Directiva cambiarPagina={this.cambiarPagina}/>
 				}
 			case "Login":
 				switch(this.state.page){

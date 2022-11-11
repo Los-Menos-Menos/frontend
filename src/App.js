@@ -45,6 +45,7 @@ import Reservas_Quincho from './Componentes/residente/reserva_quincho';
 import Reservas_Estacionamiento from './Componentes/residente/reserva_estacionamiento';
 import Reservas_SalaEventos from './Componentes/residente/reserva_salaeventos';
 import Reservas_Multicancha from './Componentes/residente/reserva_multicancha';
+import Add_Observacion from './Componentes/residente/add_observacion';
 
 
 class App extends Component {
@@ -190,7 +191,7 @@ class App extends Component {
             <div className="App">
                 <Navbar opciones={opcionesNavbar} cambiarPagina={this.cambiarPagina} botonLogin={this.botonLogin}/>
                 <main>
-					<Nuevo_Anuncio></Nuevo_Anuncio>
+					<Add_Observacion></Add_Observacion>
                 </main>
                 <Footer cambiarPagina={this.cambiarPagina}/>
             </div>

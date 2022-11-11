@@ -36,7 +36,16 @@ const columns = [
     }
 ];
 
-
+const ExpandedComponent = ({ data }) => (
+    <div className="card" style={{width: '100%'}} >
+      <p> 
+        <strong>Fecha:</strong> {data.year}
+        <br />
+        <strong>Mensaje:</strong> {data.runtime}
+        <br />
+      </p>
+    </div>
+  );
 
 class Anuncios_Directiva extends Component {
     constructor(){

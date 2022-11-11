@@ -43,7 +43,7 @@ function Anuncios() {
   );
 
   return (
-    <div className="container">
+    <div className="container mx-auto" style={{margin: '40px'}}>
 
       <Card>
         <DataTable
@@ -63,6 +63,7 @@ function Anuncios() {
           
         />
       </Card>
+      
     </div>
   );
 }

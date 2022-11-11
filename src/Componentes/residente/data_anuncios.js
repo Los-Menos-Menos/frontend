@@ -21,7 +21,7 @@ export default [
     {
         title: "Alfredo Llanos",
         year: "03-11-2022",
-        runtime: "El yuyo dice que le gusta el seba",
+        runtime: "Se anuncia corte de luz para tal dia por motivo de no se que, esperamos que ",
         rol: "Directiva"
     }
 ];

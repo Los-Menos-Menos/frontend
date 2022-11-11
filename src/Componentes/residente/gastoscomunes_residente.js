@@ -56,7 +56,7 @@ function Gastoscomunes_residente() {
   );
 
   return (
-    <div className="container">
+    <div className="container mx-auto" style={{margin: '40px'}}>
 
       <Card>
         <DataTable

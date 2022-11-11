@@ -4,6 +4,7 @@ import Card from '@mui/material/Card';
 import Button from "@mui/material/Button";
 import data from "./data_anuncios";
 
+
 const SearchIt = ({ onChange, value }) => (
   <input
     placeholder="Search"
@@ -57,13 +58,15 @@ function Anuncios_Directiva() {
                 <SearchIt 
                 onChange={e => setFilter(e.target.value)}
                 value={filter}
-                />
+                />    
                 <Button variant="contained" style={{margin: 10}}>Nuevo Anuncio</Button>
+
             </div>
           }
           
         />
       </Card>
+
     </div>
   );
 }

@@ -36,6 +36,16 @@ const columns = [
   }
 ];
 
+const ExpandedComponent = ({ data }) => (
+  <p className="mx-auto">
+    <strong>Fecha:</strong> {data.year}
+    <br />
+    <strong>Mensaje:</strong> {data.runtime}
+    <br />
+  </p>
+);
+
+
 function Anuncios() {
   const [filter, setFilter] = React.useState("");
   const filteredData = data.filter(item =>
@@ -50,6 +60,8 @@ function Anuncios() {
           title="Anuncios"
           columns={columns}
           data={filteredData}
+          expandableRows
+          expandableRowsComponent={ExpandedComponent}
           pagination
           subHeader
           subHeaderComponent={

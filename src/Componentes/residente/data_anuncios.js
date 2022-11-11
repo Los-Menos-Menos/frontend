@@ -21,7 +21,7 @@ export default [
     {
         title: "Alfredo Llanos",
         year: "03-11-2022",
-        runtime: "Se anuncia corte de luz para tal dia por motivo de no se que, esperamos que ",
+        runtime: "Se anuncia corte de luz para el día Viernes 11 de Noviembre a las 12 pm por motivo de arreglar una tubería rota, le pedimos se organice para ese día. Esperamos que esto no cause muchas molestias, se despide la directiva.",
         rol: "Directiva"
     }
 ];

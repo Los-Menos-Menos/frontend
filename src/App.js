@@ -1,11 +1,15 @@
 import './App.css';
 import React, {Component} from 'react';
+
+import opciones from './opciones.js';
+
 import Residente from "./Componentes/residente/residente";
 import Gastoscomunes_residente from "./Componentes/residente/gastoscomunes_residente";
 import Navbar from "./Componentes/navbar";
 import Footer from './Componentes/footer';
-import Admin from './Componentes/admin/admin';
-import Admin_usuarios from './Componentes/admin/admin_usuarios';
+import AdminInicio from './Componentes/admin/admin_inicio';
+import AdminUsuarios from './Componentes/admin/admin_usuarios';
+import AdminReservas from './Componentes/admin/admin_reservas';
 import Login from './Componentes/login';
 import Conserje from './Componentes/conserje/conserje';
 import Libro from './Componentes/conserje/libro';
@@ -22,31 +26,121 @@ class App extends Component {
     constructor(){
         super();
 		this.state = {
-		residentes: [
-			{
-				nombre: "Sofia",
-				edad: 110,
-			},
-			{
-				nombre: "Juan",
-				edad: 20,
-			},
-			{
-				nombre: "Pedro",
-				edad: 30,
-			},
-		],
-	};
+			residentes: [
+				{
+					nombre: "Sofia",
+					edad: 110,
+				},
+				{
+					nombre: "Juan",
+					edad: 20,
+				},
+				{
+					nombre: "Pedro",
+					edad: 30,
+				},
+			],
+			page: "Login",
+			tipoUsuario: "Login",
+		};
+		this.renderPage = this.renderPage.bind(this);
+		this.cambiarPagina = this.cambiarPagina.bind(this);
+		this.botonLogin = this.botonLogin.bind(this);
+		this.logear = this.logear.bind(this);
     }
 
+	cambiarPagina(pagina, opciones){
+		this.setState({
+			page: pagina,
+		});
+		console.log(pagina,opciones);
+	}
+	
+	renderPage(){
+
+		switch(this.state.tipoUsuario){
+			case "Residente":
+				switch(this.state.page){
+					case "Residente":
+						return <Residente residentes={this.state.residentes} cambiarPagina={this.cambiarPagina}/>
+					case "Gastoscomunes_residente":
+						return <Gastoscomunes_residente cambiarPagina={this.cambiarPagina}/>
+					case "Reservas_Residente":
+						return <Reservas_Residente cambiarPagina={this.cambiarPagina}/>
+					case "Reservas_Quincho":
+						return <Reservas_Quincho cambiarPagina={this.cambiarPagina}/>
+					case "Reservas_Estacionamiento":
+						return <Reservas_Estacionamiento cambiarPagina={this.cambiarPagina}/>
+					case "Reservas_SalaEventos":
+						return <Reservas_SalaEventos cambiarPagina={this.cambiarPagina}/>
+					case "Reservas_Multicancha":
+						return <Reservas_Multicancha cambiarPagina={this.cambiarPagina}/>
+					default:
+						return <Residente residentes={this.state.residentes} cambiarPagina={this.cambiarPagina}/>
+				};
+			case "Administrador":
+				switch(this.state.page){
+					case "Administrador":
+						return <AdminInicio cambiarPagina={this.cambiarPagina}/>
+					case "AdminUsuarios":
+						return <AdminUsuarios cambiarPagina={this.cambiarPagina}/>
+					case "AdminReservas":
+						return <AdminReservas cambiarPagina={this.cambiarPagina}/>
+					default:
+						return <AdminInicio cambiarPagina={this.cambiarPagina}/>
+				};
+			case "Conserje":
+				switch(this.state.page){
+					case "Conserje":
+						return <div>Conserje</div>
+					default:
+						return <div>Conserje</div>
+				}
+			case "Login":
+				switch(this.state.page){
+					case "Login":
+						return <Login cambiarPagina={this.cambiarPagina} logear={this.logear}/>
+					default:
+						return <Login cambiarPagina={this.cambiarPagina} logear={this.logear}/>
+				}
+			case "SuperUsuario":
+				switch(this.state.page){
+					case "SuperUsuario":
+						return <div>SuperUsuario</div>
+					default:
+						return <div>SuperUsuario</div>
+				};
+			default:
+				return <Login cambiarPagina={this.cambiarPagina} logear={this.logear}/>
+			}
+	}
+
+	botonLogin(){
+		console.log("Boton login presionado");
+		console.log("El usuario es " + this.state.tipoUsuario);
+		this.state.tipoUsuario = "Login";
+		this.setState({
+			page: "Login",
+		});
+	}
+
+	logear(tipoUsuario){
+		this.setState({
+			tipoUsuario: tipoUsuario,
+			page: tipoUsuario,
+		});
+		console.log("El usuario es " + this.state.tipoUsuario);
+	}
+
     render() {
+		let opcionesNavbar = opciones[this.state.tipoUsuario];
         return (
             <div className="App">
-                <Navbar/>
+                <Navbar opciones={opcionesNavbar} cambiarPagina={this.cambiarPagina} botonLogin={this.botonLogin}/>
                 <main>
-                    <Conserje></Conserje>
+					{this.renderPage()}
                 </main>
-                <Footer/>
+                <Footer cambiarPagina={this.cambiarPagina}/>
             </div>
     );}
 }

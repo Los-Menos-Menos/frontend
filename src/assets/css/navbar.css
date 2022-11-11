@@ -69,7 +69,7 @@
   }
   
   .navigation-clean-button .action-button, .navigation-clean-button .action-button:active {
-    background: transparent;
+    
     border-radius: 0;
     color: #e04c40;
     box-shadow: none;

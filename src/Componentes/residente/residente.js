@@ -28,7 +28,7 @@ class Residente extends Component {
                                     <h4 class="text-center card-title">Gastos Comunes</h4>
                                     <p class="card-text">En esta sección puede consultar información sobre tus gastos comunes.</p>
                                     <div class="row">
-                                        <div class="col d-flex justify-content-end"><button class="btn btn-primary" type="button">Ir a Gastos Comunes</button></div>
+                                        <div class="col d-flex justify-content-end"><button class="btn btn-primary" type="button" onClick={() => this.props.cambiarPagina("Gastoscomunes_residente")}>Ir a Gastos Comunes</button></div>
                                     </div>
                                     <div class="d-flex">
                                         <div></div>
@@ -45,7 +45,7 @@ class Residente extends Component {
                                     <div class="d-flex">
                                         <div></div>
                                     </div>
-                                    <div class="col d-flex justify-content-end"><button class="btn btn-primary" type="button">Ir a Espacios Comunes</button></div>
+                                    <div class="col d-flex justify-content-end"><button class="btn btn-primary" type="button" onClick={() => this.props.cambiarPagina("Reservas_Residente")}>Ir a Espacios Comunes</button></div>
                                 </div>
                             </div>
                         </div>
@@ -55,7 +55,7 @@ class Residente extends Component {
                                 <div class="card-body p-4">
                                     <h4 class="text-center card-title">Anuncios</h4>
                                     <p class="card-text">En esta sección puede ver los anuncios del condominio.</p>
-                                    <div class="col d-flex justify-content-end"><button class="btn btn-primary" type="button">Ir a Anuncios</button></div>
+                                    <div class="col d-flex justify-content-end"><button class="btn btn-primary" type="button" onClick={() => this.props.cambiarPagina("Anuncios")}>Ir a Anuncios</button></div>
                                 </div>
                             </div>
                         </div>

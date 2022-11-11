@@ -9,11 +9,9 @@ let opciones={
     "Residente":{
         nombre: "Residente",
         paginas: [
-            ["Gastos comunes","Gastos comunes"],
-            ["Reservas","Reservas"],
+            ["Gastoscomunes_residente","Gastos comunes"],
+            ["Reservas_Residente","Reservas"],
             ["Anuncios","Anuncios"],
-            ["Multas","Multas"],
-
         ],
         botonLogin: {
             texto: "Cerrar Sesion",
@@ -23,8 +21,8 @@ let opciones={
         nombre: "Administrador",
         paginas: [
             ["Gestionar gastos comunes","Gestionar gastos comunes"],
-            ["Gestionar usuarios", "Gestionar usuarios"],
-            ["Gestionar reservas", "Gestionar reservas"],
+            ["AdminUsuarios", "Gestionar usuarios"],
+            ["AdminReservas", "Gestionar reservas"],
             ["Gestionar reclamos", "Gestionar reclamos"],
         ],
         botonLogin: {
@@ -34,11 +32,9 @@ let opciones={
     "Conserje":{
         nombre: "Conserje",
         paginas: [
-            ["Gestionar gastos comunes","Gestionar gastos comunes"],
-            ["Gestionar usuarios", "Gestionar usuarios"],
-            ["Gestionar reservas", "Gestionar reservas"],
-            ["Gestionar reclamos", "Gestionar reclamos"],
-
+            ["Residentes","Residentes"],
+            ["Espacios comunes","Espacios comunes"],
+            ["Libro","Libro"],
         ],
         botonLogin: {
             texto: "Cerrar Sesion",
@@ -61,11 +57,10 @@ let opciones={
     "Directiva" : {
         nombre: "Directiva",
         paginas: [
-            ["Gestionar gastos comunes","Gestionar gastos comunes"],
-            ["Gestionar usuarios", "Gestionar usuarios"],
-            ["Gestionar reservas", "Gestionar reservas"],
-            ["Gestionar reclamos", "Gestionar reclamos"],
-            ["Gestionar anuncios", "Gestionar anuncios"],
+            ["info_residentes","Información Residentes"],
+            ["EspaciosComunes_Directiva","Reservas"],
+            ["Nuevo_Anuncio","Nuevo Anuncio"],
+            ["Anuncios_Directiva","Anuncios"],
         ],
         botonLogin: {
             texto: "Cerrar Sesion",

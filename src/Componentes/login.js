@@ -18,7 +18,12 @@ class Login extends Component{
             "nombre": "Residente",
             "contraseña": "residente",
             "tipo": "Residente",
-        }, 
+        },
+        "conserje":{
+            "nombre": "Conserje",
+            "contraseña": "conserje",
+            "tipo": "Conserje",
+        }   
     }
 
     login = (usuario, contraseña) => {

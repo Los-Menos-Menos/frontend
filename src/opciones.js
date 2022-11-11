@@ -34,11 +34,9 @@ let opciones={
     "Conserje":{
         nombre: "Conserje",
         paginas: [
-            ["Gestionar gastos comunes","Gestionar gastos comunes"],
-            ["Gestionar usuarios", "Gestionar usuarios"],
-            ["Gestionar reservas", "Gestionar reservas"],
-            ["Gestionar reclamos", "Gestionar reclamos"],
-
+            ["Residentes","Residentes"],
+            ["Espacios comunes","Espacios comunes"],
+            ["Libro","Libro"],
         ],
         botonLogin: {
             texto: "Cerrar Sesion",

@@ -40,8 +40,8 @@ class App extends Component {
 					edad: 30,
 				},
 			],
-			page: "Login",
-			tipoUsuario: "Login",
+			page: "Directiva",
+			tipoUsuario: "Directiva",
 		};
 		this.renderPage = this.renderPage.bind(this);
 		this.cambiarPagina = this.cambiarPagina.bind(this);
@@ -75,6 +75,8 @@ class App extends Component {
 						return <Reservas_SalaEventos cambiarPagina={this.cambiarPagina}/>
 					case "Reservas_Multicancha":
 						return <Reservas_Multicancha cambiarPagina={this.cambiarPagina}/>
+					case "Anuncios":
+						return <Anuncios cambiarPagina={this.cambiarPagina}/>
 					default:
 						return <Residente residentes={this.state.residentes} cambiarPagina={this.cambiarPagina}/>
 				};
@@ -92,9 +94,20 @@ class App extends Component {
 			case "Conserje":
 				switch(this.state.page){
 					case "Conserje":
-						return <div>Conserje</div>
+						return <Conserje cambiarPagina={this.cambiarPagina}/>
+					case "Libro":
+						return <Libro cambiarPagina={this.cambiarPagina}/>
 					default:
-						return <div>Conserje</div>
+						return <Conserje cambiarPagina={this.cambiarPagina}/>
+				}
+			case "Directiva":
+				switch(this.state.page){
+					case "Directiva":
+						return <Anuncios_Directiva cambiarPagina={this.cambiarPagina}/>
+					case "Nuevo_Anuncio":
+						return <Nuevo_Anuncio cambiarPagina={this.cambiarPagina}/>
+					default:
+						return <Anuncios_Directiva cambiarPagina={this.cambiarPagina}/>
 				}
 			case "Login":
 				switch(this.state.page){
@@ -118,7 +131,7 @@ class App extends Component {
 	botonLogin(){
 		console.log("Boton login presionado");
 		console.log("El usuario es " + this.state.tipoUsuario);
-		this.state.tipoUsuario = "Login";
+		this.setState({tipoUsuario:"Login"});
 		this.setState({
 			page: "Login",
 		});
@@ -138,7 +151,7 @@ class App extends Component {
             <div className="App">
                 <Navbar opciones={opcionesNavbar} cambiarPagina={this.cambiarPagina} botonLogin={this.botonLogin}/>
                 <main>
-					{this.renderPage()}
+					<Anuncios_Directiva cambiarPagina={this.cambiarPagina}/>
                 </main>
                 <Footer cambiarPagina={this.cambiarPagina}/>
             </div>

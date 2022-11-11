@@ -46,6 +46,7 @@ const columns = [
         sortable: true
     },
     {
+        name: "Acciones",
         cell: row => (
             <button className="btn btn-danger" onClick={() => {alert("Usuario eliminado")}}>Eliminar</button>
             

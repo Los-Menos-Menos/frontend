@@ -25,10 +25,10 @@ class Directiva extends Component {
                             <div class="card">
                                 <img src={GastosComunes} class="card-img-top w-100 d-block fit-cover" alt="" style={{ height: '300px' }} />
                                 <div class="card-body p-4">
-                                    <h4 class="text-center card-title">Gastos Comunes</h4>
-                                    <p class="card-text">En esta sección puede consultar información sobre tus gastos comunes.</p>
+                                    <h4 class="text-center card-title">Residentes</h4>
+                                    <p class="card-text">En esta sección puede consultar información sobre los residentes y sus deudas.</p>
                                     <div class="row">
-                                        <div class="col d-flex justify-content-end"><button class="btn btn-primary" type="button">Ir a Gastos Comunes</button></div>
+                                        <div class="col d-flex justify-content-end"><button class="btn btn-primary" type="button">Ir a Ver Residentes</button></div>
                                     </div>
                                     <div class="d-flex">
                                         <div></div>

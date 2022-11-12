@@ -4,10 +4,40 @@ import Calendar from 'react-calendar';
 import Button from "@mui/material/Button";
 import Form from 'react-bootstrap/Form';
 import Modal from 'react-bootstrap/Modal';
+import DataTable from "react-data-table-component";
+import Card from '@mui/material/Card';
+import data from './data/data_reservas.js';
 
+
+const columns = [
+    {
+      name: "Residente",
+      selector: "title",
+      sortable: true
+    },
+    {
+      name: "Fecha",
+      selector: "year",
+      sortable: true,
+      right: true
+    },
+    {
+      name: "Pagado",
+      selector: "pagado",
+      sortable: true,
+      right: true
+    },
+    {
+      name: "Instalacion",
+      selector: "instalacion",
+      sortable: true,
+      right: true
+    },
+  ];
 
 
 function Admin_Quincho() {
+    const dataQuincho = data.filter(item => item.instalacion == "Quincho");
     //MODAL FORM
     const [show, setShow] = useState(false);
     const handleClose = () => setShow(false);
@@ -82,6 +112,18 @@ function Admin_Quincho() {
                 </div>
             </div>
 
+        </div>
+        <div style={{margin: '50px'}}>
+            <div className="container mx-auto" style={{margin:'5%'}}>
+                <Card>
+                    <DataTable
+                    title="Reservas del Quincho"
+                    columns={columns}
+                    data={dataQuincho}
+                    pagination
+                    />
+                </Card>
+            </div>
         </div>
         </>
     );

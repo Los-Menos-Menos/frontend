@@ -10,9 +10,8 @@ class Residente extends Component {
 
     render() {
         return (
-            <><div class="card-group">
-                <div class="card"></div>
-            </div><div class="container py-4 py-xl-5">
+            <>
+            <div class="container py-4 py-xl-5">
                     <div class="row mb-5">
                         <div class="col-md-8 col-xl-6 text-center mx-auto">
                             <h2>Hola, Residente</h2>

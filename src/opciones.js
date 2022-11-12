@@ -20,10 +20,10 @@ let opciones={
     "Administrador":{
         nombre: "Administrador",
         paginas: [
-            ["Gestionar gastos comunes","Gestionar gastos comunes"],
             ["AdminUsuarios", "Gestionar usuarios"],
             ["AdminReservas", "Gestionar reservas"],
-            ["Gestionar reclamos", "Gestionar reclamos"],
+            ["Anuncios_Admin", "Anuncios"],
+            
         ],
         botonLogin: {
             texto: "Cerrar Sesion",

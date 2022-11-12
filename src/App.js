@@ -17,6 +17,7 @@ import Admin_Quincho from './Componentes/admin/admin_rquincho';
 import Admin_Cancha from './Componentes/admin/admin_rcancha';
 import Admin_Estacionamiento from './Componentes/admin/admin_restacionamiento';
 import Admin_SalaEventos from './Componentes/admin/admin_rsalaeventos';
+import Anuncios_Admin from './Componentes/admin/admin_anuncios';
 
 
 // CONSERJE IMPORTS
@@ -125,6 +126,8 @@ class App extends Component {
 						return <Admin_SalaEventos cambiarPagina={this.cambiarPagina}/>
 					case "Admin_Estacionamiento":
 						return <Admin_Estacionamiento cambiarPagina={this.cambiarPagina}/>
+					case "Anuncios_Admin":
+						return <Anuncios_Admin cambiarPagina={this.cambiarPagina}/>
 					default:
 						return <AdminInicio cambiarPagina={this.cambiarPagina}/>
 				};

@@ -1,12 +1,43 @@
-import { useState} from "react";
+import React, { useState} from "react";
 import MultiCancha from"../../assets/img/multicancha.png";
 import Calendar from 'react-calendar';
 import Button from "@mui/material/Button";
+import Card from '@mui/material/Card';
 import Form from 'react-bootstrap/Form';
 import Modal from 'react-bootstrap/Modal';
+import DataTable from "react-data-table-component";
+import data from "./data/data_reservass"
 
+const columns = [
+    {
+      name: "Residente",
+      selector: "title",
+      sortable: true
+    },
+    {
+      name: "Fecha",
+      selector: "year",
+      sortable: true,
+      right: true
+    },
+    {
+      name: "Pagado",
+      selector: "pagado",
+      sortable: true,
+      right: true
+    },
+    {
+      name: "Instalacion",
+      selector: "instalacion",
+      sortable: true,
+      right: true
+    },
+  ];
+  
 
 function Conserje_Cancha(){
+    const [filter, setFilter] = React.useState("");
+    const dataCancha = data.filter(item => item.instalacion == "Multicancha");
     //MODAL FORM
     const [show, setShow] = useState(false);
     const handleClose = () => setShow(false);
@@ -80,6 +111,14 @@ function Conserje_Cancha(){
                 </div>
                 </div>
             </div>
+            <Card>
+              <DataTable
+              title="Reservas de la Cancha"
+              columns={columns}
+              data={dataCancha}
+              pagination
+              />
+          </Card>
 
         </div>
         </>

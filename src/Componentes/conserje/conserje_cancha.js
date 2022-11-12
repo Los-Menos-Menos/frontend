@@ -2,9 +2,9 @@ import React, { useState} from "react";
 import MultiCancha from"../../assets/img/multicancha.png";
 import Calendar from 'react-calendar';
 import Button from "@mui/material/Button";
-import Card from '@mui/material/Card';
 import Form from 'react-bootstrap/Form';
 import Modal from 'react-bootstrap/Modal';
+import Card from '@mui/material/Card';
 import DataTable from "react-data-table-component";
 import data from "./data/data_reservass"
 
@@ -105,20 +105,19 @@ function Conserje_Cancha(){
                             </div>
                     </div>
                 </div>
-                <div class="row">
-                <div>
-                
-                </div>
-                </div>
             </div>
-            <Card>
-              <DataTable
-              title="Reservas de la Cancha"
-              columns={columns}
-              data={dataCancha}
-              pagination
-              />
-          </Card>
+            <div style={{margin: '50px'}}>
+                    <div className="container mx-auto" style={{margin:'5%'}}>
+                        <Card>
+                            <DataTable
+                            title="Reservas de la Cancha"
+                            columns={columns}
+                            data={dataCancha}
+                            pagination
+                            />
+                        </Card>
+                    </div>
+            </div>
 
         </div>
         </>

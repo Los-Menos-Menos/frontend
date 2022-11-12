@@ -105,11 +105,6 @@ function Admin_Cancha(){
                             </div>
                     </div>
                 </div>
-                <div class="row">
-                <div>
-                
-                </div>
-                </div>
             </div>
 
         </div>

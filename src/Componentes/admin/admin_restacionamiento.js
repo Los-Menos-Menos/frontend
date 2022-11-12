@@ -118,11 +118,6 @@ function Admin_Estacionamiento() {
                                     </div>
                             </div>
                         </div>
-                        <div class="row">
-                        <div>
-                        
-                        </div>
-                        </div>
                     </div>
                 </div>
                 <div style={{margin: '50px'}}>

@@ -21,7 +21,6 @@ class Conserje extends Component {
                         <div class="col-md-8 col-xl-6 text-center mx-auto">
                             <h2>Hola, Conserje</h2>
                             <h5>Bienvenido a su espacio, estas son las funcionalidades que puede realizar:</h5>
-
                         </div>
                     </div>
                     <div class="row gy-4 row-cols-1 row-cols-md-2 row-cols-xl-3">

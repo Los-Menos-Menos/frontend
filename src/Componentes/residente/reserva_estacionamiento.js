@@ -1,20 +1,29 @@
-import { Component } from "react";
+import React, { Component, useState } from "react";
 import Estacionamiento from"../../assets/img/estacionamiento.png";
 import Calendar from 'react-calendar';
-import React, { useState } from 'react';
+import DataTable from "react-data-table-component";
+import Card from '@mui/material/Card';
+import data from './data_reserve.js';
 
-
+const columns = [
+    {
+      name: "Fecha",
+      selector: "year",
+      sortable: true,
+      right: true
+    },
+    {
+      name: "Instalacion",
+      selector: "instalacion",
+      sortable: true,
+      right: true
+    },
+];
 class Reservas_Estacionamiento extends Component {
     constructor(){
         super();
     }
-
-    mark = [
-        '16-11-2022',
-        '19-11-2022',
-        '22-11-2022'
-    ]
-
+    dataEst= data.filter(item => item.instalacion == "Estacionamiento");
     render(){
         return(
             <div style={{margin: '50px'}}>
@@ -48,11 +57,18 @@ class Reservas_Estacionamiento extends Component {
                                 </div>
                         </div>
                     </div>
-                    <div class="row">
-                    <div>
-                    
-                    </div>
-                    </div>
+                </div>
+                <div style={{margin: '50px'}}>
+                        <div className="container mx-auto" style={{margin:'5%'}}>
+                            <Card>
+                                <DataTable
+                                title="Reservas de Estacionamiento"
+                                columns={columns}
+                                data={this.dataEst}
+                                pagination
+                                />
+                            </Card>
+                        </div>
                 </div>
             </div>
           

@@ -1,9 +1,11 @@
-import React from "react";
+import React, {useState} from "react";
 import DataTable from "react-data-table-component";
 import Card from '@mui/material/Card';
 import Button from "@mui/material/Button";
 import data from "./data/data_usuarios.js";
 import dataResi from "./data/data_residentes.js";
+import Modal from 'react-bootstrap/Modal';
+import Form from 'react-bootstrap/Form';
 
 
 const SearchIt = ({ onChange, value }) => (
@@ -54,56 +56,44 @@ const columns = [
     }
 ];
 
-const columnsResi = [
-    {
-      name: "Nombre",
-      selector: "title",
-      sortable: true
-    },
-    {
-      name: "Depto",
-      selector: "depto",
-      sortable: true,
-      right: true
-    },
-    {
-      name: "Morosidad",
-      selector: "morosidad",
-      sortable: true,
-      right: true
-    }
-];
 
-const ExpandedComponent2 = ({ data }) => (
-    <div className="card" style={{width: '100%'}} >
-      <strong>Gastos Comunes:</strong> 
-      <ul>{
-      data.gastos.map((gasto, index) => (
-        <li key={index}>{gasto}</li>
-      ))
-      }
-      </ul>
-      <strong>Multas:</strong> {data.multas.length > 0 ? 
-        <ul>{
-          data.multas.map((multa, index) => (
-            <li key={index}>{multa}</li>
-          ))
-          }
-          </ul>
-      : "No hay multas"}
-      <br></br>
-      <strong>Reservas:</strong> 
-      <ul>{
-      data.reservas.map((reserva, index) => (
-        <li key={index}>{reserva}</li>
-      ))
-      }
-      </ul>
-    </div>
-  );
+
+
 
 
 function Admin_usuarios() {
+    const [show, setShow] = useState(false);
+    const handleClose = () => setShow(false);
+    const handleShow = () => setShow(true);
+    const [show2, setShow2] = useState(false);  
+    const handleClose2 = () => setShow2(false);
+    const handleShow2 = () => setShow2(true);
+    const columnsResi = [
+        {
+          name: "Nombre",
+          selector: "title",
+          sortable: true
+        },
+        {
+          name: "Depto",
+          selector: "depto",
+          sortable: true,
+          right: true
+        },
+        {
+          name: "Morosidad",
+          selector: "morosidad",
+          sortable: true,
+          right: true
+        },
+        {
+          name: "Multa",
+          cell: row => (
+            <button class="btn btn-primary" type="button" style={{margin: 10}} onClick={handleShow} >Agregar</button>
+      
+          )
+      }
+    ];
     const [filter, setFilter] = React.useState("");
     const filteredData = data.filter(item =>
         item.title.toLowerCase().includes(filter)
@@ -111,9 +101,120 @@ function Admin_usuarios() {
     const filteredDataResi = dataResi.filter(item =>
         item.title.toLowerCase().includes(filter)
     );
+    const ExpandedComponent2 = ({ data }) => (
+        <div className="card" style={{width: '100%'}} >
+          <strong>Gastos Comunes:</strong> 
+          <ul>{
+          data.gastos.map((gasto, index) => (
+            <li key={index}>{gasto}</li>
+          ))
+          }
+          </ul>
+          <strong>Multas:</strong> {data.multas.length > 0 ? 
+            <ul>{
+              data.multas.map((multa, index) => (
+                <li key={index}>
+                    {multa}
+                    <button onClick={handleShow2} style={{marginLeft:'20px', border: 'none', borderRadius:'3px', padding: '0!important', fontFamily: 'arial, sans-serif,', color: '#069', cursor: 'pointer'}}> 
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil" viewBox="0 0 16 16">
+                        <path d="M12.146.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1 0 .708l-10 10a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168l10-10zM11.207 2.5 13.5 4.793 14.793 3.5 12.5 1.207 11.207 2.5zm1.586 3L10.5 3.207 4 9.707V10h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.293l6.5-6.5zm-9.761 5.175-.106.106-1.528 3.821 3.821-1.528.106-.106A.5.5 0 0 1 5 12.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.468-.325z"/>
+                    </svg>
+                    </button>
+                    <button onClick={() => {alert("Multa borrada")}} style={{marginLeft:'20px', border: 'none', borderRadius:'3px', padding: '0!important', fontFamily: 'arial, sans-serif,', color: '#069', cursor: 'pointer'}}> 
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-trash" viewBox="0 0 16 16">
+                        <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z"/>
+                        <path fill-rule="evenodd" d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z"/>
+                    </svg>
+                    </button>
+                </li>
+                
+              ))
+              }
+              </ul>
+          : "No hay multas"}
+          <br></br>
+          <strong>Reservas:</strong> 
+          <ul>{
+          data.reservas.map((reserva, index) => (
+            <li key={index}>{reserva}</li>
+          ))
+          }
+          </ul>
+        </div>
+      );
 
     return (
-        <div>
+        <>
+        <Modal show={show} onHide={handleClose}>
+            <Modal.Header closeButton>
+                <Modal.Title>Agregar Multa</Modal.Title>
+            </Modal.Header>
+            <Modal.Body>
+                <Form>
+                    <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
+                        <Form.Label>Valor</Form.Label>
+                        <Form.Control
+                            type="text"
+                            placeholder="Ingrese valor de la multa"
+                            required
+                            autoFocus
+                        />
+                    </Form.Group>
+                    <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
+                        <Form.Label>Motivo</Form.Label>
+                        <Form.Control
+                            type="text"
+                            placeholder="Ingrese motivo de la multa"
+                            required
+                            autoFocus
+                        />
+                    </Form.Group>
+                </Form>
+            </Modal.Body>
+            <Modal.Footer>
+                <Button variant="secondary" onClick={handleClose}>
+                    Cerrar
+                </Button>
+                <Button variant="primary"        onClick={() => {alert("Multa agregada! >:)"); handleClose();}}>
+                    Agregar
+                </Button>
+            </Modal.Footer>
+        </Modal>
+        <Modal show={show2} onHide={handleClose2}>
+            <Modal.Header closeButton>
+                <Modal.Title>Modificar Multa</Modal.Title>
+            </Modal.Header>
+            <Modal.Body>
+                <Form>
+                    <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
+                        <Form.Label>Valor</Form.Label>
+                        <Form.Control
+                            type="text"
+                            placeholder="Ingrese valor de la multa"
+                            required
+                            autoFocus
+                        />
+                    </Form.Group>
+                    <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
+                        <Form.Label>Motivo</Form.Label>
+                        <Form.Control
+                            type="text"
+                            placeholder="Ingrese motivo de la multa"
+                            required
+                            autoFocus
+                        />
+                    </Form.Group>
+                </Form>
+            </Modal.Body>
+            <Modal.Footer>
+                <Button variant="secondary" onClick={handleClose2}>
+                    Cerrar
+                </Button>
+                <Button variant="primary" onClick={() => {alert("Multa modificada! >:)"); handleClose();}}>
+                    Agregar
+                </Button>
+            </Modal.Footer>
+        </Modal>
         <div className="container mx-auto" style={{margin:'5%'}}>
             <Card>
                 <DataTable
@@ -195,7 +296,7 @@ function Admin_usuarios() {
                 />
             </Card>
         </div>
-        </div>
+        </>
         );
 }
 

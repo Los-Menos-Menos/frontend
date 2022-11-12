@@ -13,6 +13,11 @@ import Login from './Componentes/login';
 import AdminInicio from './Componentes/admin/admin_inicio';
 import AdminUsuarios from './Componentes/admin/admin_usuarios';
 import AdminReservas from './Componentes/admin/admin_reservas';
+import Admin_Quincho from './Componentes/admin/admin_rquincho';
+import Admin_Cancha from './Componentes/admin/admin_rcancha';
+import Admin_Estacionamiento from './Componentes/admin/admin_restacionamiento';
+import Admin_SalaEventos from './Componentes/admin/admin_rsalaeventos';
+
 
 // CONSERJE IMPORTS
 import Conserje from './Componentes/conserje/conserje';
@@ -27,7 +32,6 @@ import Conserje_Estacionamiento from './Componentes/conserje/conserje_estacionam
 //DIRECTIVA IMPORTS
 import Directiva from './Componentes/directiva/directiva';
 import Anuncios_Directiva from './Componentes/directiva/anuncios_directiva';
-import Nuevo_Anuncio from './Componentes/directiva/nuevo_anuncio';
 import InfoResidentes_Directiva from './Componentes/directiva/info_residentes';
 import ReservasEstacionamiento_Directiva from './Componentes/directiva/reservas_estacionamiento';
 import ReservasQuincho_Directiva from './Componentes/directiva/reservas_quinchos';
@@ -113,6 +117,14 @@ class App extends Component {
 						return <AdminUsuarios cambiarPagina={this.cambiarPagina}/>
 					case "AdminReservas":
 						return <AdminReservas cambiarPagina={this.cambiarPagina}/>
+					case "Admin_Quincho":
+						return <Admin_Quincho cambiarPagina={this.cambiarPagina}/>
+					case "Admin_Cancha":
+						return <Admin_Cancha cambiarPagina={this.cambiarPagina}/> 
+					case "Admin_SalaEventos":
+						return <Admin_SalaEventos cambiarPagina={this.cambiarPagina}/>
+					case "Admin_Estacionamiento":
+						return <Admin_Estacionamiento cambiarPagina={this.cambiarPagina}/>
 					default:
 						return <AdminInicio cambiarPagina={this.cambiarPagina}/>
 				};
@@ -155,8 +167,6 @@ class App extends Component {
 						return <ReservasMultiCancha_Directiva cambiarPagina={this.cambiarPagina}/>
 					case "Anuncios_Directiva":
 						return <Anuncios_Directiva cambiarPagina={this.cambiarPagina}/>
-					case "Nuevo_Anuncio":
-						return <Nuevo_Anuncio cambiarPagina={this.cambiarPagina}/>
 					default:
 						return <Directiva cambiarPagina={this.cambiarPagina}/>
 				}

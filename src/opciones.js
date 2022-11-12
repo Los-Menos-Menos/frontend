@@ -59,7 +59,6 @@ let opciones={
         paginas: [
             ["info_residentes","Información Residentes"],
             ["EspaciosComunes_Directiva","Reservas"],
-            ["Nuevo_Anuncio","Nuevo Anuncio"],
             ["Anuncios_Directiva","Anuncios"],
         ],
         botonLogin: {

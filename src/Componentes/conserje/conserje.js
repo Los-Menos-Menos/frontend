@@ -32,7 +32,7 @@ class Conserje extends Component {
                                     <h4 class="text-center card-title">Residentes</h4>
                                     <p class="card-text">En esta sección puede consultar información en general de los residentes.</p>
                                     <div class="row">
-                                        <div class="col d-flex justify-content-end"><button class="btn btn-primary" type="button">Ir a Información</button></div>
+                                        <div class="col d-flex justify-content-end"><button class="btn btn-primary" type="button" onClick={() => this.props.cambiarPagina("InfoResidentes_Conserje")}>Ir a Información</button></div>
                                     </div>
                                     <div class="d-flex">
                                         <div></div>
@@ -49,7 +49,7 @@ class Conserje extends Component {
                                     <div class="d-flex">
                                         <div></div>
                                     </div>
-                                    <div class="col d-flex justify-content-end"><button class="btn btn-primary" type="button">Ver Espacios</button></div>
+                                    <div class="col d-flex justify-content-end"><button class="btn btn-primary" type="button" onClick={() => this.props.cambiarPagina("Reservas_Conserje")}>Ver Espacios</button></div>
                                 </div>
                             </div>
                         </div>
@@ -59,7 +59,7 @@ class Conserje extends Component {
                                 <div class="card-body p-4">
                                     <h4 class="text-center card-title">Libro</h4>
                                     <p class="card-text">En esta sección puede consultar y agregar eventos al Libro.</p>
-                                    <div class="col d-flex justify-content-end"><button class="btn btn-primary" type="button">Ir a Libro</button></div>
+                                    <div class="col d-flex justify-content-end"><button class="btn btn-primary" type="button" onClick={() => this.props.cambiarPagina("Libro")}>Ir a Libro</button></div>
                                 </div>
                             </div>
                         </div>

@@ -1,58 +1,202 @@
-import React, { Component } from "react";
-import EntradaTablasUsuario from "./entrada_tablas_usuario";
-import "../../assets/css/luis.css"
+import React from "react";
+import DataTable from "react-data-table-component";
+import Card from '@mui/material/Card';
+import Button from "@mui/material/Button";
+import data from "./data/data_usuarios.js";
+import dataResi from "./data/data_residentes.js";
 
-class Admin_usuarios extends Component{
-    usuarios=[
-        {nombre:"Juan Perez",ultimoPago:"Enero",morosidad:"$1000",email:"juanitojuanjarry@runin.cl",numero:"123456789",tipoUsuario:"Administrador",idUsuario:"1"},
-        {nombre:"Fernanda Cerda",ultimoPago:"Febrero",morosidad:"$2000",email:"fernandacerda@hermosisima.cl",numero:"987654321",tipoUsuario:"Administrador",idUsuario:"2"},
-        {nombre:"Luis Corrales",ultimoPago:"Marzo",morosidad:"$3000",email:"colocolinodecorazon@colocolo.cl",numero:"123456789",tipoUsuario:"Administrador",idUsuario:"3"},
-        {nombre:"Sofia Mañana",ultimoPago:"Abril",morosidad:"$4000",email:"luchitoesmuymaloelcolocolo@jajajaj.cl",numero:"987654321",tipoUsuario:"Residente",idUsuario:"4"},
-        {nombre:"Sebastián Sepúlveda",ultimoPago:"Mayo",morosidad:"$5000",email:"feñitateamo@amor.cl",numero:"123456789",tipoUsuario:"Residente",idUsuario:"5"},
-    ]
 
-    constructor(){
-        super();
+const SearchIt = ({ onChange, value }) => (
+    <input
+      placeholder="Search"
+      onChange={e => onChange(e)}
+      value={value.toLowerCase()}
+    />
+  );
+const columns = [
+    {
+        name: "Usuario",
+        selector: "title",
+        sortable: true
+    },
+    {
+        name: "Fecha",
+        selector: "year",
+        sortable: true
+    },
+    {
+        name: "Morosidad",
+        selector: "morosidad",
+        sortable: true,
+        right: true
+    },
+    {
+        name: "Email",
+        selector: "email",
+        sortable: true
+    },
+    {
+        name: "Numero",
+        selector: "numero",
+        sortable: true
+    },
+    {
+        name: "Tipo",
+        selector: "tipoUsuario",
+        sortable: true
+    },
+    {
+        name: "Acciones",
+        cell: row => (
+            <button className="btn btn-danger" onClick={() => {alert("Usuario deshabilitado")}}>Deshabilitar</button>
+            
+        )
     }
-    
-    render(){
-        return(
-            <div className="container-fluid">
-                <div className="card" id="TableSorterCard">
-                    <div className="card-header py-3">
-                        <div className="row table-topper align-items-center">
-                            <div className="col-12 col-sm-5 col-md-6 text-start a_u1">
-                                <p className="text-primary m-0 fw-bold a_u2">Usuarios</p>
-                            </div> 
-                        </div>
+];
+
+const columnsResi = [
+    {
+      name: "Nombre",
+      selector: "title",
+      sortable: true
+    },
+    {
+      name: "Depto",
+      selector: "depto",
+      sortable: true,
+      right: true
+    },
+    {
+      name: "Morosidad",
+      selector: "morosidad",
+      sortable: true,
+      right: true
+    }
+];
+
+const ExpandedComponent2 = ({ data }) => (
+    <div className="card" style={{width: '100%'}} >
+      <strong>Gastos Comunes:</strong> 
+      <ul>{
+      data.gastos.map((gasto, index) => (
+        <li key={index}>{gasto}</li>
+      ))
+      }
+      </ul>
+      <strong>Multas:</strong> {data.multas.length > 0 ? 
+        <ul>{
+          data.multas.map((multa, index) => (
+            <li key={index}>{multa}</li>
+          ))
+          }
+          </ul>
+      : "No hay multas"}
+      <br></br>
+      <strong>Reservas:</strong> 
+      <ul>{
+      data.reservas.map((reserva, index) => (
+        <li key={index}>{reserva}</li>
+      ))
+      }
+      </ul>
+    </div>
+  );
+
+
+function Admin_usuarios() {
+    const [filter, setFilter] = React.useState("");
+    const filteredData = data.filter(item =>
+        item.title.toLowerCase().includes(filter)
+    );
+    const filteredDataResi = dataResi.filter(item =>
+        item.title.toLowerCase().includes(filter)
+    );
+
+    return (
+        <div>
+        <div className="container mx-auto" style={{margin:'5%'}}>
+            <Card>
+                <DataTable
+                title="Gestion de Usuarios"
+                columns={columns}
+                data={filteredData}
+                pagination
+                subHeader
+                subHeaderComponent={
+                    <div>
+                        <SearchIt 
+                        onChange={e => setFilter(e.target.value)}
+                        value={filter}
+                        />
+                        
                     </div>
-                    <div className="row">
-                        <div className="col-12">
-                            <div className="table-responsive">
-                                <table className="table table-striped table tablesorter" id="ipi-table">
-                                    <thead className="thead-dark">
-                                        <tr>
-                                            <th className="text-center">Nombre</th>
-                                            <th className="text-center">Estado de cuenta</th>
-                                            <th className="text-center">Contacto</th>
-                                            <th className="text-center">TIPO</th>
-                                            <th className="text-center">Departamento</th>
-                                            <th className="text-center filter-false sorter-false">Gestionar</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody className="text-center">
-                                        {this.usuarios.map((usuario) => (
-                                            <EntradaTablasUsuario usuario={usuario}/>
-                                        ))}
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-                    </div>
+                }
+            
+                />
+            </Card>
+        </div>
+        <div className="container mx-auto" style={{margin:'5%'}}>
+            <Card>
+            <form>
+                <h4>Nuevo Usuario</h4>
+                <div className="form-group">
+                    <label for="exampleUsername"></label>
+                    <input type="text" className="form-control" id="exampleUsername" placeholder="Nombre"/>
                 </div>
-            </div>
+                <div className="form-group">
+                    <label for="exampleInputEmail1"></label>
+                    <input type="email" className="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Email"/>
+                </div>
+                <div className="form-group">
+                    <label for="exampleInputPassword1"></label>
+                    <input type="password" className="form-control" id="exampleInputPassword1" placeholder="Contraseña"/>
+                </div>
+                <div className="form-group">
+                    <label for="exampleInputNumber"></label>
+                    <input type="text" className="form-control" id="exampleInputNumber" placeholder="Número de celular"/>
+                </div>
+                <div class="form-group">
+                    <label for="exampleFormControlSelect1"></label>
+                    <select class="form-control" id="exampleFormControlSelect1" placeholder="Tipo de usuario">
+                    <option disabled={true} value="">
+                    --Elige un tipo de usuario--
+                    </option>
+                    <option>Residente</option>
+                    <option>Conserje</option>
+                    <option>Directiva</option>
+                    <option>Administrador</option>
+                    </select>
+                </div>
+
+                <Button variant="contained" onClick={() => {alert("Usuario creado")}} style={{margin: 10}} >Crear usuario</Button>
+            </form>
+            </Card>
+        </div>
+        <div className="container mx-auto" style={{margin:'5%'}}>
+            <Card>
+                <DataTable
+                title="Informacion de Residentes"
+                columns={columnsResi}
+                data={filteredDataResi}
+                expandableRows
+                expandableRowsComponent={ExpandedComponent2}
+                pagination
+                subHeader
+                subHeaderComponent={
+                    <div>
+                        <SearchIt 
+                        onChange={e => setFilter(e.target.value)}
+                        value={filter}
+                        />
+                        
+                    </div>
+                }
+            
+                />
+            </Card>
+        </div>
+        </div>
         );
-    }
 }
 
 export default Admin_usuarios;

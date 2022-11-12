@@ -7,7 +7,7 @@ import Modal from 'react-bootstrap/Modal';
 
 
 
-function Reservas_Quincho() {
+function Conserje_Quincho() {
     //MODAL FORM
     const [show, setShow] = useState(false);
     const handleClose = () => setShow(false);
@@ -87,4 +87,4 @@ function Reservas_Quincho() {
     );
 }
 
-export default Reservas_Quincho;
+export default Conserje_Quincho;

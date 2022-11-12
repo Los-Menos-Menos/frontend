@@ -1,42 +1,39 @@
 import React from "react";
 import DataTable from "react-data-table-component";
 import Card from '@mui/material/Card';
-import Button from "@mui/material/Button";
-import data from "./data_residentes";
-import EspaciosComunes from"../../assets/img/salaeventos.png";
+import data from "./data_reservas";
+import EspaciosComunes from"../../assets/img/espacios_comunes.png";
 
-const SearchIt = ({ onChange, value }) => (
-  <input
-    placeholder="Search"
-    onChange={e => onChange(e)}
-    value={value.toLowerCase()}
-  />
-);
 const columns = [
   {
-    name: "Nombre",
+    name: "Residente",
     selector: "title",
     sortable: true
   },
   {
-    name: "Depto",
-    selector: "depto",
+    name: "Fecha",
+    selector: "year",
     sortable: true,
     right: true
   },
   {
-    name: "Fecha",
-    selector: "fecha",
+    name: "Pagado",
+    selector: "pagado",
+    sortable: true,
+    right: true
+  },
+  {
+    name: "Instalacion",
+    selector: "instalacion",
     sortable: true,
     right: true
   },
 ];
 
-function ReservasSalaEventos_Directiva() {
+function ReservasQuincho_Directiva() {
   const [filter, setFilter] = React.useState("");
-  const filteredData = data.filter(item =>
-    item.title.toLowerCase().includes(filter)
-  );
+  const dataQuincho = data.filter(item => item.instalacion == "Sala de eventos");
+
 
   return (
     <div style={{margin: '50px'}}>
@@ -47,7 +44,7 @@ function ReservasSalaEventos_Directiva() {
                       <img src={EspaciosComunes} class="card-img-top w-100 d-block fit-cover" alt="" style={{ height: '300px' }} />
                       <div class="card-body p-4">
                           <div class="row">
-                              <div class="col d-flex justify-content-center"><p>Nuestra Sala de Eventos cuenta con un lindo espacio para realizar tus reuniones familiares o cumpleaños.</p></div>
+                              <div class="col d-flex justify-content-center"><p>El Quincho de este condominio cuenta con diversas secciones, parrilla, comedor, patio y ¡muchas cosas más!</p></div>
                           </div>
                           <div class="d-flex">
                               <div></div>
@@ -57,26 +54,15 @@ function ReservasSalaEventos_Directiva() {
               </div> 
           <Card>
               <DataTable
-              title="Reservas de Sala de Eventos"
+              title="Reservas de la sala de eventos"
               columns={columns}
-              data={filteredData}
+              data={dataQuincho}
               pagination
-              subHeader
-              subHeaderComponent={
-                  <div>
-                      <SearchIt 
-                      onChange={e => setFilter(e.target.value)}
-                      value={filter}
-                      />
-                  </div>
-              }
-              
               />
           </Card>
         </div>
       </div>
-    </div>
+  </div>
   );
 }
-export default ReservasSalaEventos_Directiva;
-
+export default ReservasQuincho_Directiva;

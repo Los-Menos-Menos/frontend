@@ -27,7 +27,6 @@ import Conserje_Estacionamiento from './Componentes/conserje/conserje_estacionam
 //DIRECTIVA IMPORTS
 import Directiva from './Componentes/directiva/directiva';
 import Anuncios_Directiva from './Componentes/directiva/anuncios_directiva';
-import Nuevo_Anuncio from './Componentes/directiva/nuevo_anuncio';
 import InfoResidentes_Directiva from './Componentes/directiva/info_residentes';
 import ReservasEstacionamiento_Directiva from './Componentes/directiva/reservas_estacionamiento';
 import ReservasQuincho_Directiva from './Componentes/directiva/reservas_quinchos';
@@ -143,8 +142,6 @@ class App extends Component {
 						return <ReservasMultiCancha_Directiva cambiarPagina={this.cambiarPagina}/>
 					case "Anuncios_Directiva":
 						return <Anuncios_Directiva cambiarPagina={this.cambiarPagina}/>
-					case "Nuevo_Anuncio":
-						return <Nuevo_Anuncio cambiarPagina={this.cambiarPagina}/>
 					default:
 						return <Directiva cambiarPagina={this.cambiarPagina}/>
 				}

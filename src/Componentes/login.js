@@ -65,7 +65,7 @@ class Login extends Component{
                                         <p class="text-muted mt-2 mb-5">Ingresa tu email y contraseña para ingresar al sistema</p>
 
                                         <form>
-                                            <div class="form-group">
+                                            <div class="form-group" style={{marginBottom: '10px'}}>
                                                 <label for="usuario">Dirección Email</label>
                                                 <input type="email" class="form-control" id="usuario"></input>
                                             </div>
@@ -73,28 +73,23 @@ class Login extends Component{
                                                 <label for="contraseña">Contraseña</label>
                                                 <input type="password" class="form-control" id="contraseña"></input>
                                             </div>
-                                            <button type="submit" class="btn-theme" onClick={(e)=>this.triggerLogin(e)}>Iniciar Sesión</button>
-                                            <a href="#l" class="forgot-link float-right text-primary">¿Olvidaste tu contraseña?</a>
+                                            <button type="submit" class="btn-theme" style={{marginBottom: '10px'}} onClick={(e)=>this.triggerLogin(e)}>Iniciar Sesión</button>
+                                            
                                         </form>
+                                        <a href="#l" class="forgot-link float-right text-primary">¿Olvidaste tu contraseña?</a>
                                     </div>
                                 </div>
 
                                 <div class="col-lg-6 d-none d-lg-inline-block">
                                     <div class="account-block rounded-right">
                                         <div class="overlay rounded-right"></div>
-                                        <div class="account-testimonial">
-                                            <h4 class="text-white mb-4">This  beautiful theme yours!</h4>
-                                            <p class="lead text-white">"La mejor inversión que puedes hacer. Lo recomiendo a nuevos usuarios."</p>
-                                            <p>- Usuario Administrador</p>
-                                        </div>
+
                                     </div>
                                 </div>
                             </div>
 
                         </div>
-                        
                     </div>
-                    <p class="text-muted text-center mt-3 mb-0">Don't have an account? <a href="register.html" class="text-primary ml-1">register</a></p>
                 </div>
             </div>
         </div>

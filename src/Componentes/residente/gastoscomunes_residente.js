@@ -66,7 +66,7 @@ function Gastoscomunes_residente() {
     <>
       <Modal show={show} onHide={handleClose}>
         <Modal.Header closeButton>
-        <Modal.Title>Reservar para residente</Modal.Title>
+        <Modal.Title>Observación de Gasto</Modal.Title>
         </Modal.Header>
         <Modal.Body>
         <Form>

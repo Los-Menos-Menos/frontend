@@ -23,7 +23,6 @@ let opciones={
             ["Gestionar gastos comunes","Gestionar gastos comunes"],
             ["AdminUsuarios", "Gestionar usuarios"],
             ["AdminReservas", "Gestionar reservas"],
-            ["Gestionar reclamos", "Gestionar reclamos"],
         ],
         botonLogin: {
             texto: "Cerrar Sesion",

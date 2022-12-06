@@ -7,6 +7,8 @@ import data from "./data/data";
 import Form from 'react-bootstrap/Form';
 import Modal from 'react-bootstrap/Modal';
 
+import {useMutation, gql} from '@apollo/client';
+
 
 const SearchIt = ({ onChange, value }) => (
     <input
@@ -38,9 +40,34 @@ const columns = [
         sortable: true
     }
 ];
+//Mutation AddReserva
+const ADD_RESERVA = gql`
+mutation addReserva(
+    $fecha: String!, 
+    $instalacion: Instalacion,
+    $pagado: Boolean!,
+    $residente: Residente
+) {
+    addReserva(input: {fecha: $fecha, instalacion: $instalacion, pagado: $pagado, residente: $residente}) {
+        fecha
+        instalacion
+        pagado
+        residente
+    }
+}
+`;
 
 function Libro() {
-//MODAL FORM
+    // ADDRESERVA
+    const [addReserva, {data, loading, error}] = useMutation(ADD_RESERVA);
+    const [formState, SetFormState] = React.useState({
+        fecha: '',
+        instalacion: '',
+        pagado: '',
+        residente: ''
+    });
+
+    //MODAL FORM
     const [show, setShow] = useState(false);
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
@@ -52,12 +79,19 @@ function Libro() {
 
     return (
         <div className="container mx-auto" style={{margin: '40px'}}>
+        <Form onSubmit={e =>{
+            e.preventDefault();
+            addReserva({variables: {
+                fecha: formState.fecha, 
+                instalacion: formState.instalacion, 
+                pagado: formState.pagado, 
+                residente: formState.residente}});
+        }}>
             <Modal show={show} onHide={handleClose}>
                 <Modal.Header closeButton>
                     <Modal.Title>Nuevo Evento</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
-                    <Form>
                         <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
                             <Form.Label>Residente</Form.Label>
                             <Form.Control
@@ -90,17 +124,17 @@ function Libro() {
 								label="Pagado"
 							/>
                         </Form.Group>
-                    </Form>
                 </Modal.Body>
                 <Modal.Footer>
                     <Button variant="secondary" onClick={handleClose}>
                         Cerrar
                     </Button>
-                    <Button variant="primary" onClick={handleClose}>
+                    <Button variant="primary"  type="submit" onClick={handleClose}>
                         Agregar
                     </Button>
                 </Modal.Footer>
             </Modal>
+            </Form>
             <Card>
                 <DataTable
                     title="Libro de Eventos"
@@ -114,7 +148,7 @@ function Libro() {
 							onChange={e => setFilter(e.target.value)}
 							value={filter}
 							/>
-							<Button variant="contained" style={{margin: 10}} onClick={handleShow} >Nuevo Evento</Button>
+							<Button variant="contained" style={{margin: 10}} onClick={handleShow} >Nuevo Evento</Button>  
                         </div>
                     }
                 />

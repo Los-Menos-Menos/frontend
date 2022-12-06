@@ -7,6 +7,7 @@ import data from "./data_anuncios";
 import Modal from 'react-bootstrap/Modal';
 import Form from 'react-bootstrap/Form';
 
+
 const SearchIt = ({ onChange, value }) => (
   <input
     placeholder="Search"
@@ -52,7 +53,7 @@ class Anuncios_Directiva extends Component {
             show: false,
         }
         this.handleClose = this.handleClose.bind(this);
-        this.handleShow = this.handleShow.bind(this);
+        this.handleShow = this.handleShow.bind(this);        
     }
     handleClose = () => this.setState({show: false});
     handleShow = () => this.setState({show: true});
@@ -70,16 +71,17 @@ class Anuncios_Directiva extends Component {
         />
     );
 
-  
+    
     render() {
         return (
             <>
+            <Form>
             <Modal show={this.state.show} onHide={this.handleClose}>
                 <Modal.Header closeButton>
                 <Modal.Title>Agregar Anuncio</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
-                <Form>
+                
                     <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
                     <Form.Label>Autor</Form.Label>
                     <Form.Control
@@ -98,7 +100,6 @@ class Anuncios_Directiva extends Component {
                         autoFocus
                     />
                     </Form.Group>
-                </Form>
                 </Modal.Body>
                 <Modal.Footer>
                 <Button variant="secondary" onClick={this.handleClose}>
@@ -109,6 +110,7 @@ class Anuncios_Directiva extends Component {
                 </Button>
                 </Modal.Footer>
             </Modal>
+            </Form>
             <div className="container">
 				<Card>
 					<DataTable

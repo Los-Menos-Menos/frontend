@@ -7,6 +7,29 @@ import dataResi from "./data/data_residentes.js";
 import Modal from 'react-bootstrap/Modal';
 import Form from 'react-bootstrap/Form';
 
+import {useMutation, gql} from '@apollo/client';
+
+const ADD_MULTA = gql`
+    mutation addMulta(
+        $detalle: String!,
+        $fecha: String!,
+        $monto: Int!,
+        $pagado: Boolean!,
+        $residente: Residente!
+    ){
+        addMulta(input: detalle: $detalle, fecha: $fecha, monto: $monto, pagado: $pagado, residente: $residente){
+            detalle
+            fecha
+            monto
+            pagado
+            residente{
+                rut
+            }
+        }
+    }
+`
+
+
 
 const SearchIt = ({ onChange, value }) => (
     <input
@@ -68,6 +91,9 @@ function Admin_usuarios() {
     const [show2, setShow2] = useState(false);  
     const handleClose2 = () => setShow2(false);
     const handleShow2 = () => setShow2(true);
+
+    const [addMulta, {data, loading, error}] = useMutation(ADD_MULTA);
+
     const columnsResi = [
         {
           name: "Nombre",
@@ -145,41 +171,50 @@ function Admin_usuarios() {
 
     return (
         <>
+        <Form onSubmit={e=>{
+            e.preventDefault();
+            addMulta({
+                
+                
+            });
+        }}>
         <Modal show={show} onHide={handleClose}>
             <Modal.Header closeButton>
                 <Modal.Title>Agregar Multa</Modal.Title>
             </Modal.Header>
             <Modal.Body>
-                <Form>
-                    <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
-                        <Form.Label>Valor</Form.Label>
-                        <Form.Control
-                            type="text"
-                            placeholder="Ingrese valor de la multa"
-                            required
-                            autoFocus
-                        />
-                    </Form.Group>
-                    <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
-                        <Form.Label>Motivo</Form.Label>
-                        <Form.Control
-                            type="text"
-                            placeholder="Ingrese motivo de la multa"
-                            required
-                            autoFocus
-                        />
-                    </Form.Group>
-                </Form>
+                
+                <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
+                    <Form.Label>Valor</Form.Label>
+                    <Form.Control
+                        type="text"
+                        placeholder="Ingrese valor de la multa"
+                        required
+                        autoFocus
+                    />
+                </Form.Group>
+                <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
+                    <Form.Label>Motivo</Form.Label>
+                    <Form.Control
+                        type="text"
+                        placeholder="Ingrese motivo de la multa"
+                        required
+                        autoFocus
+                    />
+                </Form.Group>
+                
             </Modal.Body>
             <Modal.Footer>
                 <Button variant="secondary" onClick={handleClose}>
                     Cerrar
                 </Button>
-                <Button variant="primary"        onClick={() => {alert("Multa agregada! >:)"); handleClose();}}>
+                <Button variant="primary"  type="submit" onClick={() => {alert("Multa agregada! >:)"); handleClose();}}>
                     Agregar
                 </Button>
             </Modal.Footer>
         </Modal>
+        </Form>
+        
         <Modal show={show2} onHide={handleClose2}>
             <Modal.Header closeButton>
                 <Modal.Title>Modificar Multa</Modal.Title>

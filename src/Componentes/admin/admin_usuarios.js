@@ -2,12 +2,12 @@ import React, {useState} from "react";
 import DataTable from "react-data-table-component";
 import Card from '@mui/material/Card';
 import Button from "@mui/material/Button";
-import data from "./data/data_usuarios.js";
+import dataR from "./data/data_usuarios.js";
 import dataResi from "./data/data_residentes.js";
 import Modal from 'react-bootstrap/Modal';
 import Form from 'react-bootstrap/Form';
 
-import {useMutation, gql} from '@apollo/client';
+import {useMutation, gql, useQuery} from '@apollo/client';
 
 const ADD_MULTA = gql`
     mutation addMulta(
@@ -16,8 +16,8 @@ const ADD_MULTA = gql`
         $monto: Int!,
         $pagado: Boolean!,
         $residente: Residente!
-    ){
-        addMulta(input: detalle: $detalle, fecha: $fecha, monto: $monto, pagado: $pagado, residente: $residente){
+    ) {
+        addMulta(input: {detalle: $detalle, fecha: $fecha, monto: $monto, pagado: $pagado, residente: $residente}) {
             detalle
             fecha
             monto
@@ -27,7 +27,39 @@ const ADD_MULTA = gql`
             }
         }
     }
-`
+`;
+
+const GET_RESIDENTES = gql`
+  query GetResidentes {
+    getResidentes {
+        rut
+        nombre
+        email
+        estadodecuenta{
+            reservas{
+                fecha
+                instalacion{
+                    nombre
+                }
+                pagado
+            }
+            multas{
+                detalle
+                fecha
+                monto
+                pagado
+            }
+            morosidad
+            gastoscomuneslista{
+                detalle
+                fecha
+                monto
+                pagado
+            }
+        }
+    }
+  }
+`;
 
 
 
@@ -92,7 +124,19 @@ function Admin_usuarios() {
     const handleClose2 = () => setShow2(false);
     const handleShow2 = () => setShow2(true);
 
+    //MUTATION ADDMULTA
     const [addMulta, {data, loading, error}] = useMutation(ADD_MULTA);
+    const [formState, SetFormState] = React.useState({
+        detalle: '',
+        fecha: '',
+        monto: '',
+        pagado: '',
+        residente: ''
+    });
+    //QUERY GETRESIDENTES
+    const {data: dataResidentes, loading: loadingResidentes, error: errorResidentes} = useQuery(GET_RESIDENTES);
+    
+
 
     const columnsResi = [
         {
@@ -121,24 +165,24 @@ function Admin_usuarios() {
       }
     ];
     const [filter, setFilter] = React.useState("");
-    const filteredData = data.filter(item =>
+    const filteredData = dataR.filter(item =>
         item.title.toLowerCase().includes(filter)
     );
     const filteredDataResi = dataResi.filter(item =>
         item.title.toLowerCase().includes(filter)
     );
-    const ExpandedComponent2 = ({ data }) => (
+    const ExpandedComponent2 = ({ dataR }) => (
         <div className="card" style={{width: '100%'}} >
           <strong>Gastos Comunes:</strong> 
           <ul>{
-          data.gastos.map((gasto, index) => (
+          dataR.gastos.map((gasto, index) => (
             <li key={index}>{gasto}</li>
           ))
           }
           </ul>
-          <strong>Multas:</strong> {data.multas.length > 0 ? 
+          <strong>Multas:</strong> {dataR.multas.length > 0 ? 
             <ul>{
-              data.multas.map((multa, index) => (
+              dataR.multas.map((multa, index) => (
                 <li key={index}>
                     {multa}
                     <button onClick={handleShow2} style={{marginLeft:'20px', border: 'none', borderRadius:'3px', padding: '0!important', fontFamily: 'arial, sans-serif,', color: '#069', cursor: 'pointer'}}> 
@@ -161,7 +205,7 @@ function Admin_usuarios() {
           <br></br>
           <strong>Reservas:</strong> 
           <ul>{
-          data.reservas.map((reserva, index) => (
+          dataR.reservas.map((reserva, index) => (
             <li key={index}>{reserva}</li>
           ))
           }
@@ -171,13 +215,7 @@ function Admin_usuarios() {
 
     return (
         <>
-        <Form onSubmit={e=>{
-            e.preventDefault();
-            addMulta({
-                
-                
-            });
-        }}>
+        <Form>
         <Modal show={show} onHide={handleClose}>
             <Modal.Header closeButton>
                 <Modal.Title>Agregar Multa</Modal.Title>
@@ -186,21 +224,35 @@ function Admin_usuarios() {
                 
                 <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
                     <Form.Label>Valor</Form.Label>
-                    <Form.Control
+                    <input value={formState.monto} onChange={e=>
+                        SetFormState({
+                            ...formState, monto: e.target.value
+                        })
+                    } type= "text" placeholder="Ingrese valor de la multa"  />
+{/*                     <Form.Control
                         type="text"
                         placeholder="Ingrese valor de la multa"
                         required
                         autoFocus
-                    />
+                    /> */}
                 </Form.Group>
                 <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
                     <Form.Label>Motivo</Form.Label>
-                    <Form.Control
+                    <input value={formState.detalle} onChange={e=>
+                        SetFormState({
+                            ...formState, detalle: e.target.value
+                        })
+                    } type= "text" placeholder="Ingrese motivo de la multa"  />
+{/*                     <Form.Control
                         type="text"
                         placeholder="Ingrese motivo de la multa"
                         required
                         autoFocus
-                    />
+                        value={formState.detalle} onChange={e=>
+                        SetFormState({
+                            ...formState, detalle: e.target.value
+                        })
+                    /> */}
                 </Form.Group>
                 
             </Modal.Body>
@@ -208,7 +260,7 @@ function Admin_usuarios() {
                 <Button variant="secondary" onClick={handleClose}>
                     Cerrar
                 </Button>
-                <Button variant="primary"  type="submit" onClick={() => {alert("Multa agregada! >:)"); handleClose();}}>
+                <Button variant="primary"   onClick={() => {alert("Multa agregada! >:)"); handleClose();}}>
                     Agregar
                 </Button>
             </Modal.Footer>
@@ -245,7 +297,7 @@ function Admin_usuarios() {
                 <Button variant="secondary" onClick={handleClose2}>
                     Cerrar
                 </Button>
-                <Button variant="primary" onClick={() => {alert("Multa modificada! >:)"); handleClose();}}>
+                <Button variant="primary"  onClick={() => {alert("Multa modificada! >:)"); handleClose();}}>
                     Agregar
                 </Button>
             </Modal.Footer>

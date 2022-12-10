@@ -9,81 +9,6 @@ import Form from 'react-bootstrap/Form';
 
 import {useMutation, gql, useQuery} from '@apollo/client';
 
-const ADD_MULTA = gql`
-    mutation addMulta(
-        $detalle: String!,
-        $fecha: String!,
-        $monto: Int!,
-        $pagado: Boolean!,
-        $residente: Residente!
-    ) {
-        addMulta(input: {detalle: $detalle, fecha: $fecha, monto: $monto, pagado: $pagado, residente: $residente}) {
-            detalle
-            fecha
-            monto
-            pagado
-            residente{
-                rut
-            }
-        }
-    }
-`;
-
-const GET_RESIDENTES = gql`
-    query getResidentes {
-        getResidentes {
-            email
-            nombre
-            rut
-        }
-    }
-`;
-
-//mutation delete residente
-const DELETE_RESIDENTE = gql`
-    mutation deleteResidente($id: ID!) {
-        deleteResidente(id: $id) {
-            alert
-        }
-    }
-`;
-
-const SearchIt = ({ onChange, value }) => (
-    <input
-      placeholder="Search"
-      onChange={e => onChange(e)}
-      value={value.toLowerCase()}
-    />
-  );
-const columns = [
-    {
-        name: "Usuario",
-        selector: row => row.nombre,
-        sortable: true
-    },
-    {
-        name: "Email",
-        selector: row => row.email,
-        sortable: true
-    },
-    {
-        name: "Rut",
-        selector: row => row.rut,
-        omit: true
-    },
-    {
-        name: "Tipo de usuario",
-        selector: row => row.__typename,
-        sortable: true
-    },
-    {
-        name: "Acciones",
-        cell: (row) => (
-            <button className="btn btn-danger" onClick={() => {alert(row.rut)}}>Deshabilitar</button>
-        )
-    }
-];
-
 function Admin_usuarios() {
     const [show, setShow] = useState(false);
     const handleClose = () => setShow(false);
@@ -92,34 +17,163 @@ function Admin_usuarios() {
     const handleClose2 = () => setShow2(false);
     const handleShow2 = () => setShow2(true);
 
-    //MUTATION ADDMULTA
-    const [addMulta, {data, loading, error}] = useMutation(ADD_MULTA);
+    //mutation add residente
+    const ADD_RESIDENTE = gql`
+        mutation AddResidente(
+            $email: String,
+            $nombre: String,
+            $rut: Int
+        ) {
+            addResidente(input: {email: $email, nombre: $nombre, rut: $rut}) {
+              email
+              id
+              nombre
+              rut
+            }
+          }
+        
+    `;
 
-    const [formState, SetFormState] = React.useState({
-        detalle: '',
-        fecha: '',
-        monto: '',
-        pagado: '',
-        residente: ''
-    });
+    const GET_ESTADO_CUENTA = gql`
+        query Query($getEstadoDeCuentaId: ID!) {
+            getEstadoDeCuenta(id: $getEstadoDeCuentaId) {
+                morosidad
+                multas {
+                    detalle
+                    fecha
+                    monto
+                    pagado
+                    id
+                }
+            }
+        }
+    `
+
+    const GET_RESIDENTES = gql`
+        query getResidentes {
+            getResidentes {
+                id
+                email
+                nombre
+                rut
+                estadodecuenta
+            }
+        }
+    `;
+
+    //mutation delete residente
+    const DELETE_RESIDENTE = gql`
+        mutation Mutation($deleteResidenteId: ID!) {
+            deleteResidente(id: $deleteResidenteId) {
+                message
+            }
+        }
+    `;
+
+    const ADD_MULTA = gql`
+        mutation addMulta(
+            $detalle: String!,
+            $fecha: String!,
+            $monto: Int!,
+            $pagado: Boolean!,
+            $residente: Residente!
+        ) {
+            addMulta(input: {detalle: $detalle, fecha: $fecha, monto: $monto, pagado: $pagado, residente: $residente}) {
+                detalle
+                fecha
+                monto
+                pagado
+                residente{
+                    rut
+                }
+            }
+        }
+    `;
+
+
+
+
     //QUERY GETRESIDENTES
     const {data: dataResidentes, loading: loadingResidentes, error: errorResidentes} = useQuery(GET_RESIDENTES);
+    const {data: dataEstadoDeCuenta, loading: loadingEstadoDeCuenta, error: errorEstadoDeCuenta} = useQuery(GET_ESTADO_CUENTA,{
+        variables:{
+            getEstadoDeCuentaId: "63335462cedcef070b0430f6"
+        }
+    });
 
+    if (!loadingEstadoDeCuenta){
+        console.log(dataEstadoDeCuenta.getEstadoDeCuenta);
+    }
+    //MUTATION's
+    const [addMulta, {data: dataMulta, loading: loadingMulta, error: errorMulta}] = useMutation(ADD_MULTA);
+    const [deleteResidente, {data: dataDeleteResidente, loading: loadingDeleteResidente, error: errorDeleteResidente}] = useMutation(DELETE_RESIDENTE,{
+        refetchQueries: [{query: GET_RESIDENTES},
+        ]
+    });
+    const [addResidente, {data: dataAddResidente, loading: loadingAddResidente, error: errorAddResidente}] = useMutation(ADD_RESIDENTE,{
+        refetchQueries: [{query: GET_RESIDENTES},
+        ]
+    });
+    const [formState, SetFormState] = React.useState({
+        email: String,
+        nombre: String,
+        rut: Number
+    });
+
+    const SearchIt = ({ onChange, value }) => (
+        <input
+        placeholder="Search"
+        onChange={e => onChange(e)}
+        value={value.toLowerCase()}
+        />
+    );
+    //columnas de primera tabla: gestion de usuarios
+    const columns = [
+        {
+            name: "Usuario",
+            selector: row => row.nombre,
+            sortable: true
+        },
+        {
+            name: "Email",
+            selector: row => row.email,
+            sortable: true
+        },
+        {
+            name: "Rut",
+            selector: row => row.rut,
+            omit: true
+        },
+        {
+            name: "Tipo de usuario",
+            selector: row => row.__typename,
+            sortable: true
+        },
+        {
+            name: "Id",
+            selector: row => row.id,
+            omit: true
+        },
+        {
+            name: "Acciones",
+            cell: (row) => (
+                <button className="btn btn-danger"  onClick={e => {
+                    e.preventDefault();
+                    deleteResidente({variables: {deleteResidenteId: row.id}});
+                }}>Deshabilitar</button>    
+            )
+        }
+    ];
+    //columnas de segunda tabla: informacion de residentes
     const columnsResi = [
         {
           name: "Nombre",
-          selector: "title",
+          selector: row => row.nombre,
           sortable: true
         },
         {
-          name: "Depto",
-          selector: "depto",
-          sortable: true,
-          right: true
-        },
-        {
           name: "Morosidad",
-          selector: "morosidad",
+          selector: row => row.morosidad,
           sortable: true,
           right: true
         },
@@ -133,15 +187,15 @@ function Admin_usuarios() {
     ];
     const [filter, setFilter] = React.useState("");
     var filteredData;
-    if (loadingResidentes){
+    var filteredDataResi;
+    if (loadingResidentes || loadingMulta || loadingDeleteResidente || loadingAddResidente) {
         filteredData = dataR
+        filteredDataResi = dataResi;
     }
     else{
         filteredData = dataResidentes.getResidentes;
     }
-    const filteredDataResi = dataResi.filter(item =>
-        item.title.toLowerCase().includes(filter)
-    );
+    filteredDataResi = dataResi
     
     const ExpandedComponent2 = ({dataResi}) => (
         <div className="card" style={{width: '100%'}} >
@@ -202,30 +256,14 @@ function Admin_usuarios() {
                             ...formState, monto: e.target.value
                         })
                     } type= "text" placeholder="Ingrese valor de la multa"  />
-{/*                     <Form.Control
-                        type="text"
-                        placeholder="Ingrese valor de la multa"
-                        required
-                        autoFocus
-                    /> */}
                 </Form.Group>
-                <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
+                <Form.Group className="mb-3" controlId="exampleForm.ControlInput2">
                     <Form.Label>Motivo</Form.Label>
                     <input value={formState.detalle} onChange={e=>
                         SetFormState({
                             ...formState, detalle: e.target.value
                         })
                     } type= "text" placeholder="Ingrese motivo de la multa"  />
-{/*                     <Form.Control
-                        type="text"
-                        placeholder="Ingrese motivo de la multa"
-                        required
-                        autoFocus
-                        value={formState.detalle} onChange={e=>
-                        SetFormState({
-                            ...formState, detalle: e.target.value
-                        })
-                    /> */}
                 </Form.Group>
                 
             </Modal.Body>
@@ -278,7 +316,7 @@ function Admin_usuarios() {
         <div className="container mx-auto" style={{margin:'5%'}}>
             <Card>
                 <DataTable
-                title="Gestion de Usuarios"
+                title="Gestión de Usuarios"
                 columns={columns}
                 data={filteredData}
                 pagination
@@ -298,38 +336,82 @@ function Admin_usuarios() {
         </div>
         <div className="container mx-auto" style={{margin:'5%'}}>
             <Card>
-            <form>
+            <form onSubmit={e =>{
+                    e.preventDefault();
+                    addResidente({
+                        variables: {
+                            nombre: formState.nombre,
+                            email: formState.email,
+                            rut: formState.rut
+                        }
+                    })
+/*                     // check usertype and use the correct apollo query
+                    if (TipoUsuario.value === "Residente"){
+                        console.log({
+                            nombre: NombreUsuario.value,
+                            email: EmailUsuario.value,
+                            rut: RutUsuario.value
+                        })
+                        addResidente({
+                            variables:{
+                                nombre: NombreUsuario.value,
+                                email: EmailUsuario.value,
+                                rut: RutUsuario.value
+                            }
+                        });
+                    }
+                    alert("Usuario creado"); */
+                }}>
                 <h4>Nuevo Usuario</h4>
                 <div className="form-group">
-                    <label for="exampleUsername"></label>
-                    <input type="text" className="form-control" id="exampleUsername" placeholder="Nombre"/>
+                    <label for="NombreUsuario"></label>
+                    <input value={formState.nombre} type="text" className="form-control" id="NombreUsuario" placeholder="Nombre" onChange={e=>
+                        SetFormState({
+                            ...formState, nombre : e.target.value
+                        })
+                    }/>  
+                </div>
+                {/* <div className="form-group">
+                    <label for="emailUsuario"></label>
+                    <input  type="email" className="form-control" id="emailUsuario"  placeholder="Email" onChange={e=>
+                        SetFormState({
+                            ...formState, email : e.target.value
+                        })
+                    } />
+                </div> */}
+                <div className="form-group">
+                    <label for="EmailUsuario"></label>
+                    <input type="text" className="form-control" id="EmailUsuario" placeholder="Email" onChange={e=>
+                        SetFormState({
+                            ...formState, email : e.target.value
+                        })
+                    } />
                 </div>
                 <div className="form-group">
-                    <label for="exampleInputEmail1"></label>
-                    <input type="email" className="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Email"/>
+                    <label for="RutUsuario"></label>
+                    <input type="number" className="form-control" id="RutUsuario" placeholder="Rut" onChange={e=>
+                        SetFormState({
+                            ...formState, rut : e.target.value
+                        })
+                    } />
                 </div>
                 <div className="form-group">
                     <label for="exampleInputPassword1"></label>
                     <input type="password" className="form-control" id="exampleInputPassword1" placeholder="Contraseña"/>
                 </div>
-                <div className="form-group">
-                    <label for="exampleInputNumber"></label>
-                    <input type="text" className="form-control" id="exampleInputNumber" placeholder="Número de celular"/>
-                </div>
                 <div class="form-group">
                     <label for="exampleFormControlSelect1"></label>
-                    <select class="form-control" id="exampleFormControlSelect1" placeholder="Tipo de usuario">
-                    <option disabled={true} value="">
-                    --Elige un tipo de usuario--
-                    </option>
-                    <option>Residente</option>
-                    <option>Conserje</option>
-                    <option>Directiva</option>
-                    <option>Administrador</option>
+                    <select class="form-control" id="usertype" placeholder="Tipo de usuario">
+                        <option disabled={true} value="">
+                        --Elige un tipo de usuario--
+                        </option>
+                        <option>Residente</option>
+                        <option>Conserje</option>
+                        <option>Directiva</option>
+                        <option>Administrador</option>
                     </select>
                 </div>
-
-                <Button variant="contained" onClick={() => {alert("Usuario creado")}} style={{margin: 10}} >Crear usuario</Button>
+                <button variant="contained" type='submit' style={{margin: 10}}>Crear usuario</button>
             </form>
             </Card>
         </div>

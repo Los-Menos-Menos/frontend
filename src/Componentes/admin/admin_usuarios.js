@@ -30,38 +30,23 @@ const ADD_MULTA = gql`
 `;
 
 const GET_RESIDENTES = gql`
-  query GetResidentes {
-    getResidentes {
-        rut
-        nombre
-        email
-        estadodecuenta{
-            reservas{
-                fecha
-                instalacion{
-                    nombre
-                }
-                pagado
-            }
-            multas{
-                detalle
-                fecha
-                monto
-                pagado
-            }
-            morosidad
-            gastoscomuneslista{
-                detalle
-                fecha
-                monto
-                pagado
-            }
+    query getResidentes {
+        getResidentes {
+            email
+            nombre
+            rut
         }
     }
-  }
 `;
 
-
+//mutation delete residente
+const DELETE_RESIDENTE = gql`
+    mutation deleteResidente($id: ID!) {
+        deleteResidente(id: $id) {
+            alert
+        }
+    }
+`;
 
 const SearchIt = ({ onChange, value }) => (
     <input
@@ -73,48 +58,31 @@ const SearchIt = ({ onChange, value }) => (
 const columns = [
     {
         name: "Usuario",
-        selector: "title",
+        selector: row => row.nombre,
         sortable: true
-    },
-    {
-        name: "Fecha",
-        selector: "year",
-        sortable: true
-    },
-    {
-        name: "Morosidad",
-        selector: "morosidad",
-        sortable: true,
-        right: true
     },
     {
         name: "Email",
-        selector: "email",
+        selector: row => row.email,
         sortable: true
     },
     {
-        name: "Numero",
-        selector: "numero",
-        sortable: true
+        name: "Rut",
+        selector: row => row.rut,
+        omit: true
     },
     {
-        name: "Tipo",
-        selector: "tipoUsuario",
+        name: "Tipo de usuario",
+        selector: row => row.__typename,
         sortable: true
     },
     {
         name: "Acciones",
-        cell: row => (
-            <button className="btn btn-danger" onClick={() => {alert("Usuario deshabilitado")}}>Deshabilitar</button>
-            
+        cell: (row) => (
+            <button className="btn btn-danger" onClick={() => {alert(row.rut)}}>Deshabilitar</button>
         )
     }
 ];
-
-
-
-
-
 
 function Admin_usuarios() {
     const [show, setShow] = useState(false);
@@ -126,6 +94,7 @@ function Admin_usuarios() {
 
     //MUTATION ADDMULTA
     const [addMulta, {data, loading, error}] = useMutation(ADD_MULTA);
+
     const [formState, SetFormState] = React.useState({
         detalle: '',
         fecha: '',
@@ -135,8 +104,6 @@ function Admin_usuarios() {
     });
     //QUERY GETRESIDENTES
     const {data: dataResidentes, loading: loadingResidentes, error: errorResidentes} = useQuery(GET_RESIDENTES);
-    
-
 
     const columnsResi = [
         {
@@ -165,53 +132,59 @@ function Admin_usuarios() {
       }
     ];
     const [filter, setFilter] = React.useState("");
-    const filteredData = dataR.filter(item =>
-        item.title.toLowerCase().includes(filter)
-    );
+    var filteredData;
+    if (loadingResidentes){
+        filteredData = dataR
+    }
+    else{
+        filteredData = dataResidentes.getResidentes;
+    }
     const filteredDataResi = dataResi.filter(item =>
         item.title.toLowerCase().includes(filter)
     );
-    const ExpandedComponent2 = ({ dataR }) => (
+    
+    const ExpandedComponent2 = ({dataResi}) => (
         <div className="card" style={{width: '100%'}} >
-          <strong>Gastos Comunes:</strong> 
-          <ul>{
-          dataR.gastos.map((gasto, index) => (
-            <li key={index}>{gasto}</li>
-          ))
-          }
-          </ul>
-          <strong>Multas:</strong> {dataR.multas.length > 0 ? 
+            <strong>Gastos Comunes:</strong> 
             <ul>{
-              dataR.multas.map((multa, index) => (
-                <li key={index}>
-                    {multa}
-                    <button onClick={handleShow2} style={{marginLeft:'20px', border: 'none', borderRadius:'3px', padding: '0!important', fontFamily: 'arial, sans-serif,', color: '#069', cursor: 'pointer'}}> 
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil" viewBox="0 0 16 16">
-                        <path d="M12.146.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1 0 .708l-10 10a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168l10-10zM11.207 2.5 13.5 4.793 14.793 3.5 12.5 1.207 11.207 2.5zm1.586 3L10.5 3.207 4 9.707V10h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.293l6.5-6.5zm-9.761 5.175-.106.106-1.528 3.821 3.821-1.528.106-.106A.5.5 0 0 1 5 12.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.468-.325z"/>
-                    </svg>
-                    </button>
-                    <button onClick={() => {alert("Multa borrada")}} style={{marginLeft:'20px', border: 'none', borderRadius:'3px', padding: '0!important', fontFamily: 'arial, sans-serif,', color: '#069', cursor: 'pointer'}}> 
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-trash" viewBox="0 0 16 16">
-                        <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z"/>
-                        <path fill-rule="evenodd" d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z"/>
-                    </svg>
-                    </button>
-                </li>
-                
-              ))
-              }
-              </ul>
-          : "No hay multas"}
-          <br></br>
-          <strong>Reservas:</strong> 
-          <ul>{
-          dataR.reservas.map((reserva, index) => (
-            <li key={index}>{reserva}</li>
-          ))
-          }
-          </ul>
+                dataResi.gastos.map((gasto, index)=>(
+                    <li key={index}>{gasto}</li>
+                ))
+            }
+            </ul>
+            <strong>Multas:</strong> {dataResi.multas.length > 0 ? 
+                <ul>{
+                dataResi.multas.map((multa, index) => (
+                    <li key={index}>
+                        {multa}
+                        <button onClick={handleShow2} style={{marginLeft:'20px', border: 'none', borderRadius:'3px', padding: '0!important', fontFamily: 'arial, sans-serif,', color: '#069', cursor: 'pointer'}}> 
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil" viewBox="0 0 16 16">
+                            <path d="M12.146.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1 0 .708l-10 10a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168l10-10zM11.207 2.5 13.5 4.793 14.793 3.5 12.5 1.207 11.207 2.5zm1.586 3L10.5 3.207 4 9.707V10h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.293l6.5-6.5zm-9.761 5.175-.106.106-1.528 3.821 3.821-1.528.106-.106A.5.5 0 0 1 5 12.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.468-.325z"/>
+                        </svg>
+                        </button>
+                        <button onClick={() => {alert("Multa borrada")}} style={{marginLeft:'20px', border: 'none', borderRadius:'3px', padding: '0!important', fontFamily: 'arial, sans-serif,', color: '#069', cursor: 'pointer'}}> 
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-trash" viewBox="0 0 16 16">
+                            <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z"/>
+                            <path fill-rule="evenodd" d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z"/>
+                        </svg>
+                        </button>
+                    </li>
+                    
+                ))
+                }
+                </ul>
+            : "No hay multas"}
+            <br></br>
+            <strong>Reservas:</strong> 
+            <ul>{
+            dataResi.reservas.map((reserva, index) => (
+                <li key={index}>{reserva}</li>
+            ))
+            }
+            </ul>
         </div>
-      );
+        );
+    
 
     return (
         <>

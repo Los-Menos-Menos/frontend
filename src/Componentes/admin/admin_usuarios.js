@@ -112,12 +112,13 @@ function Admin_usuarios() {
     });
     const [addResidente, {data: dataAddResidente, loading: loadingAddResidente, error: errorAddResidente}] = useMutation(ADD_RESIDENTE,{
         refetchQueries: [{query: GET_RESIDENTES},
+
         ]
     });
     const [formState, SetFormState] = React.useState({
-        email: String,
-        nombre: String,
-        rut: Number
+        email: '',
+        nombre: '',
+        rut: 0
     });
 
     const SearchIt = ({ onChange, value }) => (
@@ -337,14 +338,17 @@ function Admin_usuarios() {
         <div className="container mx-auto" style={{margin:'5%'}}>
             <Card>
             <form onSubmit={e =>{
-                    e.preventDefault();
-                    addResidente({
-                        variables: {
-                            nombre: formState.nombre,
-                            email: formState.email,
-                            rut: formState.rut
-                        }
-                    })
+                const rut = parseInt(formState.rut, 10);
+                e.preventDefault();
+                addResidente({
+                    variables: {
+                        nombre: formState.nombre,
+                        email: formState.email,
+                        rut: rut
+                    }
+                })
+
+
 /*                     // check usertype and use the correct apollo query
                     if (TipoUsuario.value === "Residente"){
                         console.log({
@@ -365,7 +369,7 @@ function Admin_usuarios() {
                 <h4>Nuevo Usuario</h4>
                 <div className="form-group">
                     <label for="NombreUsuario"></label>
-                    <input value={formState.nombre} type="text" className="form-control" id="NombreUsuario" placeholder="Nombre" onChange={e=>
+                    <input value={formState.nombre} type="text" className="form-control"  name="nombre" placeholder="Nombre" onChange={e=>
                         SetFormState({
                             ...formState, nombre : e.target.value
                         })
@@ -381,7 +385,7 @@ function Admin_usuarios() {
                 </div> */}
                 <div className="form-group">
                     <label for="EmailUsuario"></label>
-                    <input type="text" className="form-control" id="EmailUsuario" placeholder="Email" onChange={e=>
+                    <input type="text" className="form-control" name="email" placeholder="Email" onChange={e=>
                         SetFormState({
                             ...formState, email : e.target.value
                         })
@@ -389,7 +393,7 @@ function Admin_usuarios() {
                 </div>
                 <div className="form-group">
                     <label for="RutUsuario"></label>
-                    <input type="number" className="form-control" id="RutUsuario" placeholder="Rut" onChange={e=>
+                    <input type="number" className="form-control" name="rut" placeholder="Rut" onChange={e=>
                         SetFormState({
                             ...formState, rut : e.target.value
                         })

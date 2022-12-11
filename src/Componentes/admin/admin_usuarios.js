@@ -17,7 +17,7 @@ function Admin_usuarios() {
     const handleClose2 = () => setShow2(false);
     const handleShow2 = () => setShow2(true);
 
-    //mutation add residente
+    //mutation's tipo ADD
     const ADD_RESIDENTE = gql`
         mutation AddResidente(
             $email: String,
@@ -33,7 +33,69 @@ function Admin_usuarios() {
           }
         
     `;
+    const ADD_CONSERJE = gql`
+        mutation addConserje(
+            $email: String,
+            $nombre: String,
+            $rut: Int
+        ) {
+            addConserje(input: {email: $email, nombre: $nombre, rut: $rut}) {
+                email
+                id
+                nombre
+                rut
+            }
+        }
+    `;
+    const ADD_DIRECTIVA = gql`
+        mutation addDirectiva(
+            $email: String,
+            $nombre: String,
+            $rut: Int
+        ) {
+            addDirectiva(input: {email: $email, nombre: $nombre, rut: $rut}) {
+                email
+                id
+                nombre
+                rut
+            }
+        }
+    `;
+    const ADD_ADMINISTRADOR = gql`
+        mutation addAdministrador(
+            $email: String,
+            $nombre: String,
+            $rut: Int
+            ) {
+                addAdministrador(input: {email: $email, nombre: $nombre, rut: $rut}) {
+                    email
+                    id
+                    nombre
+                    rut
+                }
+            }
+    `;
+    const ADD_MULTA = gql`
+    mutation addMulta(
+        $detalle: String!,
+        $fecha: String!,
+        $monto: Int!,
+        $pagado: Boolean!,
+        $residente: Residente!
+    ) {
+        addMulta(input: {detalle: $detalle, fecha: $fecha, monto: $monto, pagado: $pagado, residente: $residente}) {
+            detalle
+            fecha
+            monto
+            pagado
+            residente{
+                rut
+            }
+        }
+    }
+`;
 
+    //queries tipo GET
     const GET_ESTADO_CUENTA = gql`
         query Query($getEstadoDeCuentaId: ID!) {
             getEstadoDeCuenta(id: $getEstadoDeCuentaId) {
@@ -48,7 +110,6 @@ function Admin_usuarios() {
             }
         }
     `
-
     const GET_RESIDENTES = gql`
         query getResidentes {
             getResidentes {
@@ -60,8 +121,48 @@ function Admin_usuarios() {
             }
         }
     `;
+    const GET_CONSERJES = gql`
+        query getConserjes {
+            getConserjes {
+                id
+                email
+                nombre
+                rut
+            }
+        }
+    `;
+    const GET_DIRECTIVAS = gql`
+        query getDirectivas {
+            getDirectivas {
+                id
+                email
+                nombre
+                rut
+            }
+        }
+    `;
+    const GET_ADMINISTRADORES = gql`
+        query getAdministradores {
+            getAdministradores {
+                id
+                email
+                nombre
+                rut
+            }
+        }
+    `;
+    const GET_ESTADOS_CUENTAS = gql`
+        query getEstadosDeCuenta {
+            getEstadosDeCuenta {
+                id
+                morosidad
+                multas 
+                residente
+            }
+        }
+    `;
 
-    //mutation delete residente
+    //mutation's tipo DELETE
     const DELETE_RESIDENTE = gql`
         mutation Mutation($deleteResidenteId: ID!) {
             deleteResidente(id: $deleteResidenteId) {
@@ -69,45 +170,62 @@ function Admin_usuarios() {
             }
         }
     `;
-
-    const ADD_MULTA = gql`
-        mutation addMulta(
-            $detalle: String!,
-            $fecha: String!,
-            $monto: Int!,
-            $pagado: Boolean!,
-            $residente: Residente!
-        ) {
-            addMulta(input: {detalle: $detalle, fecha: $fecha, monto: $monto, pagado: $pagado, residente: $residente}) {
-                detalle
-                fecha
-                monto
-                pagado
-                residente{
-                    rut
-                }
+    const DELETE_CONSERJE = gql`
+        mutation Mutation($deleteConserjeId: ID!) {
+            deleteConserje(id: $deleteConserjeId) {
+                message
             }
         }
     `;
+    const DELETE_DIRECTIVA = gql`
+        mutation Mutation($deleteDirectivaId: ID!) {
+            deleteDirectiva(id: $deleteDirectivaId) {
+                message
+            }
+        }
+    `;
+    const DELETE_ADMINISTRADOR = gql`
+        mutation Mutation($deleteAdministradorId: ID!) {
+            deleteAdministrador(id: $deleteAdministradorId) {
+                message
+                }
+            }
+        `;
 
 
-
-
-    //QUERY GETRESIDENTES
+    
+    //QUERY GET
     const {data: dataResidentes, loading: loadingResidentes, error: errorResidentes} = useQuery(GET_RESIDENTES);
+    const {data: dataConserjes, loading: loadingConserjes, error: errorConserjes} = useQuery(GET_CONSERJES);
+    const {data: dataDirectivas, loading: loadingDirectivas, error: errorDirectivas} = useQuery(GET_DIRECTIVAS);
+    const {data: dataAdministradores, loading: loadingAdministradores, error: errorAdministradores} = useQuery(GET_ADMINISTRADORES);
+    const {data: dataEstadosDeCuenta, loading: loadingEstadosDeCuenta, error: errorEstadosDeCuenta} = useQuery(GET_ESTADOS_CUENTAS);
+
     const {data: dataEstadoDeCuenta, loading: loadingEstadoDeCuenta, error: errorEstadoDeCuenta} = useQuery(GET_ESTADO_CUENTA,{
         variables:{
-            getEstadoDeCuentaId: "63335462cedcef070b0430f6"
+            getEstadoDeCuentaId: "63335462cedcef070b0430f6"  
         }
     });
 
 /*     if (!loadingEstadoDeCuenta){
         console.log(dataEstadoDeCuenta.getEstadoDeCuenta);
     } */
+    
     //MUTATION's
-    const [addMulta, {data: dataMulta, loading: loadingMulta, error: errorMulta}] = useMutation(ADD_MULTA);
     const [deleteResidente, {data: dataDeleteResidente, loading: loadingDeleteResidente, error: errorDeleteResidente}] = useMutation(DELETE_RESIDENTE,{
         refetchQueries: [{query: GET_RESIDENTES},
+        ]
+    });
+    const [deleteConserje, {data: dataDeleteConserje, loading: loadingDeleteConserje, error: errorDeleteConserje}] = useMutation(DELETE_CONSERJE,{
+        refetchQueries: [{query: GET_CONSERJES},
+        ]
+    });
+    const [deleteDirectiva, {data: dataDeleteDirectiva, loading: loadingDeleteDirectiva, error: errorDeleteDirectiva}] = useMutation(DELETE_DIRECTIVA,{
+        refetchQueries: [{query: GET_DIRECTIVAS},
+        ]
+    });
+    const [deleteAdministrador, {data: dataDeleteAdministrador, loading: loadingDeleteAdministrador, error: errorDeleteAdministrador}] = useMutation(DELETE_ADMINISTRADOR,{
+        refetchQueries: [{query: GET_ADMINISTRADORES},
         ]
     });
     const [addResidente, {data: dataAddResidente, loading: loadingAddResidente, error: errorAddResidente}] = useMutation(ADD_RESIDENTE,{
@@ -115,11 +233,27 @@ function Admin_usuarios() {
 
         ]
     });
-    const [formState, SetFormState] = React.useState({
+    const [addConserje, {data: dataAddRConserje, loading: loadingAddConserje, error: errorAddConserje}] = useMutation(ADD_CONSERJE,{
+        refetchQueries: [{query: GET_CONSERJES},
+        ]
+    });
+    const [addDirectiva, {data: dataAddDirectiva, loading: loadingAddDirectiva, error: errorAddDirectiva}] = useMutation(ADD_DIRECTIVA,{
+        refetchQueries: [{query: GET_DIRECTIVAS},
+        ]
+    });
+    const [addAdministrador, {data: dataAddAdministrador, loading: loadingAddAdministrador, error: errorAddAdministrador}] = useMutation(ADD_ADMINISTRADOR,{
+        refetchQueries: [{query: GET_ADMINISTRADORES},
+        ]
+    });
+    const [addMulta, {data: dataMulta, loading: loadingMulta, error: errorMulta}] = useMutation(ADD_MULTA);
+
+
+    const [formState, SetFormState] = React.useState({ //formulario de agregar residente
         email: '',
         nombre: '',
-        rut: 0,
-        tipo: 'Residente'
+        rut: '',
+        tipo: '',
+        password: '',
     });
 
     const SearchIt = ({ onChange, value }) => (
@@ -161,7 +295,17 @@ function Admin_usuarios() {
             cell: (row) => (
                 <button className="btn btn-danger"  onClick={e => {
                     e.preventDefault();
-                    deleteResidente({variables: {deleteResidenteId: row.id}});
+                    //if pa saber q usuario borrar
+                    if (row.__typename === "Residente"){
+                        deleteResidente({variables: {deleteResidenteId: row.id}});
+                    }else if (row.__typename === "Conserje"){
+                        deleteConserje({variables: {deleteConserjeId: row.id}});
+                    }else if (row.__typename === "Directiva"){
+                        deleteDirectiva({variables: {deleteDirectivaId: row.id}});
+                    }else if (row.__typename === "Administrador"){
+                        deleteAdministrador({variables: {deleteAdministradorId: row.id}});
+                    }
+
                 }}>Deshabilitar</button>    
             )
         }
@@ -190,14 +334,15 @@ function Admin_usuarios() {
     const [filter, setFilter] = React.useState("");
     var filteredData;
     var filteredDataResi;
-    if (loadingResidentes || loadingMulta || loadingDeleteResidente || loadingAddResidente) {
+    if (loadingResidentes || loadingMulta || loadingDeleteResidente || loadingAddResidente || loadingConserjes || loadingDeleteConserje || loadingDirectivas || loadingAdministradores || loadingDeleteDirectiva || loadingDeleteAdministrador || loadingAddConserje || loadingAddDirectiva || loadingAddAdministrador || loadingEstadosDeCuenta) {
         filteredData = dataR
         filteredDataResi = dataResi;
     }
     else{
-        filteredData = dataResidentes.getResidentes;
+        //concatenar los datos de residentes y conserjes
+        filteredData = dataResidentes.getResidentes.concat(dataConserjes.getConserjes, dataDirectivas.getDirectivas, dataAdministradores.getAdministradores);
+        filteredDataResi = dataResidentes.getResidentes
     }
-    filteredDataResi = dataResi
     
     const ExpandedComponent2 = ({dataResi}) => (
         <div className="card" style={{width: '100%'}} >
@@ -342,11 +487,6 @@ function Admin_usuarios() {
                 const rut = parseInt(formState.rut, 10);
                 e.preventDefault();
                 if (formState.tipo === "Residente"){
-                    console.log({
-                        nombre: formState.nombre,
-                        email: formState.email,
-                        rut: rut
-                    })
                     addResidente({
                         variables:{
                             nombre: formState.nombre,
@@ -355,8 +495,44 @@ function Admin_usuarios() {
                         }
                     });
                 }
-                
-                alert("Usuario creado");
+                if (formState.tipo === "Conserje"){
+                    addConserje({
+                        variables:{
+                            nombre: formState.nombre,
+                            email: formState.email,
+                            rut: rut,
+                        }
+                    });
+                }
+                if (formState.tipo === "Administrador"){
+                    addAdministrador({
+                        variables:{
+                            nombre: formState.nombre,
+                            email: formState.email,
+                            rut: rut,
+                        }
+                    });
+                }
+                if (formState.tipo === "Directiva"){
+                    addDirectiva({
+                        variables:{
+                            nombre: formState.nombre,
+                            email: formState.email,
+                            rut: rut,
+                        }
+                    });
+                }
+         
+                if (!loadingAddAdministrador && !loadingAddConserje && !loadingAddDirectiva && !loadingAddResidente){
+                    alert("Usuario creado");
+                    SetFormState({
+                        nombre: "",
+                        email: "",
+                        rut: "",
+                        tipo: "",
+                        password: ""
+                    });
+                }
 
                 }}>
                 <h4>Nuevo Usuario</h4>
@@ -370,7 +546,7 @@ function Admin_usuarios() {
                 </div>
                 <div className="form-group">
                     <label for="EmailUsuario"></label>
-                    <input type="text" className="form-control" name="email" placeholder="Email" onChange={e=>
+                    <input value={formState.email} type="text" className="form-control" name="email" placeholder="Email" onChange={e=>
                         SetFormState({
                             ...formState, email : e.target.value
                         })
@@ -378,7 +554,7 @@ function Admin_usuarios() {
                 </div>
                 <div className="form-group">
                     <label for="RutUsuario"></label>
-                    <input type="number" className="form-control" name="rut" placeholder="Rut" onChange={e=>
+                    <input value={formState.rut} type="text" className="form-control" name="rut" placeholder="Rut" onChange={e=>
                         SetFormState({
                             ...formState, rut : e.target.value
                         })
@@ -386,11 +562,15 @@ function Admin_usuarios() {
                 </div>
                 <div className="form-group">
                     <label for="exampleInputPassword1"></label>
-                    <input type="password" className="form-control" id="exampleInputPassword1" placeholder="Contraseña"/>
+                    <input value={formState.password} type="password" className="form-control" id="exampleInputPassword1" placeholder="Contraseña" onChange={e=>
+                        SetFormState({
+                            ...formState, password : e.target.value
+                        })
+                    }/>
                 </div>
                 <div class="form-group">
                     <label for="exampleFormControlSelect1"></label>
-                    <select class="form-control" id="usertype" placeholder="Tipo de usuario" name="tipo" onChange={e=>
+                    <select value={formState.tipo} class="form-control" id="usertype" placeholder="Tipo de usuario" name="tipo" onChange={e=>
                         SetFormState({
                             ...formState, tipo : e.target.value
                         })
@@ -404,7 +584,7 @@ function Admin_usuarios() {
                         <option>Administrador</option>
                     </select>
                 </div>
-                <button variant="contained" type='submit' style={{margin: 10}}>Crear usuario</button>
+                <Button variant="contained" type='submit' style={{margin: 10}}>Crear usuario</Button>
             </form>
             </Card>
         </div>

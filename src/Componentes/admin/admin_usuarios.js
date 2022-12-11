@@ -101,9 +101,9 @@ function Admin_usuarios() {
         }
     });
 
-    if (!loadingEstadoDeCuenta){
+/*     if (!loadingEstadoDeCuenta){
         console.log(dataEstadoDeCuenta.getEstadoDeCuenta);
-    }
+    } */
     //MUTATION's
     const [addMulta, {data: dataMulta, loading: loadingMulta, error: errorMulta}] = useMutation(ADD_MULTA);
     const [deleteResidente, {data: dataDeleteResidente, loading: loadingDeleteResidente, error: errorDeleteResidente}] = useMutation(DELETE_RESIDENTE,{
@@ -118,7 +118,8 @@ function Admin_usuarios() {
     const [formState, SetFormState] = React.useState({
         email: '',
         nombre: '',
-        rut: 0
+        rut: 0,
+        tipo: 'Residente'
     });
 
     const SearchIt = ({ onChange, value }) => (
@@ -340,31 +341,23 @@ function Admin_usuarios() {
             <form onSubmit={e =>{
                 const rut = parseInt(formState.rut, 10);
                 e.preventDefault();
-                addResidente({
-                    variables: {
+                if (formState.tipo === "Residente"){
+                    console.log({
                         nombre: formState.nombre,
                         email: formState.email,
                         rut: rut
-                    }
-                })
+                    })
+                    addResidente({
+                        variables:{
+                            nombre: formState.nombre,
+                            email: formState.email,
+                            rut: rut
+                        }
+                    });
+                }
+                
+                alert("Usuario creado");
 
-
-/*                     // check usertype and use the correct apollo query
-                    if (TipoUsuario.value === "Residente"){
-                        console.log({
-                            nombre: NombreUsuario.value,
-                            email: EmailUsuario.value,
-                            rut: RutUsuario.value
-                        })
-                        addResidente({
-                            variables:{
-                                nombre: NombreUsuario.value,
-                                email: EmailUsuario.value,
-                                rut: RutUsuario.value
-                            }
-                        });
-                    }
-                    alert("Usuario creado"); */
                 }}>
                 <h4>Nuevo Usuario</h4>
                 <div className="form-group">
@@ -375,14 +368,6 @@ function Admin_usuarios() {
                         })
                     }/>  
                 </div>
-                {/* <div className="form-group">
-                    <label for="emailUsuario"></label>
-                    <input  type="email" className="form-control" id="emailUsuario"  placeholder="Email" onChange={e=>
-                        SetFormState({
-                            ...formState, email : e.target.value
-                        })
-                    } />
-                </div> */}
                 <div className="form-group">
                     <label for="EmailUsuario"></label>
                     <input type="text" className="form-control" name="email" placeholder="Email" onChange={e=>
@@ -405,7 +390,11 @@ function Admin_usuarios() {
                 </div>
                 <div class="form-group">
                     <label for="exampleFormControlSelect1"></label>
-                    <select class="form-control" id="usertype" placeholder="Tipo de usuario">
+                    <select class="form-control" id="usertype" placeholder="Tipo de usuario" name="tipo" onChange={e=>
+                        SetFormState({
+                            ...formState, tipo : e.target.value
+                        })
+                    }>
                         <option disabled={true} value="">
                         --Elige un tipo de usuario--
                         </option>

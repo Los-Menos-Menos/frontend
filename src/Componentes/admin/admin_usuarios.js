@@ -98,9 +98,14 @@ function Admin_usuarios() {
             $detalle: String,
             $monto: Int,
             $pagado: Boolean,
-            $residente: String
+            $residente: ID
         ) {
-            addMulta(input: {detalle: $detalle, monto: $monto, pagado: $pagado, residente: $residente}) {
+            addMulta(input: {
+                detalle: $detalle,
+                monto: $monto,
+                pagado: $pagado,
+                residente: $residente
+            }) {
                 detalle
                 fecha
                 monto
@@ -363,10 +368,10 @@ function Admin_usuarios() {
     });
     const [formStateAddMulta, SetFormStateAddMulta] = React.useState({
         detalle: '',
-        monto: '',
+        monto: 0,
         residente: '',
         fecha: '',
-        pagado: ''
+        pagado: false
     });
 
 
@@ -592,7 +597,6 @@ function Admin_usuarios() {
             e => {
                 e.preventDefault();
                 alert("Multa agregada");
-                formStateAddMulta.monto = parseInt(formStateAddMulta.monto);
                 console.log(formStateAddMulta);
                 addMulta({
                     variables: {
@@ -601,18 +605,17 @@ function Admin_usuarios() {
                         residente: formStateAddMulta.residente,
                         pagado: formStateAddMulta.pagado,
                     }
-                })
+                });
                 if (!loadingAddMulta){
                     SetFormStateAddMulta({
                         monto: "",
                         detalle: "",
                         residente: "",
                         pagado: false,
-                    })
+                    });
                     handleClose();
                 }
-            }
-        } >
+            }}>
             <Modal.Header closeButton>
                 <Modal.Title>Agregar Multa</Modal.Title>
             </Modal.Header>
@@ -622,9 +625,9 @@ function Admin_usuarios() {
                     <Form.Label>Valor</Form.Label>
                     <input value={formStateAddMulta.monto} onChange={e=>
                         SetFormStateAddMulta({
-                            ...formStateAddMulta, monto: e.target.value
+                            ...formStateAddMulta, monto: parseInt(e.target.value, 10)
                         })
-                    } type= "text" placeholder="Ingrese valor de la multa"  />
+                    } type= "number" placeholder="Ingrese valor de la multa"  />
                 </Form.Group>
                 <Form.Group className="mb-3" controlId="exampleForm.ControlInput2">
                     <Form.Label>Motivo</Form.Label>
@@ -642,7 +645,6 @@ function Admin_usuarios() {
                         } />
                     <label for="PagadoMulta">¿Está pagado?</label>
                 </Form.Group>
-                
             </Modal.Body>
             <Modal.Footer>
                 <Button variant="secondary" onClick={handleClose}>

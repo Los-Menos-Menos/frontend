@@ -4,50 +4,83 @@ import Card from '@mui/material/Card';
 import Button from "@mui/material/Button";
 import data from "./data_anuncios";
 
-const SearchIt = ({ onChange, value }) => (
-  <input
-    placeholder="Search"
-    onChange={e => onChange(e)}
-    value={value.toLowerCase()}
-  />
-);
-const columns = [
-  {
-    name: "Nombre",
-    selector: "title",
-    sortable: true
-  },
-  {
-    name: "Rol",
-    selector: "rol",
-    sortable: true,
-    right: true
-  },
-  {
-    name: "Fecha",
-    selector: "year",
-    sortable: true,
-    right: true
-  }
-];
 
-const ExpandedComponent = ({ data }) => (
-  <div className="card" style={{width: '100%'}} >
-    <p> 
-      <strong>Fecha:</strong> {data.year}
-      <br />
-      <strong>Mensaje:</strong> {data.runtime}
-      <br />
-    </p>
-  </div>
-);
-
+import {gql, useQuery} from '@apollo/client';
 
 function Anuncios() {
-  const [filter, setFilter] = React.useState("");
-  const filteredData = data.filter(item =>
-    item.title.toLowerCase().includes(filter)
+  const GET_ANUNCIOS = gql`
+    query GetAnuncios {
+        getAnuncios {
+        id
+        titulo
+        fecha
+        autor
+        mensaje
+        }
+    }
+    `;
+
+  const {data: dataAnuncios, loading: loadingAnuncios, error: errorAnuncios} = useQuery(GET_ANUNCIOS);
+  const SearchIt = ({ onChange, value }) => (
+    <input
+      placeholder="Search"
+      onChange={e => onChange(e)}
+      value={value.toLowerCase()}
+    />
   );
+  const columns = [
+    {
+        name: "Usuario",
+        selector: row => row.autor,
+        sortable: true
+    },
+    {
+        name: "Titulo",
+        selector: row => row.titulo,
+        sortable: true
+    },
+    {
+        name: "Fecha",
+        selector: row => row.fecha,
+        sortable: true,
+        right: true
+    },
+    {
+        name: "Id",
+        selector: row => row.id,
+        omit: true
+    }
+    ];
+    const ExpandedComponent = ({ data }) => (
+      <div className="card" style={{width: '100%'}}>
+          <strong>Anuncio:</strong>
+          {
+              loadingAnuncios ? () => "Cargando...":
+              dataAnuncios.getAnuncios.map((anuncio) => {
+                  if(anuncio.id == data.id){
+                      return (
+                          <div>
+                              <p>{anuncio.mensaje}</p>
+                          </div>
+                      )
+                  }
+              })
+          }
+          
+      </div>
+  
+      );
+
+
+  const [filter, setFilter] = React.useState("");
+  var filteredData;
+
+  if(loadingAnuncios){
+    filteredData = data;
+  }else{
+      filteredData = dataAnuncios.getAnuncios;
+  }
+
 
   return (
     <div className="container mx-auto" style={{margin: '40px'}}>

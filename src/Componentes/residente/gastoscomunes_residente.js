@@ -7,6 +7,10 @@ import data from "./data_gastos";
 import Modal from 'react-bootstrap/Modal';
 import Form from 'react-bootstrap/Form';
 
+import {gql, useQuery, useMutation} from '@apollo/client';
+
+
+
 const SearchIt = ({ onChange, value }) => (
   <input
     placeholder="Search"

@@ -1,82 +1,131 @@
-import React,{Component} from "react";
+import React,{useState} from "react";
 import DataTable from "react-data-table-component";
 import Card from '@mui/material/Card';
 import Button from "@mui/material/Button";
 import data from "./data_anuncios";
-
+import {gql, useQuery} from '@apollo/client';
 import Modal from 'react-bootstrap/Modal';
 import Form from 'react-bootstrap/Form';
 
-
 const SearchIt = ({ onChange, value }) => (
-  <input
-    placeholder="Search"
-    onChange={e => onChange(e)}
-    value={value.toLowerCase()}
-  />
-);
-const columns = [
-    {
-        name: "Nombre",
-        selector: "title",
-        sortable: true
-    },
-    {
-        name: "Rol",
-        selector: "rol",
-        sortable: true,
-        right: true
-    },
-    {
-        name: "Fecha",
-        selector: "year",
-        sortable: true,
-        right: true
-    },
-];
-
-const ExpandedComponent = ({ data }) => (
-    <div className="card" style={{width: '100%'}} >
-      <p> 
-        <strong>Fecha:</strong> {data.year}
-        <br />
-        <strong>Mensaje:</strong> {data.runtime}
-        <br />
-      </p>
-    </div>
+    <input
+      placeholder="Search"
+      onChange={e => onChange(e)}
+      value={value.toLowerCase()}
+    />
   );
 
-class Anuncios_Directiva extends Component {
-    constructor(){
-        super();
-        this.state = {
-            show: false,
-        }
-        this.handleClose = this.handleClose.bind(this);
-        this.handleShow = this.handleShow.bind(this);        
+function Anuncios_Directiva(){
+    const [show, setShow] = useState(false);
+
+    function handleShow(data){
+        setShow(true);
+        SetFormStateUpdateMulta({
+            id: data.id,
+            detalle: data.detalle,
+            fecha: data.fecha,
+            monto: data.monto,
+            pagado: data.pagado,
+            residente: data.residente
+        });
     }
-    handleClose = () => this.setState({show: false});
-    handleShow = () => this.setState({show: true});
-    
-	filter = "";
-	filteredData =  data.filter(item =>
-		item.title.toLowerCase().includes(this.filter)
-	);
 
-    SearchIt = ({ onChange, value }) => (
-        <input
-            placeholder="Search"
-            onChange={e => onChange(e)}
-            value={value.toLowerCase()}
-        />
-    );
+    function handleClose(){
+        setShow(false);
+    }
 
-    
-    render() {
-        return (
+    const [formStateUpdateMulta, SetFormStateUpdateMulta] = React.useState({ 
+        id: '',
+        detalle: '',
+        fecha: '',
+        monto: '',
+        pagado: '',
+        residente :''
+      });
+
+    const [filter, setFilter] = React.useState("");
+    var filteredData;
+      
+      const GET_ANUNCIOS = gql`
+              query getAnuncios {
+                  getAnuncios {
+                      id
+                      titulo
+                      mensaje
+                      fecha
+                      autor
+                  }
+              }
+          `;
+          const {data: dataAnuncios, loading: loadingAnuncios, error: errorAnuncios} = useQuery(GET_ANUNCIOS);
+      
+      const columns = [
+          {
+              name: "Titulo",
+              selector: row => row.titulo,
+              sortable: true
+          },
+          {
+              name: "Nombre",
+              selector: row => row.autor,
+              sortable: true,
+              right: true
+          },
+          {
+              name: "Fecha",
+              selector: row => row.fecha,
+              sortable: true,
+              right: true
+          },
+      ];
+
+      var filteredDataR;
+
+        if (loadingAnuncios) {
+            filteredDataR = data
+        }
+        else{
+            //concatenar los datos de residentes y conserjes
+            filteredDataR = dataAnuncios.getAnuncios;
+        }
+      
+      const ExpandedComponent = ({ data }) => (
+          <div className="card" style={{width: '100%'}} >
+            <p> 
+              <strong>Fecha:</strong> {
+                  loadingAnuncios ? () => "Cargando..." : 
+                  dataAnuncios.getAnuncios.map(anuncio => {
+                      if(anuncio.id == data.id){
+                          return (
+                              <div className="card-body">
+                                  <p className="card-text">Fecha: {anuncio.fecha}</p>
+                              </div>
+                          )
+                      }
+                  
+              })}
+              <br />
+              <strong>Mensaje:</strong> {
+                  loadingAnuncios ? () => "Cargando..." : 
+                  dataAnuncios.getAnuncios.map(anuncio => {
+                      if(anuncio.id == data.id){
+                          return (
+                              <div className="card-body">
+                                  <p className="card-text">Mensaje: {anuncio.mensaje}</p>
+                              </div>
+                          )
+                      }
+                  
+              })}
+              <br />
+            </p>
+          </div>
+        );
+
+        return(
             <>
             <Form>
-            <Modal show={this.state.show} onHide={this.handleClose}>
+            <Modal show={show} onHide={handleClose}>
                 <Modal.Header closeButton>
                 <Modal.Title>Agregar Anuncio</Modal.Title>
                 </Modal.Header>
@@ -102,10 +151,10 @@ class Anuncios_Directiva extends Component {
                     </Form.Group>
                 </Modal.Body>
                 <Modal.Footer>
-                <Button variant="secondary" onClick={this.handleClose}>
+                <Button variant="secondary" onClick={handleClose}>
                     Cerrar
                 </Button>
-                <Button variant="primary"        onClick={() => {alert("Anuncio creado"); this.handleClose();}}>
+                <Button variant="primary"        onClick={() => {alert("Anuncio creado"); handleClose();}}>
                     Agregar
                 </Button>
                 </Modal.Footer>
@@ -116,26 +165,25 @@ class Anuncios_Directiva extends Component {
 					<DataTable
 						title="Anuncios Directiva"
 						columns={columns}
-						data={this.filteredData}
+						data={filteredDataR}
                         expandableRows
                         expandableRowsComponent={ExpandedComponent}
 						pagination
 						subHeader
 						subHeaderComponent={
 							<div>
-								<this.SearchIt 
-								onChange={e => this.filter = e.target.value}
-								value={this.filter}
+								<SearchIt 
+								onChange={e => filter = e.target.value}
+								value={filter}
 								/>
-								<Button variant="contained" onClick={this.handleShow}e={{margin: 10}}>Nuevo Anuncio</Button>
+								<Button variant="contained" onClick={handleShow}e={{margin: 10}}>Nuevo Anuncio</Button>
 							</div>
 						}
 					/>
 				</Card>
 			</div>
             </>
-        );
-    }
+        )
 }
 
 export default Anuncios_Directiva;

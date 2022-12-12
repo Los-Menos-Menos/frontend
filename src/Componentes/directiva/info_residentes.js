@@ -5,7 +5,7 @@ import Button from "@mui/material/Button";
 import data from "./data_residentes";
 import Modal from 'react-bootstrap/Modal';
 import Form from 'react-bootstrap/Form';
-import {useMutation, gql, useQuery} from '@apollo/client';
+import { gql, useQuery} from '@apollo/client';
 
 
 const SearchIt = ({ onChange, value }) => (
@@ -14,34 +14,6 @@ const SearchIt = ({ onChange, value }) => (
     onChange={e => onChange(e)}
     value={value.toLowerCase()}
   />
-);
-
-const ExpandedComponent = ({ data }) => (
-  <div className="card" style={{width: '100%'}} >
-    <strong>Gastos Comunes:</strong> 
-    <ul>{
-    data.gastos.map((gasto, index) => (
-      <li key={index}>{gasto}</li>
-    ))
-    }
-    </ul>
-    <strong>Multas:</strong> {data.multas.length > 0 ? 
-      <ul>{
-        data.multas.map((multa, index) => (
-          <li key={index}>{multa}</li>
-        ))
-        }
-        </ul>
-    : "No hay multas"}
-    <br></br>
-    <strong>Reservas:</strong> 
-    <ul>{
-    data.reservas.map((reserva, index) => (
-      <li key={index}>{reserva}</li>
-    ))
-    }
-    </ul>
-  </div>
 );
 
 function InfoResidentes_Directiva() {
@@ -171,14 +143,6 @@ const [formStateUpdateMulta, SetFormStateUpdateMulta] = React.useState({
       ),
       sortable: true
   },
-    /*
-    {
-      name: "Multa",
-      cell: row => (
-        <button class="btn btn-primary" type="button" style={{margin: 10}} onClick={handleShow} >Agregar</button>
-  
-      )
-  }*/
   ];
   
   const [filter, setFilter] = React.useState("");

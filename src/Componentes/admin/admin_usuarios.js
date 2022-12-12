@@ -12,9 +12,17 @@ import {useMutation, gql, useQuery} from '@apollo/client';
 function Admin_usuarios() {
     const [show, setShow] = useState(false);
     const handleClose = () => setShow(false);
-    const handleShow = () => setShow(true);
     const [show2, setShow2] = useState(false);  
     const handleClose2 = () => setShow2(false);
+    function handleShow(data){
+        setShow(true);
+        SetFormStateAddMulta({
+            detalle: '',
+            monto: '',
+            pagado: false,
+            residente: data.id
+        })
+    }
     function handleShow2(data){
         setShow2(true);
         SetFormStateUpdateMulta({
@@ -86,23 +94,20 @@ function Admin_usuarios() {
             }
     `;
     const ADD_MULTA = gql`
-    mutation addMulta(
-        $detalle: String!,
-        $fecha: String!,
-        $monto: Int!,
-        $pagado: Boolean!,
-        $residente: Residente!
-    ) {
-        addMulta(input: {detalle: $detalle, fecha: $fecha, monto: $monto, pagado: $pagado, residente: $residente}) {
-            detalle
-            fecha
-            monto
-            pagado
-            residente{
-                rut
+        mutation AddMulta(
+            $detalle: String,
+            $monto: Int,
+            $pagado: Boolean,
+            $residente: String
+        ) {
+            addMulta(input: {detalle: $detalle, monto: $monto, pagado: $pagado, residente: $residente}) {
+                detalle
+                fecha
+                monto
+                pagado
+                residente
             }
         }
-    }
 `;
 
 
@@ -239,25 +244,39 @@ function Admin_usuarios() {
                 }
             }
         `;
-    
-    //mutation's tipo UPDATE
-    const UPDATE_MULTA = gql`
-        mutation updateMulta(
-            $updateMultaId: ID!,
-            $detalle: String!,
-            $monto: Int!,
-            $pagado: Boolean!,
-            $residente : ID!
-        ) {
-            updateMulta(id: $updateMultaId, input: {detalle: $detalle,  monto: $monto, pagado: $pagado, residente: $residente}) {
-                id
-                detalle
-                monto
-                pagado
+
+    const DELETE_MULTA = gql`
+        mutation Mutation($deleteMultaId: ID!) {
+            deleteMulta(id: $deleteMultaId) {
+                message
             }
         }
     `;
-
+    
+    //mutation's tipo UPDATE
+    const UPDATE_MULTA = gql`
+    mutation UpdateMulta(
+      $updateMultaId: ID!,
+      $detalle: String!,
+      $monto: Int!,
+      $pagado: Boolean!,
+      $residente: ID!
+    ) {
+      updateMulta(id: $updateMultaId, input: {
+        detalle: $detalle,
+        monto: $monto,
+        pagado: $pagado,
+        residente: $residente
+      }) {
+        id
+        detalle
+        monto
+        pagado
+      }
+    }
+  `;
+  
+  
     
     //QUERY GET
     const {data: dataResidentes, loading: loadingResidentes, error: errorResidentes} = useQuery(GET_RESIDENTES);
@@ -297,6 +316,10 @@ function Admin_usuarios() {
         refetchQueries: [{query: GET_ADMINISTRADORES},
         ]
     });
+    const [deleteMulta, {data: dataDeleteMulta, loading: loadingDeleteMulta, error: errorDeleteMulta}] = useMutation(DELETE_MULTA,{
+        refetchQueries: [{query: GET_MULTAS},
+        ]
+    });
     const [addResidente, {data: dataAddResidente, loading: loadingAddResidente, error: errorAddResidente}] = useMutation(ADD_RESIDENTE,{
         refetchQueries: [{query: GET_RESIDENTES},
 
@@ -318,7 +341,9 @@ function Admin_usuarios() {
         refetchQueries: [{query: GET_MULTAS},
         ]
     });
-    const [addMulta, {data: dataMulta, loading: loadingMulta, error: errorMulta}] = useMutation(ADD_MULTA);
+    const [addMulta, {data: dataMulta, loading: loadingAddMulta, error: errorMulta}] = useMutation(ADD_MULTA,{
+        refetchQueries: [{query: GET_MULTAS},]
+    });
 
 
     const [formState, SetFormState] = React.useState({ //formulario de agregar residente
@@ -335,6 +360,13 @@ function Admin_usuarios() {
         monto: '',
         pagado: '',
         residente :''
+    });
+    const [formStateAddMulta, SetFormStateAddMulta] = React.useState({
+        detalle: '',
+        monto: '',
+        residente: '',
+        fecha: '',
+        pagado: ''
     });
 
 
@@ -425,7 +457,14 @@ function Admin_usuarios() {
         {
           name: "Multa",
           cell: row => (
-            <button class="btn btn-primary" type="button" style={{margin: 10}} onClick={handleShow} >Agregar</button>
+            <button class="btn btn-primary" type="button" style={{margin: 10}} onClick={()=>{handleShow({
+                id: row.id,
+                nombre: row.nombre,
+                rut: row.rut,
+                email: row.email,
+                tipo: row.__typename,
+                residente: row.id
+            })}} >Agregar</button>
       
           )
       }
@@ -434,7 +473,7 @@ function Admin_usuarios() {
     var filteredData;
     var filteredDataResi;
 
-    if (loadingResidentes || loadingMulta || loadingDeleteResidente || loadingAddResidente || loadingConserjes || loadingDeleteConserje || loadingDirectivas || loadingAdministradores || loadingDeleteDirectiva || loadingDeleteAdministrador || loadingAddConserje || loadingAddDirectiva || loadingAddAdministrador || loadingEstadosDeCuenta || loadingMultas || loadingGastosComunes || loadingReservas || loadingUpdateMulta) {
+    if (loadingResidentes || loadingAddMulta || loadingDeleteResidente || loadingAddResidente || loadingConserjes || loadingDeleteConserje || loadingDirectivas || loadingAdministradores || loadingDeleteDirectiva || loadingDeleteAdministrador || loadingAddConserje || loadingAddDirectiva || loadingAddAdministrador || loadingEstadosDeCuenta || loadingMultas || loadingGastosComunes || loadingReservas || loadingUpdateMulta) {
         filteredData = dataR
         filteredDataResi = dataResi;
     }
@@ -481,14 +520,25 @@ function Admin_usuarios() {
 
                                     <p className="card-text">Pagado: {multa.pagado ? "Si" : "No"}</p>
                                     <button onClick={()=>{
-                                        console.log(multa, "Multa en boton");
                                         handleShow2(multa);
                                         }} style={{marginLeft:'20px', border: 'none', borderRadius:'3px', padding: '0!important', fontFamily: 'arial, sans-serif,', color: '#069', cursor: 'pointer'}}> 
                                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil" viewBox="0 0 16 16">
                                             <path d="M12.146.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1 0 .708l-10 10a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168l10-10zM11.207 2.5 13.5 4.793 14.793 3.5 12.5 1.207 11.207 2.5zm1.586 3L10.5 3.207 4 9.707V10h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.293l6.5-6.5zm-9.761 5.175-.106.106-1.528 3.821 3.821-1.528.106-.106A.5.5 0 0 1 5 12.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.468-.325z"/>
                                         </svg>
                                     </button>
-                                    <button onClick={() => {alert("Multa borrada")}} style={{marginLeft:'20px', border: 'none', borderRadius:'3px', padding: '0!important', fontFamily: 'arial, sans-serif,', color: '#069', cursor: 'pointer'}}> 
+                                    <button onClick={ e => {
+                                            e.preventDefault();
+                                            deleteMulta({
+                                                variables: {
+                                                    deleteMultaId: multa.id
+                                                }})
+                                            if (loadingDeleteMulta){
+                                                console.log("Cargando...");
+                                            }else{
+                                                alert("Multa eliminada");
+                                            }
+                                        }
+                                        } style={{marginLeft:'20px', border: 'none', borderRadius:'3px', padding: '0!important', fontFamily: 'arial, sans-serif,', color: '#069', cursor: 'pointer'}}> 
                                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-trash" viewBox="0 0 16 16">
                                             <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z"/>
                                             <path fill-rule="evenodd" d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z"/>
@@ -537,8 +587,32 @@ function Admin_usuarios() {
 
     return (
         <>
-        <Form>
         <Modal show={show} onHide={handleClose}>
+        <form onSubmit={
+            e => {
+                e.preventDefault();
+                alert("Multa agregada");
+                formStateAddMulta.monto = parseInt(formStateAddMulta.monto);
+                console.log(formStateAddMulta);
+                addMulta({
+                    variables: {
+                        monto: formStateAddMulta.monto,
+                        detalle: formStateAddMulta.detalle,
+                        residente: formStateAddMulta.residente,
+                        pagado: formStateAddMulta.pagado,
+                    }
+                })
+                if (!loadingAddMulta){
+                    SetFormStateAddMulta({
+                        monto: "",
+                        detalle: "",
+                        residente: "",
+                        pagado: false,
+                    })
+                    handleClose();
+                }
+            }
+        } >
             <Modal.Header closeButton>
                 <Modal.Title>Agregar Multa</Modal.Title>
             </Modal.Header>
@@ -546,19 +620,27 @@ function Admin_usuarios() {
                 
                 <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
                     <Form.Label>Valor</Form.Label>
-                    <input value={formState.monto} onChange={e=>
-                        SetFormState({
-                            ...formState, monto: e.target.value
+                    <input value={formStateAddMulta.monto} onChange={e=>
+                        SetFormStateAddMulta({
+                            ...formStateAddMulta, monto: e.target.value
                         })
                     } type= "text" placeholder="Ingrese valor de la multa"  />
                 </Form.Group>
                 <Form.Group className="mb-3" controlId="exampleForm.ControlInput2">
                     <Form.Label>Motivo</Form.Label>
-                    <input value={formState.detalle} onChange={e=>
-                        SetFormState({
-                            ...formState, detalle: e.target.value
+                    <input value={formStateAddMulta.detalle} onChange={e=>
+                        SetFormStateAddMulta({
+                            ...formStateAddMulta, detalle: e.target.value
                         })
                     } type= "text" placeholder="Ingrese motivo de la multa"  />
+                </Form.Group>
+                <Form.Group className="mb-3">
+                    <input checked={formStateAddMulta.pagado} className="form-check-input" type="checkbox" id="PagadoMulta" onChange={e=>
+                        SetFormStateAddMulta({
+                            ...formStateAddMulta, pagado : !formStateAddMulta.pagado
+                        })
+                        } />
+                    <label for="PagadoMulta">¿Está pagado?</label>
                 </Form.Group>
                 
             </Modal.Body>
@@ -566,33 +648,32 @@ function Admin_usuarios() {
                 <Button variant="secondary" onClick={handleClose}>
                     Cerrar
                 </Button>
-                <Button variant="primary"   onClick={() => {alert("Multa agregada! >:)"); handleClose();}}>
+                <Button variant="primary" type="submit">
                     Agregar
                 </Button>
             </Modal.Footer>
+            </form>
         </Modal>
-        </Form>
+        
         
         <Modal show={show2} onHide={handleClose2}>
             <form onSubmit={
                         e => {
                             e.preventDefault();
                             alert("Multa modificada");
-                            SetFormStateUpdateMulta({
-                                ...formStateUpdateMulta, monto: "", detalle: "", id: "", residente: "", fecha: "", pagado: ""
-                            });
-
+                            var monto1 = parseInt(formStateUpdateMulta.monto);
                             updateMulta({
                                 variables: {
                                     updateMultaId: formStateUpdateMulta.id,
-                                    monto: formStateUpdateMulta.monto,
+                                    monto: monto1,
                                     detalle: formStateUpdateMulta.detalle,
                                     residente: formStateUpdateMulta.residente,
                                     pagado: formStateUpdateMulta.pagado
-                                    
                                 }
                             });
-
+                            SetFormStateUpdateMulta({
+                                ...formStateUpdateMulta, monto: "", detalle: "", id: "", residente: "", fecha: "", pagado: ""
+                            });
                             if (!loadingUpdateMulta){
                                 handleClose2();
                             }

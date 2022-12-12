@@ -49,7 +49,7 @@ class AdminInicio extends Component {
                             <div class="card-body p-4">
                                 <h4 class="text-center card-title">Anuncios</h4>
                                 <p class="card-text">En esta sección puede ver los anuncios del condominio.</p>
-                                <div class="col d-flex justify-content-end"><button class="btn btn-primary" type="button" onClick={() => this.props.cambiarPagina("Anuncios")}>Ir a Anuncios</button></div>
+                                <div class="col d-flex justify-content-end"><button class="btn btn-primary" type="button" onClick={() => this.props.cambiarPagina("Anuncios_Admin")}>Ir a Anuncios</button></div>
                             </div>
                         </div>
                     </div>

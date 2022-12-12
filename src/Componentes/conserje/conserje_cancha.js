@@ -6,7 +6,10 @@ import Form from 'react-bootstrap/Form';
 import Modal from 'react-bootstrap/Modal';
 import Card from '@mui/material/Card';
 import DataTable from "react-data-table-component";
-import data from "./data/data_reservass"
+import dataReser from "./data/data_reservass.js"
+import dataResi from "./data/datac_residentes.js"
+
+import {useMutation, gql, useQuery} from '@apollo/client';
 
 const columns = [
     {
@@ -36,8 +39,156 @@ const columns = [
   
 
 function Conserje_Cancha(){
+
+const ADD_RESERVA = gql`
+        mutation AddReserva(
+            $fecha: String,
+            $instalacion: Instalacion,
+            $pagado: Boolean,
+            $residente: Residente
+        ) {
+            addReserva(input: {fecha: $fecha, instalacion: $instalacion, residente: $residente}) {
+              fecha
+              id
+              instalacion{
+                nombre
+              }
+              residente{
+                rut
+              }
+            }
+          }
+        
+    `;
+
+    const GET_RESERVAS = gql`
+        query getReservas {
+            getReservas {
+                id
+                fecha
+                pagado
+                residente
+                instalacion
+            }
+        }
+    `;
+    const GET_INSTALACIONES = gql`
+        query getInstalaciones {
+            getInstalaciones {
+                id
+                estado
+                monto
+                nombre
+                reservas
+            }
+        }
+    `;
+    const GET_RESIDENTES = gql`
+        query getResidentes {
+            getResidentes {
+                id
+                email
+                nombre
+                rut
+                estadodecuenta
+            }
+        }
+    `;
+
+    // QUERY GET
+    const {data: dataReservas, loading: loadingReservas, error: errorReservas} = useQuery(GET_RESERVAS);
+    const {data: dataResidentes, loading: loadingResidentes, error: errorResidentes} = useQuery(GET_RESIDENTES);
+    const {data: dataInstalaciones, loading: loadingInstalaciones, error: errorInstalaciones} = useQuery(GET_INSTALACIONES);
+
+    // MUTATION ADD
+    const [addReserva, {data: dataAddReserva, loading: loadingAddReserva, error: errorAddReserva}] = useMutation(ADD_RESERVA,{
+        refetchQueries: [{query: GET_RESERVAS},
+
+        ]
+    });
+
+    const [formState, SetFormState] = React.useState({ //formulario de agregar reserva
+        residente: '',
+        fecha: '',
+        pagado: '',
+        instalacion: '',
+    });
+    const [formStateUpdateMulta, SetFormStateUpdateMulta] = React.useState({ 
+        id: '',
+        residente: '',
+        fecha: '',
+        pagado: '',
+        instalacion :''
+    });
+
+    const SearchIt = ({ onChange, value }) => (
+        <input
+        placeholder="Search"
+        onChange={e => onChange(e)}
+        value={value.toLowerCase()}
+        />
+    );
+
+    const columns = [
+        {
+            name: "Residente",
+            selector: row => (
+                loadingResidentes ? "Cargando..." :
+                dataResidentes.getResidentes.map((resi) => {
+                    if (resi.id === row.residente){
+                        return resi.nombre;
+                    }
+                })
+                
+            ),
+            sortable: true
+        },
+        {
+            name: "Fecha",
+            selector: row => row.fecha,
+            sortable: true
+        },
+        {
+            name: "Pagado",
+            selector: row => row.pagado,
+            omit: true
+        },
+        {
+            name: "Instalacion",
+            selector: row => (
+                loadingInstalaciones ? "Cargando..." :
+                dataInstalaciones.getInstalaciones.map((inst) => {
+                    if (inst.id === row.instalacion){
+                        return inst.nombre;
+                    }
+                })
+
+            ),
+            sortable: true
+        }
+    ];
     const [filter, setFilter] = React.useState("");
-    const dataCancha = data.filter(item => item.instalacion == "Multicancha");
+    var filteredDataReservas;
+    var filteredDataResidentes;
+    var filteredDataInstalaciones;
+    var dataCancha;
+    //const dataEst = data.filter(item => item.instalacion == "Estacionamiento");
+    //MODAL FORM
+    if (loadingReservas || loadingResidentes || loadingInstalaciones) {
+        filteredDataReservas = dataReser;
+        filteredDataResidentes = dataResi;
+        //dataQuincho = filteredDataReservas.filter(item => item.instalacion == "Quincho");
+    }
+    else{
+        filteredDataReservas = dataReservas.getReservas;
+        filteredDataResidentes = dataResidentes.getResidentes;
+        filteredDataInstalaciones = dataInstalaciones.getInstalaciones;
+        dataCancha = filteredDataReservas.filter(item => item.instalacion == "6397565cb225116395017546");
+
+    }
+
+
+    //const dataCancha = data.filter(item => item.instalacion == "Multicancha");
     //MODAL FORM
     const [show, setShow] = useState(false);
     const handleClose = () => setShow(false);
